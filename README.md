@@ -18,7 +18,17 @@ mgan.train(trainset)
 - `model.fit`에 `validation_data`가 있어야 합니다.
 - 사용 예시
 ```
+from tensorflow import keras
 from chart import chart
+
+model=keras.Sequential()
+model.add(keras.layers.Dense(100,activation='relu'))
+model.add(keras.layers.Dense(3,activation='softmax'))
+
+model.compile(optimizer='adam',loss='sparse_categorical_crossentropy',metrics='accuracy')
+checkpoint_cb=keras.callbacks.ModelCheckpoint('../Data/best_cnn_model.h5')
+earlystopping_cb=keras.callbacks.EarlyStopping(patience=3,restore_best_weights=True)
+history=model.fit(data,target,epochs=20,validation_data=(valData,valTargetData),callbacks=[checkpoint_cb,earlystopping_cb])
 
 chart(history)
 ```
