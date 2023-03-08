@@ -12,12 +12,17 @@
     - `height`: 생성하려고 하는 이미지의 높이입니다(샘플 이미지 원본과는 관계없지만, `width`와 `height`의 비를 원본과 비슷하게 하는 것을 권장합니다.). 4의 배수여야 합니다.
     - `batch_size`: 배치 사이즈입니다.
     - `noise_dim`: 생성할 이미지의 개수입니다.
-  - `makebatch`
+  - `makebatch`: `train`을 위한 데이터셋을 만듭니다.
     - `imgs`: 이미지 파일 이름의 리스트입니다.
-  - `train`
+  - `train`: 이미지 생성을 위해 학습합니다.
     - `dataset`: `makebatch`를 통해 만든 데이터셋입니다.
     - `epochs`: 반복 학습 횟수입니다. 기본값은 1000입니다.
     - `show_freq`: 몇 번째 epoch마다 생성한 이미지를 보여 줄 지에 대한 매개 변수입니다. 기본값은 5입니다.
+  - `saveimage`: 이미지를 생성하고 저장합니다. `.jpg` 파일로 저장됩니다.
+    - `num_res`: 생성할 이미지의 개수입니다.
+    - `dir`: 이미지를 저장할 디렉토리입니다. 마지막에 /는 생략합니다.
+    - `prefix`: 저장될 이미지의 이름입니다. 이름 뒤에 1부터 숫자가 붙습니다.
+    
 - 사용 예시
 ```
 from mygan import MyGAN
@@ -25,6 +30,7 @@ from mygan import MyGAN
 mgan=MyGAN(1,100,100,5)
 trainset=mgan.makebatch(['../Data/gogh1.jpg'])
 mgan.train(trainset,show_freq=10)
+mgan.saveimage(num_res=100,dir='../Data',prefix='sample')
 ```
 ### chart
 - 딥러닝 모델의 정확도(accuracy)와 손실(loss)을 차트로 시각화하는 모듈입니다.
