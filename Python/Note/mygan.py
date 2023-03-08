@@ -1,10 +1,3 @@
-"""
-Author: MirrorSpring
-Date: 2023-03-08
-Desc: 샘플로 준 이미지와 유사한 이미지를 생성하는 모델
-"""
-
-
 from tensorflow import keras
 import numpy as np
 import matplotlib.pyplot as plt
@@ -17,21 +10,19 @@ class MyGAN:
     img_height_size=100
     channel=1
     batch_size=5
-    noise_dim=30
+    noise_dim=100
     generator_optimizer=keras.optimizers.Adam(1e-4)
     discriminator_optimizer=keras.optimizers.Adam(1e-4)
     generator=0
     discriminator=0
 
-    def __init__(self,number_of_data,width,height,batch_size,channel=1,noise_dim=30):
+    def __init__(self,number_of_data,width,height,batch_size):
         if (width%4)+(height%4)!=0:
             raise ValueError('높이와 너비는 4의 배수여야 합니다.')
         self.number_of_data=number_of_data
         self.img_height_size=height
         self.img_width_size=width
-        self.channel=channel
         self.batch_size=batch_size
-        self.noise_dim=noise_dim
         self.generator=self.build_generator_model()
         self.discriminator=self.build_discriminator_model()
     
@@ -55,7 +46,7 @@ class MyGAN:
     def build_generator_model(self):
         model = keras.Sequential() # Keras 모델 생성
     
-        model.add(keras.layers.Dense(1024, input_dim=30, use_bias=False))
+        model.add(keras.layers.Dense(1024, input_dim=100, use_bias=False))
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.LeakyReLU())
         
@@ -63,7 +54,6 @@ class MyGAN:
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.LeakyReLU())
         
-        # Resahpe (7*7)
         model.add(keras.layers.Reshape((int(self.img_height_size/4), int(self.img_width_size/4), 128)))
         
         model.add(keras.layers.Conv2DTranspose(self.img_height_size*4, (5, 5),
@@ -71,13 +61,11 @@ class MyGAN:
         model.add(keras.layers.BatchNormalization()) 
         model.add(keras.layers.LeakyReLU())
         
-        # (7*7) -> (14*14)
         model.add(keras.layers.Conv2DTranspose(self.img_width_size*2, (5, 5), # 28 * 2
                                         strides=(2, 2), padding='same', use_bias=False))
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.LeakyReLU())
         
-        # (14*14) -> (28*28)
         model.add(keras.layers.Conv2DTranspose(1, (5, 5), 
                                         strides=(2, 2), padding='same', activation='tanh'))
         assert model.output_shape == (None, self.img_height_size, self.img_width_size, 1)
@@ -157,9 +145,18 @@ class MyGAN:
         plt.suptitle("Generated Images on EPOCH: %s" % epoch, fontsize = 25)
         plt.show()
     
-    def train(self,dataset,epochs,show_freq):
+    def train(self,dataset,epochs=1000,show_freq=5):
         for epoch in range(epochs):
             for image_batch in dataset:
                 self.train_step(image_batch)
             if epoch%show_freq==0:
                 self.show_generated_images(epoch)
+
+    def saveimage(self,num_res,dir,prefix):
+        test_noise = tf.random.normal([num_res, self.noise_dim])
+        images = self.generator.predict(test_noise)
+
+        i=1
+        for image in images:
+            Image.fromarray(image).save(f'{dir}/{prefix}{i}.jpg')
+            i+=1
