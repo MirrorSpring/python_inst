@@ -2,6 +2,8 @@
 
 ## 라이브러리
 ### mygan
+- 샘플로 준 이미지와 유사한 이미지를 생성하는 모델입니다.
+- 이미지는 디렉토리의 배열입니다. `glob`을 사용해도 무방합니다.
 - `height`와 `width`는 4의 배수여야 합니다.
 - 사용 예시
 ```
@@ -12,6 +14,7 @@ trainset=mgan.makebatch(['../Data/gogh1.jpg'])
 mgan.train(trainset)
 ```
 ### chart
+- 딥러닝 모델의 정확도(accuracy)와 손실(loss)을 차트로 시각화하는 모듈입니다.
 - `model.fit`에 `validation_data`가 있어야 합니다.
 - 사용 예시
 ```
