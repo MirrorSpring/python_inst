@@ -1,3 +1,9 @@
+"""
+Author: MirrorSpring
+Date: 2023-03-08
+Desc: 모델의 정확도와 손실을 차트로 시각화
+"""
+
 import matplotlib.pyplot as plt
 
 def chart(history):

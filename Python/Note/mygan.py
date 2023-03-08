@@ -1,3 +1,10 @@
+"""
+Author: MirrorSpring
+Date: 2023-03-08
+Desc: 샘플로 준 이미지와 유사한 이미지를 생성하는 모델
+"""
+
+
 from tensorflow import keras
 import numpy as np
 import matplotlib.pyplot as plt
