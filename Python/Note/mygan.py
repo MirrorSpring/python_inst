@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 import tensorflow as tf
+import imageio
 
 class MyGAN:
     number_of_data=1
@@ -152,11 +153,11 @@ class MyGAN:
             if epoch%show_freq==0:
                 self.show_generated_images(epoch)
 
-    def saveimage(self,num_res,dir,prefix):
+    def saveimage(self,num_res,dirstr,prefix):
         test_noise = tf.random.normal([num_res, self.noise_dim])
         images = self.generator.predict(test_noise)
 
         i=1
         for image in images:
-            Image.fromarray(image).save(f'{dir}/{prefix}{i}.jpg')
+            imageio.imwrite(f'{dirstr}/{prefix}{i}.jpg', image)
             i+=1
