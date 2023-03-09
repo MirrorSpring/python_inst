@@ -33,7 +33,7 @@ class MyGAN:
         for image in sorted(imgs):
             img=Image.open(image)
             imgConverted=img.convert('L')
-            imgConverted=imgConverted.resize((100,100))
+            imgConverted=imgConverted.resize((self.img_height_size,self.img_width_size))
             img=np.array(imgConverted,dtype=np.int32)
             train[i,:,:]=img
             i+=1
@@ -156,8 +156,8 @@ class MyGAN:
     def saveimage(self,num_res,dirstr,prefix):
         test_noise = tf.random.normal([num_res, self.noise_dim])
         images = self.generator.predict(test_noise)
-
         i=1
         for image in images:
-            imageio.imwrite(f'{dirstr}/{prefix}{i}.jpg', image)
+            img=Image.fromarray(((image)*127.5+127.5).astype('uint8').reshape(100,100),'L')
+            img.save(f'{dirstr}/{prefix}{i}.jpg', 'JPEG')
             i+=1
