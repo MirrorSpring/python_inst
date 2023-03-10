@@ -20,6 +20,7 @@ class MyGAN:
     discriminator_optimizer=keras.optimizers.Adam(1e-4) #판별자 경사 하강 알고리즘
     generator=0 #생성자
     discriminator=0 #판별자
+    total_epochs=0
 
     #생성자
     def __init__(self,number_of_data,width,height,batch_size=3,channel=1):
@@ -169,7 +170,8 @@ class MyGAN:
             for image_batch in data:
                 self.train_step(image_batch)
             if epoch%show_freq==0:
-                self.show_generated_images(epoch)
+                self.show_generated_images(self.total_epochs)
+            self.total_epochs+=1
         self.show_generated_images('Final')
         print('Done!')
 
