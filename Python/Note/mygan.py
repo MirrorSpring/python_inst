@@ -21,18 +21,20 @@ class MyGAN:
     generator=0 #생성자
     discriminator=0 #판별자
     total_epochs=0
+    batch_data=0
 
     #생성자
-    def __init__(self,number_of_data,width,height,batch_size=3,channel=1):
+    def __init__(self,data,width,height,batch_size=3,channel=1):
         if (width%4)+(height%4)!=0:
             raise ValueError('높이와 너비는 4의 배수여야 합니다.')
-        self.number_of_data=number_of_data
+        self.number_of_data=len(data)
         self.img_height_size=height
         self.img_width_size=width
         self.batch_size=batch_size
         self.channel=channel
         self.generator=self.build_generator_model()
         self.discriminator=self.build_discriminator_model()
+        self.batch_data=self.makebatch(data)
     
     #배치 데이터셋 만들기
     def makebatch(self,imgs):
@@ -92,17 +94,17 @@ class MyGAN:
 
         model = keras.Sequential()
     
-        model.add(keras.layers.Conv2D(self.img_height_size*2, (5, 5), strides=2, padding='same',  # 56 = 28 * 2
+        model.add(keras.layers.Conv2D(self.img_height_size*2, (5, 5), strides=2, padding='same',
                        input_shape=[self.img_height_size, self.img_width_size, self.channel])) # input image size
         model.add(keras.layers.LeakyReLU(0.2))
         model.add(keras.layers.Dropout(0.3))
 
-        model.add(keras.layers.Conv2D(self.img_height_size*4, (5, 5), strides=2, padding='same')) # 112 = 56 * 2
+        model.add(keras.layers.Conv2D(self.img_height_size*4, (5, 5), strides=2, padding='same'))
         model.add(keras.layers.LeakyReLU(0.2))
     
         model.add(keras.layers.Flatten())
     
-        model.add(keras.layers.Dense(self.img_height_size*4*2)) # 224 = 112 * 2
+        model.add(keras.layers.Dense(self.img_height_size*4*2))
         model.add(keras.layers.LeakyReLU(0.2))
         model.add(keras.layers.Dropout(0.3))
 
@@ -164,10 +166,9 @@ class MyGAN:
         plt.show()
     
     #훈련 시작
-    def train(self,dataset,epochs=1000,show_freq=5):
-        data=self.makebatch(dataset)
+    def train(self,epochs=1000,show_freq=5):
         for epoch in range(epochs):
-            for image_batch in data:
+            for image_batch in self.batch_data:
                 self.train_step(image_batch)
             if epoch%show_freq==0:
                 self.show_generated_images(self.total_epochs)
