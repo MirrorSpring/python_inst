@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../DataHandler/review_handler.dart';
-import '../Model/Chat/static_user.dart';
+import '../Model/static_user.dart';
 import '../Widget/AppBar/custom_app_bar.dart';
 
 class ReviewListPage extends StatefulWidget {

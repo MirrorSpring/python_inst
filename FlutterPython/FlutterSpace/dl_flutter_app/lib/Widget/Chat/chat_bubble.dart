@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../Model/Chat/chat.dart';
-import '../../Model/Chat/static_user.dart';
+import '../../Model/static_user.dart';
 
 class ChatBubble extends StatelessWidget {
   final Chat chat;
