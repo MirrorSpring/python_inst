@@ -1,268 +1,138 @@
+!SESSION 2023-03-09 18:07:19.281 -----------------------------------------------
+eclipse.buildId=4.25.0.I20220831-1800
+java.version=17.0.4.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=ko_KR
+Framework arguments:  -product org.eclipse.epp.package.jee.product -product org.eclipse.epp.package.jee.product -keyring /Users/ptk/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.jee.product -data /Users/ptk/Documents/FlutterSpring/deeplearning -product org.eclipse.epp.package.jee.product -keyring /Users/ptk/.eclipse_keyring
 
-!ENTRY org.eclipse.core.resources 4 2 2023-03-13 14:29:36.431
-!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.core.resources".
-!STACK 1
-org.eclipse.core.runtime.CoreException: Problems while saving variables and containers
-	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4418)
-	at org.eclipse.jdt.internal.core.JavaModelManager.savingTimed(JavaModelManager.java:4648)
-	at org.eclipse.jdt.internal.core.JavaModelManager.saving(JavaModelManager.java:4634)
-	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:394)
-	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:210)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:213)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1171)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
-	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-Caused by: java.io.FileNotFoundException: /Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat (No such file or directory)
-	at java.base/java.io.FileOutputStream.open0(Native Method)
-	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
-	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4413)
-	... 10 more
-!SUBENTRY 1 org.eclipse.jdt.core 4 4 2023-03-13 14:29:36.432
-!MESSAGE Problems while saving variables and containers
-!STACK 0
-java.io.FileNotFoundException: /Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat (No such file or directory)
-	at java.base/java.io.FileOutputStream.open0(Native Method)
-	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
-	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4413)
-	at org.eclipse.jdt.internal.core.JavaModelManager.savingTimed(JavaModelManager.java:4648)
-	at org.eclipse.jdt.internal.core.JavaModelManager.saving(JavaModelManager.java:4634)
-	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:394)
-	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:210)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:213)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1171)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
-	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-!SUBENTRY 1 org.eclipse.jdt.core 4 4 2023-03-13 14:29:36.432
-!MESSAGE Problems while saving variables and containers
-!STACK 0
-java.io.FileNotFoundException: /Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat (No such file or directory)
-	at java.base/java.io.FileOutputStream.open0(Native Method)
-	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
-	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4413)
-	at org.eclipse.jdt.internal.core.JavaModelManager.savingTimed(JavaModelManager.java:4648)
-	at org.eclipse.jdt.internal.core.JavaModelManager.saving(JavaModelManager.java:4634)
-	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:394)
-	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:210)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:213)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1171)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
-	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!ENTRY org.eclipse.jface 2 0 2023-03-09 18:07:26.627
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2023-03-09 18:07:26.628
+!MESSAGE A conflict occurred for COMMAND+SHIFT+T:
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.jdt.ui.navigate.open.type"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.lsp4e.symbolinworkspace"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2023-03-09 18:07:26.628
+!MESSAGE A conflict occurred for ALT+COMMAND+R:
+Binding(ALT+COMMAND+R,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.rename,Rename,
+		Rename the selected item,
+		Category(org.eclipse.ui.category.file,File,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.ui.edit.rename"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)
+Binding(ALT+COMMAND+R,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.rename.element,Rename - Refactoring ,
+		Rename the selected element,
+		Category(org.eclipse.jdt.ui.category.refactoring,Refactor - Java,Java Refactoring Actions,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.jdt.ui.edit.text.java.rename.element"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)
+!SESSION 2023-03-09 18:08:36.752 -----------------------------------------------
+eclipse.buildId=4.25.0.I20220831-1800
+java.version=17.0.4.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=ko_KR
+Framework arguments:  -product org.eclipse.epp.package.jee.product -product org.eclipse.epp.package.jee.product -product org.eclipse.epp.package.jee.product -keyring /Users/ptk/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.jee.product -product org.eclipse.epp.package.jee.product -data /Users/ptk/Documents/FlutterSpring/deeplearning -product org.eclipse.epp.package.jee.product -keyring /Users/ptk/.eclipse_keyring
 
-!ENTRY org.eclipse.m2e.logback.appender 4 0 2023-03-13 14:29:36.444
-!MESSAGE Can't write workspace state
-!STACK 0
-java.io.FileNotFoundException: /Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/org.eclipse.m2e.core/workspaceState.ser (No such file or directory)
-	at java.base/java.io.FileOutputStream.open0(Native Method)
-	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
-	at org.eclipse.m2e.core.internal.project.registry.ProjectRegistryReader.createObjectOutputStream(ProjectRegistryReader.java:128)
-	at org.eclipse.m2e.core.internal.project.registry.ProjectRegistryReader.writeWorkspaceState(ProjectRegistryReader.java:117)
-	at org.eclipse.m2e.core.internal.project.registry.ProjectRegistryManager.writeWorkspaceState(ProjectRegistryManager.java:987)
-	at org.eclipse.m2e.core.internal.project.registry.ProjectRegistryManager.saving(ProjectRegistryManager.java:1199)
-	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:394)
-	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:210)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:213)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1171)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
-	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!ENTRY org.eclipse.jface 2 0 2023-03-09 18:08:42.447
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2023-03-09 18:08:42.447
+!MESSAGE A conflict occurred for COMMAND+SHIFT+T:
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.jdt.ui.navigate.open.type"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.lsp4e.symbolinworkspace"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2023-03-09 18:08:42.447
+!MESSAGE A conflict occurred for ALT+COMMAND+R:
+Binding(ALT+COMMAND+R,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.rename,Rename,
+		Rename the selected item,
+		Category(org.eclipse.ui.category.file,File,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.ui.edit.rename"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)
+Binding(ALT+COMMAND+R,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.rename.element,Rename - Refactoring ,
+		Rename the selected element,
+		Category(org.eclipse.jdt.ui.category.refactoring,Refactor - Java,Java Refactoring Actions,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.jdt.ui.edit.text.java.rename.element"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)
+!SESSION 2023-03-09 18:12:41.145 -----------------------------------------------
+eclipse.buildId=4.25.0.I20220831-1800
+java.version=17.0.4.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=ko_KR
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/ptk/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.jee.product -keyring /Users/ptk/.eclipse_keyring
 
-!ENTRY org.eclipse.jdt.launching 4 4 2023-03-13 14:29:36.450
-!MESSAGE No such file or directory
-!STACK 0
-java.io.IOException: No such file or directory
-	at java.base/java.io.UnixFileSystem.createFileExclusively(Native Method)
-	at java.base/java.io.File.createNewFile(File.java:1043)
-	at org.eclipse.jdt.internal.launching.LaunchingPlugin.writeInstallInfo(LaunchingPlugin.java:1111)
-	at org.eclipse.jdt.internal.launching.LaunchingPlugin$1.saving(LaunchingPlugin.java:576)
-	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:394)
-	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:210)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:213)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1171)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
-	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-
-!ENTRY org.eclipse.core.resources 4 568 2023-03-13 14:29:36.453
-!MESSAGE Could not write workspace metadata '/Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/org.eclipse.core.resources/1.snap'.
-!STACK 0
-java.io.FileNotFoundException: /Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/org.eclipse.core.resources/1.snap (No such file or directory)
-	at java.base/java.io.FileOutputStream.open0(Native Method)
-	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:155)
-	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:48)
-	at org.eclipse.core.internal.localstore.SafeChunkyOutputStream.<init>(SafeChunkyOutputStream.java:44)
-	at org.eclipse.core.internal.resources.SaveManager.snapTree(SaveManager.java:1486)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1205)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1150)
-	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
-
-!ENTRY org.eclipse.core.resources 4 2 2023-03-13 14:32:07.042
-!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.core.resources".
-!STACK 1
-org.eclipse.core.runtime.CoreException: Problems while saving variables and containers
-	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4418)
-	at org.eclipse.jdt.internal.core.JavaModelManager.savingTimed(JavaModelManager.java:4648)
-	at org.eclipse.jdt.internal.core.JavaModelManager.saving(JavaModelManager.java:4634)
-	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:394)
-	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:210)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:213)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1171)
-	at org.eclipse.core.internal.resources.Workspace.save(Workspace.java:2421)
-	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.lambda$1(IDEWorkbenchAdvisor.java:554)
-	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
-Caused by: java.io.FileNotFoundException: /Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat (No such file or directory)
-	at java.base/java.io.FileOutputStream.open0(Native Method)
-	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
-	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4413)
-	... 10 more
-!SUBENTRY 1 org.eclipse.jdt.core 4 4 2023-03-13 14:32:07.043
-!MESSAGE Problems while saving variables and containers
-!STACK 0
-java.io.FileNotFoundException: /Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat (No such file or directory)
-	at java.base/java.io.FileOutputStream.open0(Native Method)
-	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
-	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4413)
-	at org.eclipse.jdt.internal.core.JavaModelManager.savingTimed(JavaModelManager.java:4648)
-	at org.eclipse.jdt.internal.core.JavaModelManager.saving(JavaModelManager.java:4634)
-	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:394)
-	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:210)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:213)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1171)
-	at org.eclipse.core.internal.resources.Workspace.save(Workspace.java:2421)
-	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.lambda$1(IDEWorkbenchAdvisor.java:554)
-	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
-!SUBENTRY 1 org.eclipse.jdt.core 4 4 2023-03-13 14:32:07.043
-!MESSAGE Problems while saving variables and containers
-!STACK 0
-java.io.FileNotFoundException: /Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat (No such file or directory)
-	at java.base/java.io.FileOutputStream.open0(Native Method)
-	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
-	at org.eclipse.jdt.internal.core.JavaModelManager.saveVariablesAndContainers(JavaModelManager.java:4413)
-	at org.eclipse.jdt.internal.core.JavaModelManager.savingTimed(JavaModelManager.java:4648)
-	at org.eclipse.jdt.internal.core.JavaModelManager.saving(JavaModelManager.java:4634)
-	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:394)
-	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:210)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:213)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1171)
-	at org.eclipse.core.internal.resources.Workspace.save(Workspace.java:2421)
-	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.lambda$1(IDEWorkbenchAdvisor.java:554)
-	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
-
-!ENTRY org.eclipse.m2e.logback.appender 4 0 2023-03-13 14:32:07.044
-!MESSAGE Can't write workspace state
-!STACK 0
-java.io.FileNotFoundException: /Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/org.eclipse.m2e.core/workspaceState.ser (No such file or directory)
-	at java.base/java.io.FileOutputStream.open0(Native Method)
-	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
-	at org.eclipse.m2e.core.internal.project.registry.ProjectRegistryReader.createObjectOutputStream(ProjectRegistryReader.java:128)
-	at org.eclipse.m2e.core.internal.project.registry.ProjectRegistryReader.writeWorkspaceState(ProjectRegistryReader.java:117)
-	at org.eclipse.m2e.core.internal.project.registry.ProjectRegistryManager.writeWorkspaceState(ProjectRegistryManager.java:987)
-	at org.eclipse.m2e.core.internal.project.registry.ProjectRegistryManager.saving(ProjectRegistryManager.java:1199)
-	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:394)
-	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:210)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:213)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1171)
-	at org.eclipse.core.internal.resources.Workspace.save(Workspace.java:2421)
-	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.lambda$1(IDEWorkbenchAdvisor.java:554)
-	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
-
-!ENTRY org.eclipse.jdt.launching 4 4 2023-03-13 14:32:07.045
-!MESSAGE No such file or directory
-!STACK 0
-java.io.IOException: No such file or directory
-	at java.base/java.io.UnixFileSystem.createFileExclusively(Native Method)
-	at java.base/java.io.File.createNewFile(File.java:1043)
-	at org.eclipse.jdt.internal.launching.LaunchingPlugin.writeInstallInfo(LaunchingPlugin.java:1111)
-	at org.eclipse.jdt.internal.launching.LaunchingPlugin$1.saving(LaunchingPlugin.java:576)
-	at org.eclipse.core.internal.resources.SaveManager.executeLifecycle(SaveManager.java:394)
-	at org.eclipse.core.internal.resources.SaveManager$1.run(SaveManager.java:210)
-	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
-	at org.eclipse.core.internal.resources.SaveManager.broadcastLifecycle(SaveManager.java:213)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1171)
-	at org.eclipse.core.internal.resources.Workspace.save(Workspace.java:2421)
-	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.lambda$1(IDEWorkbenchAdvisor.java:554)
-	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
-
-!ENTRY org.eclipse.ui.ide 4 4 2023-03-13 14:32:08.678
-!MESSAGE Problems saving workspace
-
-!ENTRY org.eclipse.ui.ide 4 1 2023-03-13 14:32:08.679
-!MESSAGE Problems occurred while trying to save the state of the workbench.
-!SUBENTRY 1 org.eclipse.core.resources 4 568 2023-03-13 14:32:08.679
-!MESSAGE Could not write workspace metadata '/Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/org.eclipse.core.resources/.root/1.tree'.
-!STACK 0
-java.io.FileNotFoundException: /Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/org.eclipse.core.resources/.root/1.tree (No such file or directory)
-	at java.base/java.io.FileOutputStream.open0(Native Method)
-	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
-	at org.eclipse.core.internal.localstore.SafeFileOutputStream.<init>(SafeFileOutputStream.java:55)
-	at org.eclipse.core.internal.resources.SaveManager.saveTree(SaveManager.java:1393)
-	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1175)
-	at org.eclipse.core.internal.resources.Workspace.save(Workspace.java:2421)
-	at org.eclipse.ui.internal.ide.application.IDEWorkbenchAdvisor.lambda$1(IDEWorkbenchAdvisor.java:554)
-	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
-
-!ENTRY com.genuitec.eclipse.monitor 4 0 2023-03-13 14:32:08.842
-!MESSAGE /Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/com.genuitec.eclipse.monitor/myeclipse-usage.properties (No such file or directory)
-!STACK 0
-java.io.FileNotFoundException: /Users/yejin/Documents/Project/국비/team/DL-Flutter-Python/PROJECT/python_inst/deeplearning/.metadata/.plugins/com.genuitec.eclipse.monitor/myeclipse-usage.properties (No such file or directory)
-	at java.base/java.io.FileOutputStream.open0(Native Method)
-	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:293)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:235)
-	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:184)
-	at com.genuitec.eclipse.monitor.internal.collector.server.ServerMetricsCollector.saveToFile(ServerMetricsCollector.java:395)
-	at com.genuitec.eclipse.monitor.internal.collector.server.ServerMetricsCollector.stopMonitoring(ServerMetricsCollector.java:223)
-	at com.genuitec.eclipse.monitor.internal.MetricsManager.stopMonitoring(MetricsManager.java:259)
-	at com.genuitec.eclipse.monitor.internal.MetricsManager.dispose(MetricsManager.java:182)
-	at com.genuitec.eclipse.monitor.internal.MonitorPlugin.stop(MonitorPlugin.java:43)
-	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:875)
-	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569)
-	at org.eclipse.osgi.internal.framework.BundleContextImpl.stop(BundleContextImpl.java:867)
-	at org.eclipse.osgi.internal.framework.EquinoxBundle.stopWorker0(EquinoxBundle.java:1046)
-	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.stopWorker(EquinoxBundle.java:376)
-	at org.eclipse.osgi.container.Module.doStop(Module.java:660)
-	at org.eclipse.osgi.container.Module.stop(Module.java:521)
-	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.decStartLevel(ModuleContainer.java:1893)
-	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1768)
-	at org.eclipse.osgi.container.SystemModule.stopWorker(SystemModule.java:275)
-	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule.stopWorker(EquinoxBundle.java:208)
-	at org.eclipse.osgi.container.Module.doStop(Module.java:660)
-	at org.eclipse.osgi.container.Module.stop(Module.java:521)
-	at org.eclipse.osgi.container.SystemModule.stop(SystemModule.java:207)
-	at org.eclipse.osgi.internal.framework.EquinoxBundle$SystemBundle$EquinoxSystemModule$1.run(EquinoxBundle.java:226)
-	at java.base/java.lang.Thread.run(Thread.java:833)
-
-!ENTRY org.eclipse.core.resources 2 10035 2023-03-13 14:32:09.506
-!MESSAGE The workspace will exit with unsaved changes in this session.
+!ENTRY org.eclipse.jface 2 0 2023-03-09 18:13:12.590
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2023-03-09 18:13:12.590
+!MESSAGE A conflict occurred for COMMAND+SHIFT+T:
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.jdt.ui.navigate.open.type"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(COMMAND+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.lsp4e.symbolinworkspace"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2023-03-09 18:13:12.590
+!MESSAGE A conflict occurred for ALT+COMMAND+R:
+Binding(ALT+COMMAND+R,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.rename,Rename,
+		Rename the selected item,
+		Category(org.eclipse.ui.category.file,File,null,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.ui.edit.rename"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)
+Binding(ALT+COMMAND+R,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.rename.element,Rename - Refactoring ,
+		Rename the selected element,
+		Category(org.eclipse.jdt.ui.category.refactoring,Refactor - Java,Java Refactoring Actions,true),
+		WorkbenchHandlerServiceHandler("org.eclipse.jdt.ui.edit.text.java.rename.element"),
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,cocoa,system)

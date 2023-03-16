@@ -1,0 +1,149 @@
+package com.javalec.base.model;
+
+import java.sql.Date;
+import java.sql.Time;
+
+public class Join_PostUploadModel {
+	int poId;	
+	int poHeart;	
+	String poTitle;	
+	String poContent;	
+	String poPrice;	
+	String poImage01;	
+	String poImage02;	
+	String poImage03;	
+	int poViews;	
+	int poState;	
+	String U_userId;	
+	Date poUpDate;	
+	Time timeonly;
+	
+	public Join_PostUploadModel(int poId, int poHeart, String poTitle, String poContent, String poPrice,
+			String poImage01, String poImage02, String poImage03, int poViews, int poState, String u_userId,
+			Date poUpDate, Time timeonly) {
+		super();
+		this.poId = poId;
+		this.poHeart = poHeart;
+		this.poTitle = poTitle;
+		this.poContent = poContent;
+		this.poPrice = poPrice;
+		this.poImage01 = poImage01;
+		this.poImage02 = poImage02;
+		this.poImage03 = poImage03;
+		this.poViews = poViews;
+		this.poState = poState;
+		U_userId = u_userId;
+		this.poUpDate = poUpDate;
+		this.timeonly = timeonly;
+	}
+
+	public int getPoId() {
+		return poId;
+	}
+
+	public void setPoId(int poId) {
+		this.poId = poId;
+	}
+
+	public int getPoHeart() {
+		return poHeart;
+	}
+
+	public void setPoHeart(int poHeart) {
+		this.poHeart = poHeart;
+	}
+
+	public String getPoTitle() {
+		return poTitle;
+	}
+
+	public void setPoTitle(String poTitle) {
+		this.poTitle = poTitle;
+	}
+
+	public String getPoContent() {
+		return poContent;
+	}
+
+	public void setPoContent(String poContent) {
+		this.poContent = poContent;
+	}
+
+	public String getPoPrice() {
+		return poPrice;
+	}
+
+	public void setPoPrice(String poPrice) {
+		this.poPrice = poPrice;
+	}
+
+	public String getPoImage01() {
+		return poImage01;
+	}
+
+	public void setPoImage01(String poImage01) {
+		this.poImage01 = poImage01;
+	}
+
+	public String getPoImage02() {
+		return poImage02;
+	}
+
+	public void setPoImage02(String poImage02) {
+		this.poImage02 = poImage02;
+	}
+
+	public String getPoImage03() {
+		return poImage03;
+	}
+
+	public void setPoImage03(String poImage03) {
+		this.poImage03 = poImage03;
+	}
+
+	public int getPoViews() {
+		return poViews;
+	}
+
+	public void setPoViews(int poViews) {
+		this.poViews = poViews;
+	}
+
+	public int getPoState() {
+		return poState;
+	}
+
+	public void setPoState(int poState) {
+		this.poState = poState;
+	}
+
+	public String getU_userId() {
+		return U_userId;
+	}
+
+	public void setU_userId(String u_userId) {
+		U_userId = u_userId;
+	}
+
+	public Date getPoUpDate() {
+		return poUpDate;
+	}
+
+	public void setPoUpDate(Date poUpDate) {
+		this.poUpDate = poUpDate;
+	}
+
+	public Time getTimeonly() {
+		return timeonly;
+	}
+
+	public void setTimeonly(Time timeonly) {
+		this.timeonly = timeonly;
+	}	
+	
+	
+	
+
+	
+
+}
