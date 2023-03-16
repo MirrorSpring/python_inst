@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Model/Chat/static_chat.dart';
-import '../Model/Chat/static_user.dart';
+import '../Model/static_user.dart';
 import '../Model/User/user.dart';
 import 'chatroom_page.dart';
 

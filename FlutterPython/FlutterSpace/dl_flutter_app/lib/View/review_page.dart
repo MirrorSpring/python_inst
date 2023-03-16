@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../Model/Chat/static_chat.dart';
-import '../Model/Chat/static_user.dart';
+import '../Model/static_user.dart';
 import '../Widget/AppBar/custom_app_bar.dart';
 
 class ReviewPage extends StatefulWidget {

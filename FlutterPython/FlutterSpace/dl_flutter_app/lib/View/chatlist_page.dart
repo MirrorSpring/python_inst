@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../Model/Chat/chatroom.dart';
 import '../Model/Chat/static_chat.dart';
-import '../Model/Chat/static_user.dart';
+import '../Model/static_user.dart';
 import '../Widget/AppBar/custom_app_bar.dart';
 import 'chatroom_page.dart';
 
@@ -16,6 +16,14 @@ class ChatListPage extends StatefulWidget {
 }
 
 class _ChatListPageState extends State<ChatListPage> {
+  late bool chatRoomState;
+
+  @override
+  void initState() {
+    super.initState();
+    chatRoomState = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,11 +50,20 @@ class _ChatListPageState extends State<ChatListPage> {
   Widget _buildItemWidget(DocumentSnapshot doc) {
     final chatRoom = ChatRoom(
       chatRoomId: doc.id,
-      chatRoomState: doc['chatRoomState'],
+      sendChatRoomState: doc['sendChatRoomState'],
+      receiveChatRoomState: doc['receiveChatRoomState'],
       lastChat: doc['lastChat'],
       userIds: doc['userIds'],
       userNames: doc['userNames'],
+      receiveUserId: doc['receiveUserId'],
+      sendUserId: doc['sendUserId'],
     );
+
+    if (StaticUser.userId == chatRoom.sendUserId) {
+      chatRoomState = chatRoom.sendChatRoomState;
+    } else {
+      chatRoomState = chatRoom.receiveChatRoomState;
+    }
 
     return Dismissible(
       direction: DismissDirection.endToStart,
@@ -66,7 +83,14 @@ class _ChatListPageState extends State<ChatListPage> {
           StaticChat.chatUserIds = chatRoom.userIds;
           StaticChat.chatUserNames = chatRoom.userNames;
 
-          updateChatRoomStateAction(chatRoom.chatRoomId);
+          if (chatRoom.sendUserId != StaticUser.userId) {
+            updateChatRoomStateAction(
+                chatRoom.chatRoomId, "receiveChatRoomState");
+          }
+
+          // 채팅 읽었다고 update
+
+          // StaticChat.chatState = false;
 
           Navigator.push(
             context,
@@ -81,7 +105,7 @@ class _ChatListPageState extends State<ChatListPage> {
               '${chatRoom.userNames[0] == StaticUser.userName ? chatRoom.userNames[1] : chatRoom.userNames[0]}',
             ),
             subtitle: Text(chatRoom.lastChat),
-            trailing: chatRoom.chatRoomState
+            trailing: chatRoomState
                 ? const Icon(Icons.wechat)
                 : const Icon(Icons.wechat, color: Colors.red),
           ),
@@ -91,10 +115,10 @@ class _ChatListPageState extends State<ChatListPage> {
   }
 
   // 채팅방 읽었다고 업데이트
-  updateChatRoomStateAction(String chatRoomId) {
+  updateChatRoomStateAction(String chatRoomId, String user) {
     FirebaseFirestore.instance
         .collection('chatroom')
         .doc(chatRoomId)
-        .update({'chatRoomState': true});
+        .update({user: true});
   }
 }

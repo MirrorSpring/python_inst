@@ -1,15 +1,21 @@
 class ChatRoom {
   final String chatRoomId;
-  final bool chatRoomState;
+  final bool sendChatRoomState;
+  final bool receiveChatRoomState;
   final String lastChat;
   final List userIds;
   final List userNames;
+  final String receiveUserId;
+  final String sendUserId;
 
   ChatRoom({
     required this.chatRoomId,
-    required this.chatRoomState,
+    required this.sendChatRoomState,
+    required this.receiveChatRoomState,
     required this.lastChat,
     required this.userIds,
     required this.userNames,
+    required this.receiveUserId,
+    required this.sendUserId,
   });
 }

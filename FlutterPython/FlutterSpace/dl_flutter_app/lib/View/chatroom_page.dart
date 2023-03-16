@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 
 import '../Model/Chat/chat.dart';
 import '../Model/Chat/static_chat.dart';
-import '../Model/Chat/static_user.dart';
+import '../Model/static_user.dart';
 import '../Widget/AppBar/custom_app_bar.dart';
 import '../Widget/Chat/chat_bubble.dart';
 import '../Widget/Chat/chat_floating_bar.dart';
 import '../Widget/Chat/chat_input_tf.dart';
 
 class ChatRoomPage extends StatefulWidget {
-  // final String chatUserId;
   const ChatRoomPage({super.key});
 
   @override
@@ -27,7 +26,6 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     super.initState();
     chatRoomId = StaticChat.chatRoomId;
     tfChatController = TextEditingController();
-    // tfChatController.text = "";
   }
 
   @override
@@ -169,15 +167,15 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       'sendUserId': StaticUser.userId,
       'chatTime': DateTime.now(),
       'chatText': tfChatController.text,
-      "chatState": false,
+      // "chatState": false,
     });
   }
 
   Future selectDocId() async {
     final Query query = FirebaseFirestore.instance
         .collection('chatroom')
-        .where("user1", isEqualTo: StaticUser.userId)
-        .where("user2",
+        .where("sendUserId", isEqualTo: StaticUser.userId)
+        .where("receiveUserId",
             isEqualTo: StaticUser.userId == StaticChat.chatUserIds[0]
                 ? StaticChat.chatUserIds[1]
                 : StaticChat.chatUserIds[0]);
@@ -193,14 +191,15 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     Future(() {
       print('1. 채팅방을 만들고');
       FirebaseFirestore.instance.collection("chatroom").add({
-        "lastChat": tfChatController.text,
-        "user1": StaticUser.userId,
-        "user2": StaticUser.userId == StaticChat.chatUserIds[0]
+        "sendChatRoomState": true,
+        "receiveChatRoomState": false,
+        "sendUserId": StaticUser.userId,
+        "receiveUserId": StaticUser.userId == StaticChat.chatUserIds[0]
             ? StaticChat.chatUserIds[1]
             : StaticChat.chatUserIds[0],
+        "lastChat": tfChatController.text,
         "userIds": StaticChat.chatUserIds,
         "userNames": StaticChat.chatUserNames,
-        "chatRoomState": false,
       });
     })
         .then((value) => selectDocId())
