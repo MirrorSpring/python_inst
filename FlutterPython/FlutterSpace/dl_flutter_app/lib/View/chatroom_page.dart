@@ -206,7 +206,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
         .then((value) => chatRefresh());
   }
 
-  // 채팅방 목록에 가장 최근 채팅 띄우기
+  // 채팅방 목록에 가장 최근 채팅 띄우고 chatRoomState update
   updateChatAction() {
     print('update chatroom');
     Future(

@@ -83,12 +83,10 @@ class _ChatListPageState extends State<ChatListPage> {
           StaticChat.chatUserIds = chatRoom.userIds;
           StaticChat.chatUserNames = chatRoom.userNames;
 
-          // if (chatRoom.sendUserId != StaticUser.userId) {
+          // 채팅 읽었다고 update
           updateChatRoomStateAction(
               chatRoom.chatRoomId, chatRoom.sendUserId, chatRoom.receiveUserId);
-          // }
 
-          // 채팅 읽었다고 update
           Navigator.push(
             context,
             MaterialPageRoute(

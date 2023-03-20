@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../DataHandler/review_handler.dart';
+import '../Model/Chat/static_chat.dart';
 import '../Model/static_user.dart';
 import '../Widget/AppBar/custom_app_bar.dart';
 
@@ -16,6 +17,7 @@ class ReviewListPage extends StatefulWidget {
 class _ReviewListPageState extends State<ReviewListPage> {
   late List data;
   late ReviewHandler handler;
+  late String toUserId;
   final Color mainColor = const Color.fromARGB(255, 174, 195, 250);
 
   @override
@@ -23,6 +25,10 @@ class _ReviewListPageState extends State<ReviewListPage> {
     super.initState();
     data = [];
     handler = ReviewHandler();
+    toUserId = StaticChat.chatUserIds[0] == StaticUser.userId
+        ? StaticChat.chatUserIds[1]
+        : StaticChat.chatUserIds[0];
+    handler.selectRowCount(toUserId);
   }
 
   @override
