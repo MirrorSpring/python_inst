@@ -8,7 +8,7 @@ class ChatInputTf extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width - 70,
+      width: MediaQuery.of(context).size.width - 105,
       height: 40,
       decoration: const BoxDecoration(
         color: Color.fromARGB(255, 204, 204, 204),
