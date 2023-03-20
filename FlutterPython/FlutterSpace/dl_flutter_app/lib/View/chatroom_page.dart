@@ -167,7 +167,6 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       'sendUserId': StaticUser.userId,
       'chatTime': DateTime.now(),
       'chatText': tfChatController.text,
-      // "chatState": false,
     });
   }
 
@@ -207,14 +206,22 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
         .then((value) => chatRefresh());
   }
 
-  // 채팅방 목록에 가장 최근 채팅 띄우기
+  // 채팅방 목록에 가장 최근 채팅 띄우고 chatRoomState update
   updateChatAction() {
     print('update chatroom');
     Future(
       () => FirebaseFirestore.instance
           .collection('chatroom')
           .doc(chatRoomId)
-          .update({'lastChat': tfChatController.text}),
+          .update({
+        'lastChat': tfChatController.text,
+        "sendUserId": StaticUser.userId,
+        "receiveUserId": StaticUser.userId == StaticChat.chatUserIds[0]
+            ? StaticChat.chatUserIds[1]
+            : StaticChat.chatUserIds[0],
+        "sendChatRoomState": true,
+        "receiveChatRoomState": false,
+      }),
     ).then((value) => chatRefresh());
   }
 

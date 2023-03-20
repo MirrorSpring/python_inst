@@ -73,7 +73,6 @@ class _UserListState extends State<UserList> {
       },
       child: GestureDetector(
         onTap: () {
-          // StaticChat.chatRoomId = chatRoom.chatRoomId;
           StaticChat.chatUserIds = [StaticUser.userId, users.userId];
           StaticChat.chatUserNames = [StaticUser.userName, users.userName];
 
@@ -89,16 +88,17 @@ class _UserListState extends State<UserList> {
   }
 
   checkRoomExist(String userId, String userName) async {
-    final Query query1 = FirebaseFirestore.instance
-        .collection('chatroom')
-        .where("user1", isEqualTo: StaticUser.userId)
-        .where("user2", isEqualTo: userId);
-    // .where("userIds", arrayContains: "crR8HWc8lTbfoNUyocdU");
+    FirebaseFirestore fs = FirebaseFirestore.instance;
 
-    final Query query2 = FirebaseFirestore.instance
+    final Query query1 = fs
+        .collection('chatroom')
+        .where("sendUserId", isEqualTo: StaticUser.userId)
+        .where("receiveUserId", isEqualTo: userId);
+
+    final Query query2 = fs
         .collection("chatroom")
-        .where("user1", isEqualTo: userId)
-        .where("user2", isEqualTo: StaticUser.userId);
+        .where("sendUserId", isEqualTo: userId)
+        .where("receiveUserId", isEqualTo: StaticUser.userId);
 
     final QuerySnapshot querySnapshot1 = await query1.get();
     final QuerySnapshot querySnapshot2 = await query2.get();
@@ -107,7 +107,6 @@ class _UserListState extends State<UserList> {
     final bool chatRoomExist = (count1 + count2) == 0 ? false : true;
 
     print(count1 + count2);
-    // print(querySnapshot2.docs);
 
     // 이미 존재하는 채팅방이라면 Static에 채팅방 문서 id 넘겨주기
     if (chatRoomExist) {

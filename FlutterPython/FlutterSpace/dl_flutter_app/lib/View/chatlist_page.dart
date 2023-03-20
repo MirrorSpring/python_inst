@@ -75,7 +75,7 @@ class _ChatListPageState extends State<ChatListPage> {
       key: ValueKey(doc),
       onDismissed: (direction) {
         //삭제
-        FirebaseFirestore.instance.collection('chatroom');
+        FirebaseFirestore.instance.collection('chatroom').doc(doc.id).delete();
       },
       child: GestureDetector(
         onTap: () {
@@ -83,14 +83,9 @@ class _ChatListPageState extends State<ChatListPage> {
           StaticChat.chatUserIds = chatRoom.userIds;
           StaticChat.chatUserNames = chatRoom.userNames;
 
-          if (chatRoom.sendUserId != StaticUser.userId) {
-            updateChatRoomStateAction(
-                chatRoom.chatRoomId, "receiveChatRoomState");
-          }
-
           // 채팅 읽었다고 update
-
-          // StaticChat.chatState = false;
+          updateChatRoomStateAction(
+              chatRoom.chatRoomId, chatRoom.sendUserId, chatRoom.receiveUserId);
 
           Navigator.push(
             context,
@@ -115,10 +110,11 @@ class _ChatListPageState extends State<ChatListPage> {
   }
 
   // 채팅방 읽었다고 업데이트
-  updateChatRoomStateAction(String chatRoomId, String user) {
+  updateChatRoomStateAction(
+      String chatRoomId, String sendUserId, String receiveUserId) {
     FirebaseFirestore.instance
         .collection('chatroom')
         .doc(chatRoomId)
-        .update({user: true});
+        .update({"receiveChatRoomState": true});
   }
 }
