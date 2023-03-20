@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,9 @@ import '../Widget/Chat/chat_bubble.dart';
 import '../Widget/Chat/chat_floating_bar.dart';
 import '../Widget/Chat/chat_input_tf.dart';
 
+import 'package:image_picker/image_picker.dart';
+// import 'dart:io';
+
 class ChatRoomPage extends StatefulWidget {
   const ChatRoomPage({super.key});
 
@@ -20,12 +25,20 @@ class ChatRoomPage extends StatefulWidget {
 class _ChatRoomPageState extends State<ChatRoomPage> {
   late String chatRoomId;
   late TextEditingController tfChatController;
+  late ImagePicker picker;
+  var image;
+  var userImage;
+  late bool imageState;
 
   @override
   void initState() {
     super.initState();
     chatRoomId = StaticChat.chatRoomId;
     tfChatController = TextEditingController();
+    picker = ImagePicker();
+    imageState = false;
+
+    print("initState");
   }
 
   @override
@@ -55,6 +68,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
               return const Center(child: CupertinoActivityIndicator());
             } else {
               print('data가 존재');
+              if (image != null) {}
             }
             final documents = snapshot.data!.docs;
             return Stack(
@@ -68,14 +82,41 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                             documents.map((e) => _buildItemWidget(e)).toList(),
                       ),
                     ),
+                    if (imageState)
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                        child: Image.file(File(image.path)),
+                      )
+                    else
+                      Container(),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const SizedBox(width: 5),
+                          IconButton(
+                            color: (Colors.grey),
+                            onPressed: () async {
+                              // gallery
+                              image = await picker.pickImage(
+                                  source: ImageSource.gallery);
+
+                              // if (image != null) {
+                              //   // setState(() {
+                              //   userImage = File(image.path);
+                              //   // });
+                              imageState = true;
+                              // }
+
+                              setState(() {});
+
+                              print(image);
+                            },
+                            icon: const Icon(Icons.photo),
+                          ),
                           ChatInputTf(tfChatController: tfChatController),
-                          // ------------------------------------------------- 채팅 전송 버튼 **
+                          // -------------------------------------- 채팅 전송 버튼 **
                           IconButton(
                             color: const Color(0xff9AB6FF),
                             onPressed: () async {
