@@ -11,9 +11,12 @@ public class PostModel {
 	String poImage03;
 	int poViews;
 	int poState;
+	String poUser;
+	
+	
 	
 	public PostModel(int poId, int poHeart, String poTitle, String poContent, String poPrice, String poImage01,
-			String poImage02, String poImage03, int poViews, int poState) {
+			String poImage02, String poImage03, int poViews, int poState, String poUser) {
 		super();
 		this.poId = poId;
 		this.poHeart = poHeart;
@@ -25,6 +28,7 @@ public class PostModel {
 		this.poImage03 = poImage03;
 		this.poViews = poViews;
 		this.poState = poState;
+		this.poUser = poUser;
 	}
 	public int getPoId() {
 		return poId;
@@ -86,9 +90,14 @@ public class PostModel {
 	public void setPoState(int poState) {
 		this.poState = poState;
 	}
+	public String getPoUser() {
+		return poUser;
+	}
+	public void setPoUser(String poUser) {
+		this.poUser = poUser;
+	}
 	
 	
-
 	
 
 }

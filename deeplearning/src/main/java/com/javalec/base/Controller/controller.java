@@ -21,20 +21,6 @@ public class controller {
 	public controller(modelMapper mapper) {
 		this.mapper = mapper;
 	}
-	@GetMapping("/post/all")
-	public List<PostModel> getpostModelInformation() {
-		return mapper.getpostModelInformation();
-	}
-	
-	@GetMapping("/post/alljoin_upload")
-	public List<Join_PostUploadModel> getboardModel() {
-		return mapper.getboardModel();
-	}
-	
-	@GetMapping("/user/all")
-	public UserModel getuserModelInformation() {
-		return mapper.getuserModelInformation();
-	}
 	
 	@GetMapping("/review/write/{to_userId}/{from_userId1}")
 	public void insertReview(@PathVariable("to_userId")String to_userId, @PathVariable("from_userId1")String from_userId1, @RequestParam("reText")String reText, @RequestParam("reStarRating")int reStarRating) {
