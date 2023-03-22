@@ -76,5 +76,26 @@ public interface modelMapper {
 
 	@Select("SELECT poId,poHeart,poTitle,poContent,poPrice,poImage01,poImage02,poImage03,poViews,poState,poUser,U_userId,userAddress,userReliability, poUpDate, DATE_FORMAT(poUpDate, '%H:%i:%s') AS timeonly FROM post as p , upload as u, user as us where p.poId = u.P_poId and u.U_userId = us.userId and poDelDate is null and poTitle REGEXP #{Search} order by poUpDate desc")
 	List<Join_PostUploadModel> searchBoard(@Param("Search") String Search);
-	
+
+	// --- My Page ---
+
+	// 찜 목록
+	@Select("select poHeart, poTitle, poPrice, poImage01 from deeplearning.post p, deeplearning.user u, deeplearning.wish w\n"
+			+ "where w.P_poId = p.poId and w.U_userId = u.userId\n"
+			+ "and w.U_userId = #{user} and w.WishDelDate is null;")
+	List<Join_PostUploadUserWishModel> wishlistSelect(String user);
+
+	// 판매 내역
+	@Select("select poHeart, poTitle, poPrice, poImage01 from deeplearning.post p, deeplearning.upload up, deeplearning.user u, deeplearning.buy b\n"
+			+ "where b.P_poId = p.poId and b.U_userId = u.userId and b.U_userId = up.U_userId and b.P_poId = up.P_poId\n"
+			+ "and b.U_userId = #{user} and b.buydate is not null;")
+	List<Join_PostUploadUserWishModel> buylistSelect(String user);
+
+	// 찜 목록 지우기
+	@Delete("delete from wish where U_userId = #{userId} and P_poId = #{poId};")
+	void deleteWish(@Param("userId") String userId, @Param("poId") int poId);
+
+	// 회원 탈퇴
+	@Update("UPDATE user set userDelDate = now() WHERE userId = #{userId};")
+	void deleteUser(@Param("userId") String userId);
 }
