@@ -8,16 +8,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import org.springframework.boot.autoconfigure.web.ServerProperties.Tomcat.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,10 +46,9 @@ public class Imagecontroller {
 
     private void saveImage(String fileName, MultipartFile file) throws IOException {
         Path uploadDir = Paths.get("./src/main/resources/static/images/");
-        if (Files.exists(uploadDir)) {
-            FileSystemUtils.deleteRecursively(uploadDir);
-        }
-        Files.createDirectories(uploadDir);
+        if (!Files.exists(uploadDir)) { // 디렉토리가 존재하지 않는 경우 생성
+            Files.createDirectories(uploadDir);
+        };
 
         try (InputStream inputStream = file.getInputStream()) {
             Path filePath = uploadDir.resolve(fileName);
