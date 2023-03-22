@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
-// // import '../Model/board/boardlisttest.dart';
-// // import 'board/Declaration.dart';
-// // import 'board/Insertboard.dart';
-// import 'board/homeboard.dart';
+import 'board/Declaration.dart';
+import 'board/homeboard.dart';
+import 'package:http/http.dart' as http;
+import '../Model/board/boardlisttest.dart';
 
 class BoardListPage extends StatefulWidget {
   const BoardListPage({super.key});
@@ -15,12 +12,12 @@ class BoardListPage extends StatefulWidget {
 }
 
 class _BoardListPageState extends State<BoardListPage> {
-//   late TextEditingController selectController = TextEditingController();
-//   late TextEditingController val1 = TextEditingController();
-//   late String searchTexts = "";
-//   late List data = [];
-//   late int poId = 0;
-//   Boarder boardstartI = Boarder();
+  late TextEditingController selectController = TextEditingController();
+  late TextEditingController val1 = TextEditingController();
+  late String searchTexts = "";
+  late List data = [];
+  late int poId = 0;
+  Boarder boardstartI = Boarder();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,57 +25,44 @@ class _BoardListPageState extends State<BoardListPage> {
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
         toolbarHeight: 40,
-//         actions: [
-//           Row(children: [
-//             Padding(
-//               padding: const EdgeInsets.all(8.0),
-//               child: Container(
-//                 width: 280,
-//                 color: Colors.white,
-//                 child: Expanded(
-//                   child: TextField(
-//                     controller: selectController,
-//                     decoration: const InputDecoration(hintText: "검색"),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//             IconButton(
-//               onPressed: () {
-//                 // Homeboard model = Homeboard(
-//                 //   searchText: searchTexts,
-//                 // );
-//                 // model.boardList();
-//                 print("===== 검색 ====");
-//                 print(selectController.text);
-//                 // setState(() {
-//                 searchTexts = selectController.text;
-//                 setState(() {
-//                   // boardstartI.boardList(searchTexts);
-//                 });
-//                 // boardList(searchTexts);
-//                 // });
-//               },
-//               icon: const Icon(Icons.search),
-//               color: Colors.black,
-//             ),
-//             IconButton(
-//               onPressed: () {
-//                 // 공지사항으로 이동
-//                 Navigator.push(
-//                     context,
-//                     MaterialPageRoute(
-//                       builder: ((context) => const Declaration()),
-//                     ));
-//               },
-//               icon: const Icon(Icons.notifications),
-//               color: Colors.black,
-//             ),
-//           ]),
-//         ],
-//       ),
-//       body: Homeboard(
-//         searchText: searchTexts,
+        actions: [
+          Row(children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 280,
+                color: Colors.white,
+                child: TextField(
+                  controller: selectController,
+                  decoration: const InputDecoration(hintText: "검색"),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                searchTexts = selectController.text;
+                setState(() {});
+              },
+              icon: const Icon(Icons.search),
+              color: Colors.black,
+            ),
+            IconButton(
+              onPressed: () {
+                // 공지사항으로 이동
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) => const Declaration()),
+                    ));
+              },
+              icon: const Icon(Icons.notifications),
+              color: Colors.black,
+            ),
+          ]),
+        ],
+      ),
+      body: Homeboard(
+        searchText: searchTexts,
       ),
     );
   } //

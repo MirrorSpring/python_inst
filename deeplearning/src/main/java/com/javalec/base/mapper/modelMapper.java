@@ -58,8 +58,8 @@ public interface modelMapper {
 	@Update("UPDATE post set poViews = poViews+1 WHERE poId = #{poId}")
 	int updatePostViews(@Param("poId") String Id);
 	// 게시글 수정
-	@Update("UPDATE post set poTitle = #{poTitle},poContent = #{poContent},poPrice = #{poPrice} WHERE poId = #{poId}")
-	int modifyPost(@Param("poTitle") String poTitle,@Param("poContent") String poContent,@Param("poPrice") String poPrice,@Param("poId") int poId);
+	@Update("UPDATE post set poTitle = #{poTitle},poContent = #{poContent},poPrice = #{poPrice}, poImage01 = #{poImage01} WHERE poId = #{poId}")
+	int modifyPost(@Param("poTitle") String poTitle,@Param("poContent") String poContent,@Param("poPrice") String poPrice,@Param("poImage01") String poImage01,@Param("poId") int poId);
 	
 	// 게시글 작성
 	@Insert("INSERT INTO post(poHeart,poTitle,poContent,poPrice,poImage01,poViews,poState,poUser) VALUES(#{poHeart},#{poTitle},#{poContent},#{poPrice},#{poImage01},#{poViews},#{poState},#{poUser})")

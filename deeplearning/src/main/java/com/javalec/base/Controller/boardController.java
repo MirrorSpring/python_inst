@@ -47,8 +47,9 @@ public class boardController {
 	}
 	// 게시글수정
 	@GetMapping("/post/modify")
-		public int modifyPost(@RequestParam("poTitle") String poTitle,@RequestParam("poContent") String poContent,@RequestParam("poPrice") String poPrice,@RequestParam("poId") int poId) {
-			return mapper.modifyPost(poTitle, poContent, poPrice,poId);
+		public int modifyPost(@RequestParam("poTitle") String poTitle,@RequestParam("poContent") String poContent,@RequestParam("poPrice") String poPrice,@RequestParam("poImage01") String poImage01,@RequestParam("poId") int poId) {
+		System.out.println(poImage01);	
+		return mapper.modifyPost(poTitle, poContent, poPrice,poImage01,poId);
 	}
 	
 	// 게시글 작성
@@ -75,7 +76,6 @@ public class boardController {
 	// 게시물 제목 검색 
 	@GetMapping("/post/searchBoard")
 	public List<Join_PostUploadModel> searchBoard(@RequestParam("Search") String Search) {
-		System.out.println(Search);
 		return mapper.searchBoard(Search);
 	}
 
