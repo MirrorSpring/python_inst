@@ -196,7 +196,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
 
   // image
   Future<void> imageToServe() async {
-    final XFile? selectImage = await _picker.pickImage(
+    var selectImage = await _picker.getImage(
       maxWidth: 300,
       maxHeight: 250,
       source: ImageSource.gallery, //위치는 갤러리
