@@ -139,7 +139,7 @@ class _BoardPageState extends State<BoardPage> {
                   children: [
                     Container(
                       width: 60,
-                      height: 80,
+                      height: 60,
                       decoration: const BoxDecoration(
                         border: Border(
                           right: BorderSide(color: Colors.black, width: 0.5),
@@ -157,47 +157,26 @@ class _BoardPageState extends State<BoardPage> {
                       ),
                     ),
                     Container(
-                        width: 250,
-                        height: 80,
-                        // color: Colors.green,
-                        child: Row(
-                          children: [
-                            Text(
-                              "   가격 :  ${widget.poPrice}",
-                              style: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            // 채팅하기 누르면 1대1 채팅방으로 이동
-                            ElevatedButton(
-                              onPressed: () {
-                                //
-                              },
-                              child: const Text("채팅하기"),
-                            ),
-                          ],
-                        ))
-                    // IconButton(
-                    //   onPressed: () {
-                    //     heartState = !heartState;
-                    //     setState(() {});
-                    //     // heartNum == 0 ? heart : heart = Icon(Icons.favorite);
-                    //   },
-                    //   icon: heartState ? Icon(Icons.favorite) : heart,
-                    //   // ? True : False
-                    //   color: Colors.red,
-                    // ),
-                    // Text(
-                    //   "가격 :  ${widget.poPrice}",
-                    //   style: const TextStyle(
-                    //       fontSize: 20, fontWeight: FontWeight.bold),
-                    // ),
-                    // // 채팅하기 누르면 1대1 채팅방으로 이동
-                    // ElevatedButton(
-                    //   onPressed: () {
-                    //     //
-                    //   },
-                    //   child: const Text("채팅하기"),
-                    // ),
+                      width: 250,
+                      height: 80,
+                      // color: Colors.green,
+                      child: Row(
+                        children: [
+                          Text(
+                            "   가격 :  ${widget.poPrice}",
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          // 채팅하기 누르면 1대1 채팅방으로 이동
+                          ElevatedButton(
+                            onPressed: () {
+                              //
+                            },
+                            child: const Text("채팅하기"),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ), // == 버튼 로우 ==
               ],

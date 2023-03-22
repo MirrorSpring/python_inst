@@ -34,6 +34,12 @@ class _BoardListPageState extends State<BoardListPage> {
                 color: Colors.white,
                 child: TextField(
                   controller: selectController,
+                  onChanged: (text) {
+                    searchTexts = selectController.text;
+                    setState(() {
+                      //
+                    });
+                  },
                   decoration: const InputDecoration(hintText: "검색"),
                 ),
               ),
