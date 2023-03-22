@@ -1,9 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:dl_flutter_app/View/board/uploadboard.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
-
 import '../../Model/board/Boardmodel.dart';
 import '../../Widget/Alert/Alert.dart';
 import '../../Widget/boardPage/boardPage.dart';

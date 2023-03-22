@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-
 import '../../Widget/Alert/Snackbar.dart';
 import '../../tabbar.dart';
 
@@ -232,6 +230,7 @@ class _InsertPageState extends State<InsertPage> {
     var url = Uri.parse("http://localhost:8080/post/views/$poId/$U_userId");
     await http.get(url);
     // ignore: use_build_context_synchronously
+    await Future.delayed(Duration(seconds: 3));
     Navigator.push(
       context,
       MaterialPageRoute(
