@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import '../../tabbar.dart';
 // import '../widgets/custom_style.dart';
 
 class Alertclass {
@@ -27,8 +29,13 @@ class Alertclass {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context);
                   deldatepost(P_poId);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) => const Tabbar()),
+                    ),
+                  );
                 },
                 child: const Text('예'),
               ),

@@ -70,8 +70,8 @@ class _BoardPageState extends State<BoardPage> {
               children: [
                 Container(
                     color: Colors.white,
-                    width: 350,
-                    height: 240,
+                    width: 300,
+                    height: 300,
                     child: Column(
                       children: [
                         Image.network("http://localhost:8080/images/$text"),
