@@ -40,17 +40,16 @@ class BoardPage extends StatefulWidget {
 
 class _BoardPageState extends State<BoardPage> {
   late Icon heart = const Icon(Icons.favorite_border);
-  late bool heartState;
+  bool heartState = true;
   late String text = widget.poImage1;
+  late int poId = widget.poId;
+  late String userId = "korea";
+  late int heartbeat = 0;
   // late Uri url = '';
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    heartState = false;
-    imageslect();
-
-    // imageslect();
   }
 
   @override
@@ -71,10 +70,15 @@ class _BoardPageState extends State<BoardPage> {
                 Container(
                     color: Colors.white,
                     width: 300,
-                    height: 300,
+                    height: 255,
                     child: Column(
                       children: [
-                        Image.network("http://localhost:8080/images/$text"),
+                        Image.network(
+                          "http://localhost:8080/images/$text",
+                          fit: BoxFit.fill,
+                          width: 300,
+                          height: 250,
+                        ),
                       ],
                     )),
                 Container(
@@ -105,7 +109,7 @@ class _BoardPageState extends State<BoardPage> {
                   child: Column(
                     children: [
                       Text(
-                        "${widget.poTitle}",
+                        widget.poTitle,
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
@@ -121,7 +125,7 @@ class _BoardPageState extends State<BoardPage> {
                   child: Column(
                     children: [
                       Text(
-                        "내용 : ${widget.poContent}",
+                        widget.poContent,
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
@@ -148,10 +152,15 @@ class _BoardPageState extends State<BoardPage> {
                       child: IconButton(
                         onPressed: () {
                           heartState = !heartState;
+                          // true = import
+                          // false = import
                           setState(() {});
+                          heartState ? loveHeart() : brokenHeart();
+
+                          // poHeart +1 ,, wish에 UserID & PostID & now()
                           // heartNum == 0 ? heart : heart = Icon(Icons.favorite);
                         },
-                        icon: heartState ? Icon(Icons.favorite) : heart,
+                        icon: heartState ? const Icon(Icons.favorite) : heart,
                         // ? True : False
                         color: Colors.red,
                       ),
@@ -187,12 +196,65 @@ class _BoardPageState extends State<BoardPage> {
     );
   } //
 
+  // 이미지 이름 기져오기
   Future imageslect() async {
-    // print(poId);
+    await Future.delayed(const Duration(milliseconds: 500));
     String imagetext = widget.poImage1;
     var url = await Uri.parse('http://localhost:8080/images/$imagetext');
+    checkWish();
     return url;
   }
+
+  //
+  // 좋아요 + 1
+  Future loveHeart() async {
+    int poId = widget.poId;
+    var url =
+        await Uri.parse('http://localhost:8080/post/heartPlus?poId=$poId');
+    await http.get(url);
+    // poHeart +1 해주고
+    importWish(poId);
+    // import wish userID, poId, update(now) 해주고
+  }
+
+  // 즐겨찾기 등록하기
+  Future importWish(poId) async {
+    var url = await Uri.parse(
+        'http://localhost:8080/post/WishInsert?U_userId=$userId&P_poId=$poId');
+    await http.get(url);
+  }
+
+// =======
+  // 좋아요 1개 내리기
+  Future brokenHeart() async {
+    int poId = widget.poId;
+    var url = await Uri.parse('http://localhost:8080/post/heartDiv?poId=$poId');
+    await http.get(url);
+    deleteWish(poId);
+  } //
+
+  // 즐겨찾기  삭제하기
+  Future deleteWish(poId) async {
+    // /deleteWish/{userId}/{poId}
+    int poId = widget.poId;
+    var url = await Uri.parse('http://localhost:8080/deleteWish/$userId/$poId');
+    await http.get(url);
+  }
+
+  // 좋아요 즐겨찾기 등록한 게시물인지 체크해용
+  Future<int> checkWish() async {
+    int poId = widget.poId;
+    var url =
+        await Uri.parse('http://localhost:8080/post/selectWishlist?poId=$poId');
+    var respnse = await http.get(url);
+    var dataConvertedJson = json.decode(utf8.decode(respnse.bodyBytes));
+    heartbeat = dataConvertedJson;
+    // heartbeat == 0 ? heartState = false : "";
+    if (heartbeat != 1) {
+      heartState = false;
+    }
+    return heartbeat;
+  } //
 }
 
 /// END

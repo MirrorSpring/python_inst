@@ -29,13 +29,7 @@ class Alertclass {
             actions: [
               TextButton(
                 onPressed: () {
-                  deldatepost(P_poId);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: ((context) => const Tabbar()),
-                    ),
-                  );
+                  deldatepost(P_poId, context);
                 },
                 child: const Text('예'),
               ),
@@ -51,9 +45,15 @@ class Alertclass {
     // });
   } //
 
-  Future deldatepost(P_poId) async {
+  Future deldatepost(P_poId, context) async {
     var url = await Uri.parse('http://localhost:8080/post/deldate/$P_poId');
     await http.get(url);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Tabbar(),
+        ),
+        (route) => false);
     // print(url);
     return;
   }

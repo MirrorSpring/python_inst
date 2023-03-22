@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 import '../../Widget/Alert/Snackbar.dart';
+import '../../tabbar.dart';
 import '../boardlist_page.dart';
 
 class UpdateBorad extends StatefulWidget {
@@ -53,8 +54,12 @@ class _UpdateBoradState extends State<UpdateBorad> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    cameraImage = Image.network("http://localhost:8080/images/$poimage",
-        fit: BoxFit.fill);
+    cameraImage = Image.network(
+      "http://localhost:8080/images/$poimage",
+      fit: BoxFit.fill,
+      width: 300,
+      height: 250,
+    );
   }
 
   Widget build(BuildContext context) {
@@ -126,13 +131,18 @@ class _UpdateBoradState extends State<UpdateBorad> {
           ),
           Container(
               color: Colors.white,
-              width: 250,
-              height: 240,
+              width: 300,
+              height: 250,
               child: Column(
                 children: [
                   _image == null
                       ? cameraImage
-                      : Image.file(_image!, fit: BoxFit.fill),
+                      : Image.file(
+                          _image!,
+                          fit: BoxFit.fill,
+                          width: 300,
+                          height: 250,
+                        ),
                 ],
               )),
           // 사진 올리는 버튼
@@ -187,6 +197,8 @@ class _UpdateBoradState extends State<UpdateBorad> {
   // image
   Future<void> imageToServe() async {
     final XFile? selectImage = await _picker.pickImage(
+      maxWidth: 300,
+      maxHeight: 250,
       source: ImageSource.gallery, //위치는 갤러리
     );
     if (selectImage != null) {
@@ -249,13 +261,14 @@ class _UpdateBoradState extends State<UpdateBorad> {
   }
 
   Future pushHome() async {
-    await Future.delayed(Duration(seconds: 3));
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: ((context) => const BoardListPage()),
-      ),
-    );
+    await Future.delayed(const Duration(seconds: 2));
+    // ignore: use_build_context_synchronously
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Tabbar(),
+        ),
+        (route) => false);
   }
 
 // Future.delayed(Duration(seconds: 3));

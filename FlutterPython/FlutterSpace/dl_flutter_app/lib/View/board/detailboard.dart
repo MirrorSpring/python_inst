@@ -7,7 +7,6 @@ import '../../tabbar.dart';
 
 class PageDetail extends StatefulWidget {
   final board;
-
   const PageDetail(this.board, {super.key});
 
   @override
@@ -23,13 +22,10 @@ class _PageDetailState extends State<PageDetail> {
   @override
   void initState() {
     super.initState();
-    // Board.fromMap();
     board = widget.board;
     setState(() {
       //
     });
-
-    // widget.board;
   }
 
   @override
@@ -54,13 +50,6 @@ class _PageDetailState extends State<PageDetail> {
                 // 삭제 : Deldate update
                 int P_poId = board.poId;
                 alert.Alert(context, P_poId);
-                Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: ((context) => const Tabbar()),
-                  ),
-                );
               },
               icon: const Icon(Icons.delete),
             ),

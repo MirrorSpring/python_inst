@@ -72,12 +72,36 @@ public class boardController {
 	public int modifyUpload(@PathVariable("P_poId")String P_poId,@PathVariable("U_userId") String U_userId) {
 		return mapper.modifyUpload(P_poId, U_userId);
 	}
-	
 	// 게시물 제목 검색 
 	@GetMapping("/post/searchBoard")
 	public List<Join_PostUploadModel> searchBoard(@RequestParam("Search") String Search) {
 		return mapper.searchBoard(Search);
 	}
+	
+	// 좋아요 +1 올리기 
+	@GetMapping("/post/heartPlus")
+	public int updatePoHeart(@RequestParam("poId") String Id) {
+		return mapper.updatePoHeart(Id);
+	}
+	
+	// 좋아요 -1 내리기 
+	@GetMapping("/post/heartDiv")
+	public int downPoHeart(@RequestParam("poId") String Id) {
+		return mapper.downPoHeart(Id);
+	}
+	
+	// 좋아요 명단 추가 
+	@GetMapping("/post/WishInsert")
+	public int insertWish(@RequestParam("U_userId") String U_userId,@RequestParam("P_poId") String P_poId) {
+		return mapper.insertWish(U_userId,P_poId);
+	}
+	
+	// 즐겨찾기 등록한 게시물인지 체크 
+	@GetMapping("/post/selectWishlist")
+	public int selectWishlist(@RequestParam("poId") String Id) {
+		return mapper.selectWishlist(Id);
+	}
+
 
 //	searchBoard(@Param("search") String Search);
 }

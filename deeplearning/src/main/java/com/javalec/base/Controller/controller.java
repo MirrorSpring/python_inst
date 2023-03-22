@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javalec.base.mapper.modelMapper;
 import com.javalec.base.model.Join_PostUploadModel;
+import com.javalec.base.model.Join_PostUploadUserWishModel;
 import com.javalec.base.model.Join_UserReviewModel;
 import com.javalec.base.model.PostModel;
 import com.javalec.base.model.UserModel;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 public class controller {

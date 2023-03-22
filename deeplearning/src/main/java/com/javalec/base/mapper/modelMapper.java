@@ -2,6 +2,7 @@ package com.javalec.base.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -9,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.javalec.base.model.Join_PostUploadModel;
+import com.javalec.base.model.Join_PostUploadUserWishModel;
 import com.javalec.base.model.Join_UserReviewModel;
 import com.javalec.base.model.PostModel;
 import com.javalec.base.model.UserModel;
@@ -77,6 +79,19 @@ public interface modelMapper {
 	@Select("SELECT poId,poHeart,poTitle,poContent,poPrice,poImage01,poImage02,poImage03,poViews,poState,poUser,U_userId,userAddress,userReliability, poUpDate, DATE_FORMAT(poUpDate, '%H:%i:%s') AS timeonly FROM post as p , upload as u, user as us where p.poId = u.P_poId and u.U_userId = us.userId and poDelDate is null and poTitle REGEXP #{Search} order by poUpDate desc")
 	List<Join_PostUploadModel> searchBoard(@Param("Search") String Search);
 
+	@Update("UPDATE post set poHeart = poHeart+1 WHERE poId = #{poId}")
+	int updatePoHeart(@Param("poId") String Id);
+	
+	@Update("UPDATE post set poHeart = poHeart-1 WHERE poId = #{poId}")
+	int downPoHeart(@Param("poId") String Id);
+	
+	@Insert("INSERT INTO wish(U_userId,P_poId,WishDate) VALUES(#{U_userId},#{P_poId},now())")
+	int insertWish(@Param("U_userId") String U_userId, @Param("P_poId") String P_poId);
+	
+	@Select("SELECT Count(poId) From deeplearning.post as p, deeplearning.wish as w WHERE p.poId = w.P_poId and poId = #{poId};")
+	int selectWishlist(@Param("poId")String poId);
+	
+	
 	// --- My Page ---
 
 	// 찜 목록
