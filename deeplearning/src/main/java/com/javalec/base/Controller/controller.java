@@ -50,4 +50,30 @@ public class controller {
 		mapper.updateReliability(to_userId, userReliability);
 	}
 
+	// --- My Page ---
+
+	// 찜 목록
+	@GetMapping("/wishlistSelect")
+	public List<Join_PostUploadUserWishModel> wishlistSelect(HttpServletRequest request) {
+		String user = request.getParameter("userId");		
+		return mapper.wishlistSelect(user);
+	}
+
+	// 판매 내역
+	@GetMapping("/buylistSelect")
+	public List<Join_PostUploadUserWishModel> buylistSelect(HttpServletRequest request) {
+		String user = request.getParameter("userId");		
+		return mapper.buylistSelect(user);
+	}
+
+	// 찜 목록 지우기
+	@GetMapping("/deleteWish/{userId}/{poId}")
+	public void deleteWish(@PathVariable("userId")String userId, @PathVariable("poId")int poId) {
+		mapper.deleteWish(userId, poId);
+	}
+	// 회원 탈퇴
+	@GetMapping("/deleteUser/{userId}")
+	public void deleteUser(@PathVariable("userId") String userId) {
+		mapper.deleteUser(userId);
+	}
 }
