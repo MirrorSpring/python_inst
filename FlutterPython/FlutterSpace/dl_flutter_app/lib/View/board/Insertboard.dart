@@ -2,14 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:dl_flutter_app/View/board/homeboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 import '../../Widget/Alert/Snackbar.dart';
-import '../boardlist_page.dart';
+import '../../tabbar.dart';
 
 class InsertPage extends StatefulWidget {
   const InsertPage({super.key});
@@ -236,7 +235,7 @@ class _InsertPageState extends State<InsertPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: ((context) => const BoardListPage()),
+        builder: ((context) => const Tabbar()),
       ),
     );
     return 0;
