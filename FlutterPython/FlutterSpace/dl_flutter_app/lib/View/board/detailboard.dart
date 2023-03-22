@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../Model/board/Boardmodel.dart';
 import '../../Widget/Alert/Alert.dart';
 import '../../Widget/boardPage/boardPage.dart';
+import '../../tabbar.dart';
 
 class PageDetail extends StatefulWidget {
   final board;
@@ -53,7 +54,13 @@ class _PageDetailState extends State<PageDetail> {
                 // 삭제 : Deldate update
                 int P_poId = board.poId;
                 alert.Alert(context, P_poId);
-                // deldatepost();
+                Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => const Tabbar()),
+                  ),
+                );
               },
               icon: const Icon(Icons.delete),
             ),

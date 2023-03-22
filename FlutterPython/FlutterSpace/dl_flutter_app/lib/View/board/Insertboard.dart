@@ -35,7 +35,8 @@ class _InsertPageState extends State<InsertPage> {
   @override
   void initState() {
     super.initState();
-    cameraImage = Image.network("http://localhost:8080/images/CameraImage.png");
+    cameraImage = Image.network("http://localhost:8080/images/CameraImage.png",
+        fit: BoxFit.fill);
   }
 
   boarderTextStyle(Color? color) {
@@ -118,11 +119,13 @@ class _InsertPageState extends State<InsertPage> {
             ),
             Container(
                 color: Colors.white,
-                width: 250,
-                height: 240,
+                width: 300,
+                height: 300,
                 child: Column(
                   children: [
-                    _image == null ? cameraImage : Image.file(_image!),
+                    _image == null
+                        ? cameraImage
+                        : Image.file(_image!, fit: BoxFit.fill),
                   ],
                 )),
             // 사진 올리는 버튼
@@ -243,6 +246,8 @@ class _InsertPageState extends State<InsertPage> {
   // image
   Future<void> imageToServe() async {
     final XFile? selectImage = await _picker.pickImage(
+      maxWidth: 300,
+      maxHeight: 300,
       source: ImageSource.gallery, //위치는 갤러리
     );
     if (selectImage != null) {

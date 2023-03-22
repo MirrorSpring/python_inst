@@ -30,7 +30,7 @@ class _BoardListPageState extends State<BoardListPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                width: 280,
+                width: MediaQuery.of(context).size.width * 0.65,
                 color: Colors.white,
                 child: TextField(
                   controller: selectController,
