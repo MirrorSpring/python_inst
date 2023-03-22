@@ -101,6 +101,13 @@ public class boardController {
 	public int selectWishlist(@RequestParam("poId") String Id) {
 		return mapper.selectWishlist(Id);
 	}
+	
+	// 즐겨찾기 등록한 게시물인지 체크 (게시글 목록페이지에서) 
+	@GetMapping("/post/checkWishlist")
+	public int checkWishlist(@RequestParam("U_userId") String U_userId) {
+		return mapper.checkWishlist(U_userId);
+	}
+	//SELECT Count(U_userId) From deeplearning.post as p, deeplearning.wish as w WHERE p.poId = w.P_poId and U_userId = "korea";
 
 
 //	searchBoard(@Param("search") String Search);

@@ -91,6 +91,9 @@ public interface modelMapper {
 	@Select("SELECT Count(poId) From deeplearning.post as p, deeplearning.wish as w WHERE p.poId = w.P_poId and poId = #{poId};")
 	int selectWishlist(@Param("poId")String poId);
 	
+	@Select("SELECT Count(U_userId) From deeplearning.post as p, deeplearning.wish as w WHERE p.poId = w.P_poId and U_userId = #{U_userId};")
+	int checkWishlist(@Param("U_userId")String U_userId);
+	
 	
 	// --- My Page ---
 

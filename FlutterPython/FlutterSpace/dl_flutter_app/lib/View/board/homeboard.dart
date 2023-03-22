@@ -26,10 +26,18 @@ class _HomeboardState extends State<Homeboard> {
   ScrollController scroller = ScrollController();
   Boarder boarder = Boarder();
   var f = NumberFormat.currency(locale: 'ko_KR', symbol: '₩');
+  late int heartbeat = 0;
+  late String userid = "korea";
+  late bool heartState = false;
   @override
   void initState() {
     super.initState();
     searchText = widget.searchText;
+    setState(() {
+      if (userid != null) {
+        checkWish(userid);
+      }
+    });
   }
 
   @override
@@ -177,10 +185,19 @@ class _HomeboardState extends State<Homeboard> {
                                                   data[index]["poHeart"] != 0
                                                       ? Row(
                                                           children: [
-                                                            const Icon(
-                                                              Icons.favorite,
-                                                              color: Colors.red,
-                                                            ),
+                                                            if (heartbeat > 0)
+                                                              const Icon(
+                                                                  Icons
+                                                                      .favorite,
+                                                                  color: Colors
+                                                                      .red)
+                                                            else
+                                                              const Icon(
+                                                                Icons
+                                                                    .favorite_border,
+                                                                color:
+                                                                    Colors.red,
+                                                              ),
                                                             Text(
                                                                 "${data[index]["poHeart"]}")
                                                           ],
@@ -264,5 +281,19 @@ class _HomeboardState extends State<Homeboard> {
     await http.get(url);
     // print(url);
     return data;
-  }
+  } //
+
+  Future<int> checkWish(userid) async {
+    String U_userId = userid;
+    var url = await Uri.parse(
+        'http://localhost:8080/post/checkWishlist?U_userId=$U_userId');
+    var respnse = await http.get(url);
+    var dataConvertedJson = json.decode(utf8.decode(respnse.bodyBytes));
+    heartbeat = dataConvertedJson;
+    // heartbeat == 0 ? heartState = false : "";
+    if (heartbeat >= 1) {
+      heartState = true;
+    }
+    return heartbeat;
+  } //
 } //
