@@ -74,7 +74,7 @@ class _ChatListPageState extends State<ChatListPage> {
       ),
       key: ValueKey(doc),
       onDismissed: (direction) {
-        //삭제
+        // 채팅방 삭제
         FirebaseFirestore.instance.collection('chatroom').doc(doc.id).delete();
       },
       child: GestureDetector(
@@ -84,8 +84,7 @@ class _ChatListPageState extends State<ChatListPage> {
           StaticChat.chatUserNames = chatRoom.userNames;
 
           // 채팅 읽었다고 update
-          updateChatRoomStateAction(
-              chatRoom.chatRoomId, chatRoom.sendUserId, chatRoom.receiveUserId);
+          updateChatRoomStateAction(chatRoom.chatRoomId);
 
           Navigator.push(
             context,
@@ -110,8 +109,7 @@ class _ChatListPageState extends State<ChatListPage> {
   }
 
   // 채팅방 읽었다고 업데이트
-  updateChatRoomStateAction(
-      String chatRoomId, String sendUserId, String receiveUserId) {
+  updateChatRoomStateAction(String chatRoomId) {
     FirebaseFirestore.instance
         .collection('chatroom')
         .doc(chatRoomId)

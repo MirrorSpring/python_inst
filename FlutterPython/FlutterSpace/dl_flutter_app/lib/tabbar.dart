@@ -65,7 +65,7 @@ class _TabbarState extends State<Tabbar> {
         elevation: 1,
       ),
       body: <Widget>[
-        const BoardListPage(),
+        const Navigation(),
         const MapPage(),
         const Navigation(),
         const MyPage(),

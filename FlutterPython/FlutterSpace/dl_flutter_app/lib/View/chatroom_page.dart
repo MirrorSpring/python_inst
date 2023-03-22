@@ -1,12 +1,11 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
-// import 'package:path_provider/path_provider.dart';
 
 import '../Model/Chat/chat.dart';
 import '../Model/Chat/static_chat.dart';
@@ -15,8 +14,6 @@ import '../Widget/AppBar/custom_app_bar.dart';
 import '../Widget/Chat/chat_bubble.dart';
 import '../Widget/Chat/chat_floating_bar.dart';
 import '../Widget/Chat/chat_input_tf.dart';
-
-import 'package:image_picker/image_picker.dart';
 
 class ChatRoomPage extends StatefulWidget {
   const ChatRoomPage({super.key});
@@ -29,17 +26,11 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   late String chatRoomId;
   late TextEditingController tfChatController;
   //이미지 업로드를 위해
-  late ImagePicker picker;
-
+  late ImagePicker picker; //갤러리 사용하기 위함
   var image;
-  // var userImage;
-  late bool imageState;
-  firebase_storage.FirebaseStorage storage =
-      firebase_storage.FirebaseStorage.instance;
+  late bool imageState; // 이미지가 선택되어 있으면 이미지 컨테이너를 띄우기 위해
+  FirebaseStorage storage = FirebaseStorage.instance;
   late File file;
-
-  //이미지 출력
-  late String imageUrlString;
 
   @override
   void initState() {
@@ -49,8 +40,6 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     picker = ImagePicker();
     imageState = false;
     file = File("");
-
-    imageUrlString = "";
 
     print("initState");
   }
@@ -74,7 +63,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
               .collection('chatroom')
               .doc(chatRoomId)
               .collection('chat')
-              .orderBy("chatTime", descending: true)
+              .orderBy('chatTime', descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
@@ -98,6 +87,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                       ),
                     ),
                     // 만약에 image를 가져왔으면 image를 보여주고 아니면 빈 컨테이너를 리턴
+
                     if (imageState)
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
@@ -115,30 +105,33 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                             color: (Colors.grey),
                             onPressed: () async {
                               // gallery
-                              image = await picker.pickImage(
+                              print("image state: $imageState");
+                              image = await picker.getImage(
                                   source: ImageSource.gallery);
 
-                              // Xfile -> file로 변환
-                              file = File(image.path);
-                              // Image(
-                              //   image: AssetImage('assets/images/my_image.png'),
-                              // );
+                              print("image: $image");
 
-                              imageState = true;
+                              if (image != null) {
+                                // Xfile -> file로 변환
+                                file = File(image.path);
 
-                              setState(() {});
+                                imageState = true;
+                                print("file: $file");
 
-                              print("file: $file");
+                                setState(() {});
+                              }
                             },
                             icon: const Icon(Icons.photo),
                           ),
                           ChatInputTf(tfChatController: tfChatController),
-                          // -------------------------------------- 채팅 전송 버튼 **
+                          // -------------------------- 채팅 전송 버튼 **
                           IconButton(
                             color: const Color(0xff9AB6FF),
                             onPressed: () async {
                               //db insert
                               addChatAction();
+                              image = null;
+                              imageState = false;
                             },
                             icon: const Icon(Icons.send),
                           ),
@@ -172,8 +165,6 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
         sendUserId: doc['sendUserId'],
         photoUrl: doc['photoUrl']);
 
-    // drawImage(chat.photoUrl);
-
     return Dismissible(
       direction: DismissDirection.endToStart,
       background: Container(
@@ -194,10 +185,12 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
+          // 내가 보낸 채팅은 오른쪽 정렬(end), 받은 채팅은 왼쪽 정렬(start)
           mainAxisAlignment: chat.sendUserId == StaticUser.userId
               ? MainAxisAlignment.end
               : MainAxisAlignment.start,
           children: [
+            //저장된 이미지가 없으면 chatBubble 띄우고 있으면 이미지 띄우기
             chat.photoUrl == ""
                 ? ChatBubble(chat: chat)
                 : SizedBox(
@@ -223,6 +216,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       }
     }
 
+    // 이미지를 보냈으면 upload file -> update chatroom
     if (image != null) {
       uploadFile();
       image = null;
@@ -234,7 +228,6 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   // 채팅을 insert
   addChatBubble() {
     print('3. chat insert');
-    // 채팅을 insert 함
     FirebaseFirestore.instance
         .collection('chatroom')
         .doc(chatRoomId)
@@ -292,7 +285,8 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           .collection('chatroom')
           .doc(chatRoomId)
           .update({
-        'lastChat': tfChatController.text,
+        'lastChat':
+            tfChatController.text == "" ? "사진을 보냄" : tfChatController.text,
         "sendUserId": StaticUser.userId,
         "receiveUserId": StaticUser.userId == StaticChat.chatUserIds[0]
             ? StaticChat.chatUserIds[1]
@@ -339,14 +333,4 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       'photoUrl': downloadUrl,
     });
   }
-
-  // Future drawImage(String photoUrl) async {
-  //   //
-  //   final storage = FirebaseStorage.instance;
-
-  //   Reference ref = storage.refFromURL(photoUrl);
-  //   String downloadUrl = await ref.getDownloadURL();
-  //   imageUrlString = downloadUrl.toString();
-  //   // return imageUrlString;
-  // }
 } //END
