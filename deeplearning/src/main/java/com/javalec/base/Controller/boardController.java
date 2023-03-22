@@ -2,6 +2,7 @@ package com.javalec.base.Controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +15,7 @@ import com.javalec.base.model.UserModel;
 @RestController
 public class boardController {
 	
-private modelMapper mapper;
+	private modelMapper mapper;
 	
 	public boardController(modelMapper mapper) {
 		this.mapper = mapper;
@@ -70,5 +71,13 @@ private modelMapper mapper;
 	public int modifyUpload(@PathVariable("P_poId")String P_poId,@PathVariable("U_userId") String U_userId) {
 		return mapper.modifyUpload(P_poId, U_userId);
 	}
+	
+	// 게시물 제목 검색 
+	@GetMapping("/post/searchBoard")
+	public List<Join_PostUploadModel> searchBoard(@RequestParam("Search") String Search) {
+		System.out.println(Search);
+		return mapper.searchBoard(Search);
+	}
 
+//	searchBoard(@Param("search") String Search);
 }

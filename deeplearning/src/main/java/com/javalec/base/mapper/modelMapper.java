@@ -74,5 +74,7 @@ public interface modelMapper {
 	@Update("UPDATE upload set poMoDate = now() WHERE P_poId = #{P_poId} and U_userId = #{U_userId}")
 	int modifyUpload(@Param("P_poId") String P_poId, @Param("U_userId") String U_userId);
 
+	@Select("SELECT poId,poHeart,poTitle,poContent,poPrice,poImage01,poImage02,poImage03,poViews,poState,poUser,U_userId,userAddress,userReliability, poUpDate, DATE_FORMAT(poUpDate, '%H:%i:%s') AS timeonly FROM post as p , upload as u, user as us where p.poId = u.P_poId and u.U_userId = us.userId and poDelDate is null and poTitle REGEXP #{Search} order by poUpDate desc")
+	List<Join_PostUploadModel> searchBoard(@Param("Search") String Search);
 	
 }
