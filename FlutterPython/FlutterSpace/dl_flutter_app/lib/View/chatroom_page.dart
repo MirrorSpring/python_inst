@@ -1,8 +1,12 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+// import 'package:path_provider/path_provider.dart';
 
 import '../Model/Chat/chat.dart';
 import '../Model/Chat/static_chat.dart';
@@ -13,7 +17,6 @@ import '../Widget/Chat/chat_floating_bar.dart';
 import '../Widget/Chat/chat_input_tf.dart';
 
 import 'package:image_picker/image_picker.dart';
-// import 'dart:io';
 
 class ChatRoomPage extends StatefulWidget {
   const ChatRoomPage({super.key});
@@ -25,10 +28,18 @@ class ChatRoomPage extends StatefulWidget {
 class _ChatRoomPageState extends State<ChatRoomPage> {
   late String chatRoomId;
   late TextEditingController tfChatController;
+  //이미지 업로드를 위해
   late ImagePicker picker;
+
   var image;
-  var userImage;
+  // var userImage;
   late bool imageState;
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+  late File file;
+
+  //이미지 출력
+  late String imageUrlString;
 
   @override
   void initState() {
@@ -37,6 +48,9 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     tfChatController = TextEditingController();
     picker = ImagePicker();
     imageState = false;
+    file = File("");
+
+    imageUrlString = "";
 
     print("initState");
   }
@@ -71,6 +85,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
               if (image != null) {}
             }
             final documents = snapshot.data!.docs;
+
             return Stack(
               children: [
                 Column(
@@ -82,6 +97,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                             documents.map((e) => _buildItemWidget(e)).toList(),
                       ),
                     ),
+                    // 만약에 image를 가져왔으면 image를 보여주고 아니면 빈 컨테이너를 리턴
                     if (imageState)
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
@@ -102,16 +118,17 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                               image = await picker.pickImage(
                                   source: ImageSource.gallery);
 
-                              // if (image != null) {
-                              //   // setState(() {
-                              //   userImage = File(image.path);
-                              //   // });
+                              // Xfile -> file로 변환
+                              file = File(image.path);
+                              // Image(
+                              //   image: AssetImage('assets/images/my_image.png'),
+                              // );
+
                               imageState = true;
-                              // }
 
                               setState(() {});
 
-                              print(image);
+                              print("file: $file");
                             },
                             icon: const Icon(Icons.photo),
                           ),
@@ -152,7 +169,10 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
         chatId: doc.id,
         chatText: doc['chatText'],
         chatTime: doc['chatTime'].toDate(),
-        sendUserId: doc['sendUserId']);
+        sendUserId: doc['sendUserId'],
+        photoUrl: doc['photoUrl']);
+
+    // drawImage(chat.photoUrl);
 
     return Dismissible(
       direction: DismissDirection.endToStart,
@@ -178,7 +198,12 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
               ? MainAxisAlignment.end
               : MainAxisAlignment.start,
           children: [
-            ChatBubble(chat: chat),
+            chat.photoUrl == ""
+                ? ChatBubble(chat: chat)
+                : SizedBox(
+                    width: 250,
+                    child: Image.network(chat.photoUrl),
+                  ),
           ],
         ),
       ),
@@ -188,15 +213,25 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   // 채팅을 보냄
   addChatAction() async {
     // chatRoomId 가 없으면 일단 채팅방을 만들고
-    if (chatRoomId == "none") {
-      await addChatRoomAction();
-      // 있으면 바로 채팅을 보낸다
-    } else {
-      addChatBubble();
+    if (tfChatController.text.trim() != "") {
+      if (chatRoomId == "none") {
+        await addChatRoomAction();
+        // 있으면 바로 채팅을 보낸다
+      } else {
+        addChatBubble();
+        await updateChatAction();
+      }
+    }
+
+    if (image != null) {
+      uploadFile();
+      image = null;
+      imageState = false;
       await updateChatAction();
     }
   }
 
+  // 채팅을 insert
   addChatBubble() {
     print('3. chat insert');
     // 채팅을 insert 함
@@ -208,9 +243,11 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       'sendUserId': StaticUser.userId,
       'chatTime': DateTime.now(),
       'chatText': tfChatController.text,
+      'photoUrl': "",
     });
   }
 
+  // 만들어진 docId를 select
   Future selectDocId() async {
     final Query query = FirebaseFirestore.instance
         .collection('chatroom')
@@ -221,7 +258,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                 : StaticChat.chatUserIds[0]);
     final QuerySnapshot querySnapshot = await query.get();
     for (var document in querySnapshot.docs) {
-      print('2. chatRoom의 docId를 select: ${document.id}');
+      print('2. 만들어진 chatRoom의 docId를 select: ${document.id}');
       chatRoomId = document.id;
     }
   }
@@ -271,4 +308,45 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     setState(() {});
     tfChatController.text = "";
   }
+
+  // image upload
+  Future uploadFile() async {
+    if (image == null) return;
+
+    final storageRef = FirebaseStorage.instance.ref();
+
+    final fileName = basename(file.path);
+    final mountainImagesRef = storageRef.child("images/$fileName");
+
+    await mountainImagesRef.putFile(file);
+
+    String imageUrl = "gs://dl-flutter.appspot.com/images/$fileName";
+    Reference ref = storage.refFromURL(imageUrl);
+    String downloadUrl = await ref.getDownloadURL();
+
+    print("file2: $file");
+    print("filename: $fileName");
+    print("ref: $mountainImagesRef");
+
+    FirebaseFirestore.instance
+        .collection('chatroom')
+        .doc(chatRoomId)
+        .collection('chat')
+        .add({
+      'sendUserId': StaticUser.userId,
+      'chatTime': DateTime.now(),
+      'chatText': "사진을 보냄",
+      'photoUrl': downloadUrl,
+    });
+  }
+
+  // Future drawImage(String photoUrl) async {
+  //   //
+  //   final storage = FirebaseStorage.instance;
+
+  //   Reference ref = storage.refFromURL(photoUrl);
+  //   String downloadUrl = await ref.getDownloadURL();
+  //   imageUrlString = downloadUrl.toString();
+  //   // return imageUrlString;
+  // }
 } //END
