@@ -1,11 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 
 import '../../tabbar.dart';
 // import '../widgets/custom_style.dart';
 
 class Alertclass {
+  gotoTapbar(BuildContext context) {
+    return Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Tabbar(),
+        ),
+        (route) => false);
+  }
+
   Alert(BuildContext context, int P_poId) {
     // CustomStyle textcolor = CustomStyle();
     // setState(() {
@@ -48,12 +58,7 @@ class Alertclass {
   Future deldatepost(P_poId, context) async {
     var url = await Uri.parse('http://localhost:8080/post/deldate/$P_poId');
     await http.get(url);
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Tabbar(),
-        ),
-        (route) => false);
+    gotoTapbar(context);
     // print(url);
     return;
   }

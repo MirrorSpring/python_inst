@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:dl_flutter_app/Widget/Alert/Alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -35,6 +36,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
       TextEditingController(text: widget.poPrice);
   late TextEditingController contentController =
       TextEditingController(text: widget.poContent);
+  Alertclass gotocalss = Alertclass();
   late bool insertBoard = false;
   late String imagefile = "";
   final ImagePicker _picker = ImagePicker();
@@ -73,9 +75,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
             children: [
               IconButton(
                 onPressed: () {
-                  // 취소가 되야 돼
-                  // 팝으로 넘어가는데 게시판 상태가 갱신이 안됨,
-                  Navigator.pop(context);
+                  gotocalss.gotoTapbar(context);
                 },
                 icon: const Icon(
                   Icons.cancel_outlined,
@@ -89,9 +89,6 @@ class _UpdateBoradState extends State<UpdateBorad> {
                 "상품 등록 수정",
                 style: boarderTextStyle(Colors.black),
               ),
-              // const SizedBox(
-              //   width: 79,
-              // ),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.19,
               ),
@@ -102,7 +99,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
                   if (titleController.text.isNotEmpty &&
                       priceController.text.isNotEmpty &&
                       contentController.text.isNotEmpty &&
-                      imagefile != "") {
+                      poimage != "") {
                     insertBoard = true;
                     if (insertBoard == true) {
                       modifyBoard(
@@ -110,7 +107,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
                           titleController.text,
                           contentController.text,
                           priceController.text,
-                          imagefile);
+                          poimage);
                       pushHome();
                     }
                   } else {
@@ -273,12 +270,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
   Future pushHome() async {
     await Future.delayed(const Duration(seconds: 2));
     // ignore: use_build_context_synchronously
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Tabbar(),
-        ),
-        (route) => false);
+    gotocalss.gotoTapbar(context);
   }
 
 // Future.delayed(Duration(seconds: 3));

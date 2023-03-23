@@ -53,7 +53,6 @@ public class Imagecontroller {
         try (InputStream inputStream = file.getInputStream()) {
             Path filePath = uploadDir.resolve(fileName);
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println(filePath);
         } catch (IOException e) {
             throw new IOException("Could not save image file: " + fileName, e);
         }
