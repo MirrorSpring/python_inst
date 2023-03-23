@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -272,9 +271,11 @@ class _BoardPageState extends State<BoardPage> {
     return heartbeat;
   } //
 
+  //채팅방이 이미 있는지 확인하는 메소드
   checkRoomExist(String userId, String userName) async {
     FirebaseFirestore fs = FirebaseFirestore.instance;
 
+    // 두 유저 정보가 포함되어 있는지 확인합니다.
     final Query query1 = fs
         .collection('chatroom')
         .where("sendUserId", isEqualTo: StaticUser.userId)
@@ -293,7 +294,7 @@ class _BoardPageState extends State<BoardPage> {
 
     print(count1 + count2);
 
-    // 이미 존재하는 채팅방이라면 Static에 채팅방 문서 id 넘겨주기
+    // 이미 존재하는 채팅방이라면 Static에 채팅방 문서 id, 유저 정보, post id 넘겨주기
     if (chatRoomExist) {
       print('이미 채팅방이 존재!');
       for (var doc in [querySnapshot1.docs, querySnapshot2.docs]) {
@@ -319,13 +320,13 @@ class _BoardPageState extends State<BoardPage> {
         ),
       );
     } else {
-      // 존재하지 않는다면 빈 채팅방 페이지만 띄우기
+      // 존재하지 않는다면 빈 채팅방 페이지만 띄우기: chatRoomId = none으로 넘겨줌
+      // 유저 정보, poId를 같이 넘깁니다.
       print("채팅방이 존재하지 않으므로 빈 페이지를 띄웁니다!");
       StaticChat.chatRoomId = "none";
       StaticChat.chatUserIds = [StaticUser.userId, userId];
       StaticChat.chatUserNames = [StaticUser.userName, userName];
       StaticChat.boardId = widget.poId;
-      // StaticChat.chatRoomId = "";
       Navigator.push(
         context,
         MaterialPageRoute(

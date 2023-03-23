@@ -1,9 +1,6 @@
 import 'package:dl_flutter_app/DataHandler/post_handler.dart';
-import 'package:dl_flutter_app/Model/board/post_model.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import '../../View/review/review_page.dart';
+import 'package:intl/intl.dart';
 
 class ChatFloatingBar extends StatefulWidget {
   final String userId;
@@ -20,15 +17,12 @@ class ChatFloatingBar extends StatefulWidget {
 }
 
 class _ChatFloatingBarState extends State<ChatFloatingBar> {
-  // late List result;
   late PostHandler handler;
 
   @override
   void initState() {
     super.initState();
-    // result = [];
     handler = PostHandler();
-    // getPostDetail(widget.poId);
   }
 
   @override
@@ -60,10 +54,22 @@ class _ChatFloatingBarState extends State<ChatFloatingBar> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('${snapshot.data![0]['poTitle']}'),
-                            Text('${snapshot.data![0]['poPrice']}원'),
-                            Text(snapshot.data![0]['poState'] == 0
-                                ? "판매중"
-                                : "거래완료"),
+                            // 천단위 쉼표를 위해 number format
+                            Text(
+                                '${NumberFormat('###,###,###,###').format(int.parse(snapshot.data![0]['poPrice'])).replaceAll(' ', '')}원'),
+                            Container(
+                              decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(5.0) // POINT
+                                      ),
+                                  color: Colors.amber),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                child: Text(snapshot.data![0]['poState'] == 0
+                                    ? "판매중"
+                                    : "거래완료"),
+                              ),
+                            ),
                           ],
                         ),
                       ],
