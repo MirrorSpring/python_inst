@@ -73,154 +73,150 @@ class _BoardPageState extends State<BoardPage> {
           return const CircularProgressIndicator();
           // 비어있으면 빙글빙글 돌리기
         } else {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Stack(children: [
-              Column(
-                children: [
-                  Container(
-                      color: Colors.white,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 255,
-                      child: Column(
-                        children: [
-                          Image.network(
-                            "http://localhost:8080/images/$text",
-                            fit: BoxFit.fill,
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            height: 250,
-                          ),
-                        ],
-                      )),
-                  Container(
+          return Stack(children: [
+            Column(
+              children: [
+                Container(
                     color: Colors.white,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 70,
-                    child: Row(
-                      children: [
-                        Text("${widget.poUser} \n${widget.userAddress}",
-                            style: const TextStyle(fontSize: 20)),
-                        // Text("No : ${widget.poId}"),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.35,
-                        ),
-                        Text("${widget.userReliability}'C",
-                            style: const TextStyle(fontSize: 20)),
-                        imagetemp.tempImage(temp),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    color: Colors.white,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 60,
+                    width: MediaQuery.of(context).size.width * 1,
+                    height: MediaQuery.of(context).size.height * 0.4,
                     child: Column(
                       children: [
-                        Text(
-                          widget.poTitle,
+                        Image.network(
+                          "http://localhost:8080/images/$text",
+                          fit: BoxFit.fill,
+                          width: MediaQuery.of(context).size.width * 1,
+                          height: MediaQuery.of(context).size.height * 0.4,
+                        ),
+                      ],
+                    )),
+                Container(
+                  color: Colors.white,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: 70,
+                  child: Row(
+                    children: [
+                      Text("${widget.poUser} \n${widget.userAddress}",
+                          style: const TextStyle(fontSize: 20)),
+                      // Text("No : ${widget.poId}"),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                      ),
+                      Text("${widget.userReliability}'C",
+                          style: const TextStyle(fontSize: 20)),
+                      imagetemp.tempImage(temp),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  color: Colors.white,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: 60,
+                  child: Column(
+                    children: [
+                      Text(
+                        widget.poTitle,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: MediaQuery.of(context).size.width * 0.3,
+                  // decoration: BoxDecoration(
+                  //   border: Border.all(color: Colors.black, width: 0.5),
+                  // ),
+                  child: Column(
+                    children: [
+                      Text(
+                        widget.poContent,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            side: const BorderSide(width: 2)),
+                        onPressed: () {
+                          //
+                        },
+                        child: const Text("신고하기",
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 20)),
+                      ),
+                      Text("   관심 : ${widget.poHeart}  조회 : ${widget.poViews}",
                           style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+                              color: Colors.black, fontSize: 15)),
+                    ],
                   ),
-                  Container(
-                    color: Colors.white,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: MediaQuery.of(context).size.width * 0.55,
-                    // decoration: BoxDecoration(
-                    //   border: Border.all(color: Colors.black, width: 0.5),
-                    // ),
-                    child: Column(
-                      children: [
-                        Text(
-                          widget.poContent,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Row(
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              side: const BorderSide(width: 2)),
-                          onPressed: () {
-                            //
-                          },
-                          child: const Text("신고하기",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 20)),
-                        ),
-                        Text(
-                            "   관심 : ${widget.poHeart}  조회 : ${widget.poViews}",
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 15)),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              // Positioned(
-              //   bottom: 0,
-              //   child: Row(
-              //     children: [
-              //       Container(
-              //         width: 60,
-              //         height: 60,
-              //         decoration: const BoxDecoration(
-              //           border: Border(
-              //             right: BorderSide(color: Colors.black, width: 0.5),
-              //           ),
-              //         ),
-              //         child: IconButton(
-              //           onPressed: () {
-              //             heartState = !heartState;
-              //             setState(() {});
-              //             heartState ? loveHeart() : brokenHeart();
-              //           },
-              //           icon: heartState ? const Icon(Icons.favorite) : heart,
-              //           color: Colors.red,
-              //         ),
-              //       ),
-              //       Container(
-              //         width: MediaQuery.of(context).size.width * 0.5,
-              //         height: 80,
-              //         child: Row(
-              //           children: [
-              //             Text(
-              //               "   가격 :  ${widget.poPrice}",
-              //               style: const TextStyle(
-              //                   fontSize: 20, fontWeight: FontWeight.bold),
-              //             ),
-              //             // 채팅하기 누르면 1대1 채팅방으로 이동
-              //           ],
-              //         ),
-              //       ),
-              //       ElevatedButton(
-              //         style: ElevatedButton.styleFrom(
-              //             backgroundColor: Colors.white,
-              //             side: const BorderSide(width: 2)),
-              //         onPressed: () {
-              //           //
-              //         },
-              //         child: const Text(
-              //           "채팅하기",
-              //           style: TextStyle(color: Colors.black, fontSize: 20),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ), // == 버튼 로우 ==
-            ]), // 전체 Column
-          );
+                ),
+              ],
+            ),
+            // Positioned(
+            //   bottom: 0,
+            //   child: Row(
+            //     children: [
+            //       Container(
+            //         width: 60,
+            //         height: 60,
+            //         decoration: const BoxDecoration(
+            //           border: Border(
+            //             right: BorderSide(color: Colors.black, width: 0.5),
+            //           ),
+            //         ),
+            //         child: IconButton(
+            //           onPressed: () {
+            //             heartState = !heartState;
+            //             setState(() {});
+            //             heartState ? loveHeart() : brokenHeart();
+            //           },
+            //           icon: heartState ? const Icon(Icons.favorite) : heart,
+            //           color: Colors.red,
+            //         ),
+            //       ),
+            //       Container(
+            //         width: MediaQuery.of(context).size.width * 0.5,
+            //         height: 80,
+            //         child: Row(
+            //           children: [
+            //             Text(
+            //               "   가격 :  ${widget.poPrice}",
+            //               style: const TextStyle(
+            //                   fontSize: 20, fontWeight: FontWeight.bold),
+            //             ),
+            //             // 채팅하기 누르면 1대1 채팅방으로 이동
+            //           ],
+            //         ),
+            //       ),
+            //       ElevatedButton(
+            //         style: ElevatedButton.styleFrom(
+            //             backgroundColor: Colors.white,
+            //             side: const BorderSide(width: 2)),
+            //         onPressed: () {
+            //           //
+            //         },
+            //         child: const Text(
+            //           "채팅하기",
+            //           style: TextStyle(color: Colors.black, fontSize: 20),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ), // == 버튼 로우 ==
+          ]);
         }
       },
     );
