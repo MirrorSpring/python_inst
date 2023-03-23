@@ -31,6 +31,9 @@ public interface modelMapper {
 	@Select("SELECT poId,poHeart,poTitle,poContent,poPrice,poImage01,poImage02,poImage03,poViews,poState,poUser,U_userId,userAddress,userReliability, poUpDate, DATE_FORMAT(poUpDate, '%H:%i:%s') AS timeonly FROM deeplearning.post as p , deeplearning.upload as u, deeplearning.user as us where p.poId = u.P_poId and u.U_userId = us.userId and poDelDate is null order by poUpDate desc")
 	List<Join_PostUploadModel> getboardModel();
 	
+	@Select("select * from deeplearning.post where poId = #{poId}")
+	List<PostModel> getPostOne(@Param("poId")int poId);
+	
 	@Insert("INSERT INTO deeplearning.review (reText, reInDate, reStarRating, to_userId, from_userId1) VALUES (#{reText}, now(), #{reStarRating}, #{to_userId}, #{from_userId1})")
 	int insertReview(@Param("to_userId")String to_userId, @Param("from_userId1")String from_userId1, @Param("reText")String reText, @Param("reStarRating")int reStarRating);
 	

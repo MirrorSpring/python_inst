@@ -1,7 +1,7 @@
-import 'package:dl_flutter_app/View/userlist_page.dart';
+import 'package:dl_flutter_app/View/chat/userlist_page.dart';
 import 'package:flutter/material.dart';
 
-import 'chatlist_page.dart';
+import 'chat/chatlist_page.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});

@@ -1,8 +1,13 @@
 import 'dart:convert';
 
 // import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import '../../Model/Chat/static_chat.dart';
+import '../../Model/User/static_user.dart';
+import '../../View/chat/chatroom_page.dart';
 
 class BoardPage extends StatefulWidget {
   const BoardPage({
@@ -17,6 +22,7 @@ class BoardPage extends StatefulWidget {
     required this.poViews,
     // required this.initdate,poImage1
     required this.poUser,
+    required this.poUserId,
     required this.userAddress,
     required this.userReliability,
   });
@@ -29,6 +35,7 @@ class BoardPage extends StatefulWidget {
   // final String poImage2;
   final int poViews;
   final String poUser;
+  final String poUserId;
   final String userAddress;
   final int userReliability;
   // final int poPrice;
@@ -179,7 +186,16 @@ class _BoardPageState extends State<BoardPage> {
                           // 채팅하기 누르면 1대1 채팅방으로 이동
                           ElevatedButton(
                             onPressed: () {
-                              //
+                              StaticChat.chatUserIds = [
+                                StaticUser.userId,
+                                widget.poUserId
+                              ];
+                              StaticChat.chatUserNames = [
+                                StaticUser.userName,
+                                widget.poUser
+                              ];
+
+                              checkRoomExist(widget.poUserId, widget.poUser);
                             },
                             child: const Text("채팅하기"),
                           ),
@@ -255,6 +271,69 @@ class _BoardPageState extends State<BoardPage> {
     }
     return heartbeat;
   } //
+
+  checkRoomExist(String userId, String userName) async {
+    FirebaseFirestore fs = FirebaseFirestore.instance;
+
+    final Query query1 = fs
+        .collection('chatroom')
+        .where("sendUserId", isEqualTo: StaticUser.userId)
+        .where("receiveUserId", isEqualTo: userId);
+
+    final Query query2 = fs
+        .collection("chatroom")
+        .where("sendUserId", isEqualTo: userId)
+        .where("receiveUserId", isEqualTo: StaticUser.userId);
+
+    final QuerySnapshot querySnapshot1 = await query1.get();
+    final QuerySnapshot querySnapshot2 = await query2.get();
+    final int count1 = querySnapshot1.size;
+    final int count2 = querySnapshot2.size;
+    final bool chatRoomExist = (count1 + count2) == 0 ? false : true;
+
+    print(count1 + count2);
+
+    // 이미 존재하는 채팅방이라면 Static에 채팅방 문서 id 넘겨주기
+    if (chatRoomExist) {
+      print('이미 채팅방이 존재!');
+      for (var doc in [querySnapshot1.docs, querySnapshot2.docs]) {
+        for (var document in doc) {
+          StaticChat.chatRoomId =
+              document.id.isEmpty ? StaticChat.chatRoomId : document.id;
+          StaticChat.chatUserIds = document['userIds'] == []
+              ? StaticChat.chatUserIds
+              : document['userIds'];
+          StaticChat.chatUserNames = document['userNames'] == []
+              ? StaticChat.chatUserNames
+              : document['userNames'];
+          StaticChat.boardId = widget.poId;
+          print('Document ID: ${document.id}');
+          print('userIds: ${StaticChat.chatUserIds}');
+          print('userNames: ${StaticChat.chatUserNames}');
+        }
+      }
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatRoomPage(),
+        ),
+      );
+    } else {
+      // 존재하지 않는다면 빈 채팅방 페이지만 띄우기
+      print("채팅방이 존재하지 않으므로 빈 페이지를 띄웁니다!");
+      StaticChat.chatRoomId = "none";
+      StaticChat.chatUserIds = [StaticUser.userId, userId];
+      StaticChat.chatUserNames = [StaticUser.userName, userName];
+      StaticChat.boardId = widget.poId;
+      // StaticChat.chatRoomId = "";
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatRoomPage(),
+        ),
+      );
+    }
+  }
 }
 
 /// END

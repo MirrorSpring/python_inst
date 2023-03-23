@@ -7,6 +7,7 @@ class ChatRoom {
   final List userNames;
   final String receiveUserId;
   final String sendUserId;
+  final int poId;
 
   ChatRoom({
     required this.chatRoomId,
@@ -17,5 +18,6 @@ class ChatRoom {
     required this.userNames,
     required this.receiveUserId,
     required this.sendUserId,
+    required this.poId,
   });
 }
