@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import '../Model/User/users.dart';
 import 'board/Declaration.dart';
 import 'board/homeboard.dart';
 import 'package:http/http.dart' as http;
@@ -18,6 +21,14 @@ class _BoardListPageState extends State<BoardListPage> {
   late List data = [];
   late int poId = 0;
   Boarder boardstartI = Boarder();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("user: ${UserModel2.userId}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
