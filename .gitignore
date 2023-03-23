@@ -352,3 +352,6 @@ pyrightconfig.json
 .jpeg
 .png
 .classpath
+/Python/Data
+*.npy
+*.h3
