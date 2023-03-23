@@ -2,7 +2,6 @@ package com.javalec.base.Controller;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +27,12 @@ public class boardController {
 	@GetMapping("/post/alljoin_upload")
 	public List<Join_PostUploadModel> getboardModel() {
 		return mapper.getboardModel();
+	}
+	
+	// post 하나만 select
+	@GetMapping("/post/one/{poId}")
+	public List<PostModel> getPostOne(@PathVariable("poId")int poId) {
+		return mapper.getPostOne(poId);
 	}
 
 	

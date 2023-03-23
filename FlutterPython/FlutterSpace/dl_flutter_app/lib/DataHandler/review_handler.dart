@@ -39,15 +39,4 @@ class ReviewHandler {
     print("2. select reliability: $dataConvertedJSON");
     return dataConvertedJSON;
   }
-
-  // 별점을 받은 유저의 reliability update
-  // Future updateReliability(String toUserId) async {
-  //   var url = Uri.parse(
-  //       "http://localhost:8080/user/reliability/$toUserId?to_userId=$toUserId");
-  //   var response = await http.get(url);
-
-  //   var dataConvertedJSON = json.decode(utf8.decode(response.bodyBytes));
-  //   print("2. select reliability: $dataConvertedJSON");
-  //   return dataConvertedJSON;
-  // }
 }

@@ -4,4 +4,6 @@ class StaticChat {
   static List chatUserNames = [];
 
   static bool chatState = false;
+
+  static int boardId = 0;
 }

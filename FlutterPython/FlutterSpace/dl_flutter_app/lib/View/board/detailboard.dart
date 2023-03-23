@@ -90,6 +90,7 @@ class _PageDetailState extends State<PageDetail> {
                 // poImage2: board.poImage02,
                 poViews: board.poViews,
                 poUser: board.poUser,
+                poUserId: getCurrentUserId(),
                 userAddress: board.userAddress,
                 userReliability: board.userReliability),
             // CommandPage

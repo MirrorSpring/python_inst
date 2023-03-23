@@ -1,10 +1,9 @@
 import 'package:dl_flutter_app/View/boardlist_page.dart';
-import 'package:dl_flutter_app/View/chatlist_page.dart';
+import 'package:dl_flutter_app/View/chat/chatlist_page.dart';
 import 'package:dl_flutter_app/View/my_page.dart';
 import 'package:flutter/material.dart';
 
 import 'View/map_page.dart';
-import 'View/navigation.dart';
 
 class Tabbar extends StatefulWidget {
   const Tabbar({super.key});
@@ -67,7 +66,7 @@ class _TabbarState extends State<Tabbar> {
       body: <Widget>[
         const BoardListPage(),
         const MapPage(),
-        const Navigation(),
+        const ChatListPage(),
         const MyPage(),
       ][currentPageIndex],
     );
