@@ -1,0 +1,5 @@
+*.png
+*.h5
+*.jpg
+/Data/**/*.jpg
+*.npy
