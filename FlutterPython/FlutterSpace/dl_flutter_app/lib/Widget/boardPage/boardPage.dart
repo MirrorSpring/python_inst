@@ -56,7 +56,7 @@ class _BoardPageState extends State<BoardPage> {
   late String userId = "";
   late int temp;
   late Color buttonColoc = Colors.white;
-  late String buttonText = "판매완료";
+  late String buttonText = "상태변경";
   @override
   void initState() {
     // TODO: implement initState
@@ -178,9 +178,6 @@ class _BoardPageState extends State<BoardPage> {
   // 작성한 게시글이면 버튼 바꿔서 출력. /post/poState
   detailButton(userId) {
     String useridd = userId;
-    print(userId);
-    print("==========");
-    print(poUserId == useridd);
     if (poUserId == useridd) {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(

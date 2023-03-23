@@ -268,6 +268,8 @@ class _HomeboardState extends State<Homeboard> {
     // heartbeat == 0 ? heartState = false : "";
     if (heartbeat2 == 1) {
       heartState2 = true;
+    } else {
+      heartState2 = false;
     }
     return heartState2;
   } //

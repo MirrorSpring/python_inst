@@ -45,7 +45,7 @@ class _PageDetailState extends State<PageDetail> {
   @override
   Widget build(BuildContext context) {
     // 유저가 게시글 작성자인지 확인
-    bool isCurrentUserPostAuthor = board.u_userId == getCurrentUserId();
+    bool isCurrentUserPostAuthor = userId == getCurrentUserId();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -57,7 +57,7 @@ class _PageDetailState extends State<PageDetail> {
         //   style: TextStyle(color: Colors.black),
         // ),
         actions: [
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.35,
             child: const Text(
               "작성글",
@@ -73,7 +73,9 @@ class _PageDetailState extends State<PageDetail> {
                 alert.Alert(context, P_poId);
               },
               icon: const Icon(Icons.delete),
-            ),
+            )
+          else
+            SizedBox(width: MediaQuery.of(context).size.width * 0.12),
           if (isCurrentUserPostAuthor)
             IconButton(
               onPressed: () {
@@ -93,6 +95,8 @@ class _PageDetailState extends State<PageDetail> {
               },
               icon: const Icon(Icons.restore_page),
             )
+          else
+            SizedBox(width: MediaQuery.of(context).size.width * 0.12),
         ],
       ),
       body: Stack(
