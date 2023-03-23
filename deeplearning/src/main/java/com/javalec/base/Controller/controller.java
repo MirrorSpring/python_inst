@@ -25,6 +25,12 @@ public class controller {
 		this.mapper = mapper;
 	}
 	
+	// user insert
+	@GetMapping("/user/insert/{userId}")
+	public void insertUser(@PathVariable("userId")String userId, @RequestParam("userName")String userName, @RequestParam("userPw")String userPw, @RequestParam("userAddress")String userAddress) {
+		mapper.insertUser(userId, userName, userPw, userAddress);
+	}
+	
 	@GetMapping("/review/write/{to_userId}/{from_userId1}")
 	public void insertReview(@PathVariable("to_userId")String to_userId, @PathVariable("from_userId1")String from_userId1, @RequestParam("reText")String reText, @RequestParam("reStarRating")int reStarRating) {
 		mapper.insertReview(to_userId, from_userId1, reText, reStarRating);

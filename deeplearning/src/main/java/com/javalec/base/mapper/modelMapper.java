@@ -22,6 +22,11 @@ public interface modelMapper {
 	// EX ) INSERT INTO user(userName) VALUES (#{userName})
 	// Test
 	// Test
+	
+	// insert user
+	@Insert("insert into deeplearning.user(userId, userName, userPw, userAddress, userInDate) values (#{userId}, #{userName}, #{userPw}, #{userAddress}, now())")
+	int insertUser(@Param("userId")String userId, @Param("userName")String userName, @Param("userPw")String userPw, @Param("userAddress")String userAddress);
+	
 	@Select("SELECT * FROM user")
 	UserModel getuserModelInformation();
 	

@@ -275,7 +275,7 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
     print(userName);
     print(userAddress);
     print('======회원정보=======');
-    getJSONData();
+    insertUser();
   }
 
   //function
@@ -298,10 +298,24 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
   }
 
 // MySql 에 넣는 메소드 ------------------(미완성)
-  getJSONData() async {
+  // getJSONData() async {
+  //   var url = Uri.parse(
+  //       'http://localhost:8080/DLFlutter/user_insert.jsp?userId=$userId&userPw=$userPw&userAddress=$userAddress&userName=$userName');
+  //   await http.get(url);
+  // }
+
+  Future<bool> insertUser() async {
+    print("1. insert review");
+    // String userId = userId;
+    // String userPw = userPw;
+    // String fromUserId1 = StaticUser.userId;
+
     var url = Uri.parse(
-        'http://localhost:8080/DLFlutter/user_insert.jsp?userId=$userId&userPw=$userPw&userAddress=$userAddress&userName=$userName');
+        'http://localhost:8080/user/insert/$userId?userId=$userId&userPw=$userPw&userAddress=$userAddress&userName=$userName');
     await http.get(url);
+
+    // await updateReliability();
+    return true;
   }
 
 // 위도경도에 따른 행정구명 받는 메소드
