@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:dl_flutter_app/Model/User/static_user.dart';
 import 'package:dl_flutter_app/Widget/Alert/Alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +25,7 @@ class _InsertPageState extends State<InsertPage> {
   //
   late String searchText = "";
   //
+  late String userId = "";
   late bool insertBoard = false;
   final ImagePicker _picker = ImagePicker();
   Alertclass gotocalss = Alertclass();
@@ -42,6 +44,7 @@ class _InsertPageState extends State<InsertPage> {
   @override
   void initState() {
     super.initState();
+    userId = StaticUser.userName;
   }
 
   boarderTextStyle(Color? color) {
@@ -220,21 +223,21 @@ class _InsertPageState extends State<InsertPage> {
     String poImage01 = image;
     int poViews = 0;
     int poState = 0;
-    String poUser = "kimdo";
+    String poUser = userId;
 
     var url = Uri.parse(
         "http://localhost:8080/post/insert?poHeart=$poHeart&poTitle=$poTitle" +
             "&poContent=$poContent&poPrice=$poPrice&poImage01=$poImage01&poViews=$poViews" +
             "&poState=$poState&poUser=$poUser");
     var response = await http.get(url);
-    SelectpostId(poTitle, poContent, price, poImage01);
+    SelectpostId(poTitle, poContent, price, poImage01, poUser);
     return 0;
   }
 
   // Post에 insert했으면 그 PoId를 가져와야 한다.
   // 똑같이 입력한 값을 가지고 select 해서 ID 찾아서 Upload로 넘기자
-  Future<int> SelectpostId(
-      String title, String content, String price, String image) async {
+  Future<int> SelectpostId(String title, String content, String price,
+      String image, String poUsers) async {
     int poHeart = 0;
     String poTitle = title;
     String poContent = content;
@@ -242,7 +245,7 @@ class _InsertPageState extends State<InsertPage> {
     String poImage01 = image;
     int poViews = 0;
     int poState = 0;
-    String poUser = "kimdo";
+    String poUser = poUsers;
 
     var url = Uri.parse(
         "http://localhost:8080/post/select/postId?poHeart=$poHeart&poTitle=$poTitle" +
@@ -251,16 +254,16 @@ class _InsertPageState extends State<InsertPage> {
     var respnse = await http.get(url);
     var poId = json.decode(utf8.decode(respnse.bodyBytes));
     // upload insert로 넘김.
-    makeUploadDate(poId);
+    makeUploadDate(poId, poUser);
     return poId;
   }
 
   // uploadInsert
-  Future<int> makeUploadDate(int id) async {
+  Future<int> makeUploadDate(int id, String poUser) async {
     // int poHeart = 0;
     await Future.delayed(const Duration(seconds: 4));
     int poId = id;
-    String U_userId = "korea";
+    String U_userId = poUser;
     var url = Uri.parse("http://localhost:8080/post/views/$poId/$U_userId");
     await http.get(url);
     // ignore: use_build_context_synchronously
