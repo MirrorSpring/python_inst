@@ -337,9 +337,10 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
 
   Future<bool> insertUser() async {
     print("1. insert review");
+    var userDocId = FirebaseAuth.instance.currentUser?.uid;
 
     var url = Uri.parse(
-        'http://localhost:8080/user/insert/$userId?userId=$userId&userPw=$userPw&userAddress=$userAddress&userName=$userName');
+        'http://localhost:8080/user/insert/$userDocId?userId=$userId&userPw=$userPw&userAddress=$userAddress&userName=$userName');
     await http.get(url);
 
     return true;
