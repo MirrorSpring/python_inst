@@ -61,7 +61,7 @@ class _HomeboardState extends State<Homeboard> {
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           return Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(6.0),
                             child: GestureDetector(
                               onTap: () {
                                 poId = data[index]['poId'];
@@ -101,7 +101,6 @@ class _HomeboardState extends State<Homeboard> {
                               child: SingleChildScrollView(
                                 controller: scroller,
                                 // physics: const AlwaysScrollableScrollPhysics(),
-                                padding: const EdgeInsets.all(1),
                                 child: Column(
                                   children: [
                                     Row(
@@ -112,7 +111,10 @@ class _HomeboardState extends State<Homeboard> {
                                                   .size
                                                   .width *
                                               0.25,
-                                          height: 110,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.15,
                                           child: Image.network(
                                             "http://localhost:8080/images/${data[index]['poImage01']}",
                                             // width: 90,
@@ -147,12 +149,6 @@ class _HomeboardState extends State<Homeboard> {
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       maxLines: 2,
-                                                      //         .toString()
-                                                      //         .length >=
-                                                      //     16
-                                                      // ? '${data[index]['poTitle'].toString().substring(0, 16)}...'
-                                                      // // '조회수 : ${data[index]['poViews']}'
-                                                      // : "${data[index]['poTitle']}",
                                                       style: const TextStyle(
                                                           fontSize: 17,
                                                           fontWeight:
@@ -166,12 +162,8 @@ class _HomeboardState extends State<Homeboard> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                      // data[index]['poUser'].toString().length >= 25 ?
-                                                      // '${data[index]['poUser']} \n'
                                                       "${data[index]['userAddress']} \n"
-                                                      "${data[index]['poUpDate']}"
-                                                      // "${data[index]['poHeart']}"
-                                                      ),
+                                                      "${data[index]['poUpDate']}"),
                                                 ],
                                               ),
                                               Row(
@@ -194,8 +186,16 @@ class _HomeboardState extends State<Homeboard> {
                                                     MainAxisAlignment.end,
                                                 children: [
                                                   data[index]["poState"] != 0
-                                                      ? const Text("판매완료")
-                                                      : const Text("판매중"),
+                                                      ? const Text(
+                                                          "판매완료",
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .blueGrey),
+                                                        )
+                                                      : const Text("판매중",
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .black)),
                                                   data[index]["poHeart"] != 0
                                                       ? Row(
                                                           children: [

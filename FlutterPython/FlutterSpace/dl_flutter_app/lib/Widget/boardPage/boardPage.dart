@@ -51,11 +51,11 @@ class _BoardPageState extends State<BoardPage> {
   late Icon heart = const Icon(Icons.favorite_border);
   late String text = widget.poImage1;
   late int poId = widget.poId;
-  // late bool heartState = widget.heartState;
+  late String poUserId = widget.poUserId;
   late String userId = "korea";
-  // late int heartbeat = 0;
   late int temp;
-  // late Uri url = '';
+  late Color buttonColoc = Colors.white;
+  late String buttonText = "판매완료";
   @override
   void initState() {
     // TODO: implement initState
@@ -66,7 +66,6 @@ class _BoardPageState extends State<BoardPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      // StreamBuilder(
       future: imageslect(),
       builder: (context, snapshot) {
         if (snapshot.hasData == false) {
@@ -78,28 +77,29 @@ class _BoardPageState extends State<BoardPage> {
             Column(
               children: [
                 Container(
-                    color: Colors.white,
+                  color: Colors.white,
+                  width: MediaQuery.of(context).size.width * 1,
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  child: Image.network(
+                    "http://localhost:8080/images/$text",
+                    fit: BoxFit.fill,
                     width: MediaQuery.of(context).size.width * 1,
                     height: MediaQuery.of(context).size.height * 0.4,
-                    child: Column(
-                      children: [
-                        Image.network(
-                          "http://localhost:8080/images/$text",
-                          fit: BoxFit.fill,
-                          width: MediaQuery.of(context).size.width * 1,
-                          height: MediaQuery.of(context).size.height * 0.4,
-                        ),
-                      ],
-                    )),
+                  ),
+                ),
                 Container(
-                  color: Colors.white,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    border: Border(
+                      bottom: BorderSide(color: Colors.black, width: 1),
+                    ),
+                  ),
                   width: MediaQuery.of(context).size.width * 0.9,
-                  height: 70,
+                  height: 60,
                   child: Row(
                     children: [
                       Text("${widget.poUser} \n${widget.userAddress}",
                           style: const TextStyle(fontSize: 20)),
-                      // Text("No : ${widget.poId}"),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.35,
                       ),
@@ -113,17 +113,18 @@ class _BoardPageState extends State<BoardPage> {
                   height: 5,
                 ),
                 Container(
-                  color: Colors.white,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    border: Border(
+                      bottom: BorderSide(color: Colors.black, width: 0.1),
+                    ),
+                  ),
                   width: MediaQuery.of(context).size.width * 0.9,
-                  height: 60,
-                  child: Column(
-                    children: [
-                      Text(
-                        widget.poTitle,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  height: 45,
+                  child: Text(
+                    widget.poTitle,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
@@ -133,31 +134,18 @@ class _BoardPageState extends State<BoardPage> {
                   // decoration: BoxDecoration(
                   //   border: Border.all(color: Colors.black, width: 0.5),
                   // ),
-                  child: Column(
-                    children: [
-                      Text(
-                        widget.poContent,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  child: Text(
+                    widget.poContent,
+                    style: const TextStyle(fontSize: 20),
                   ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Row(
                     children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(width: 2)),
-                        onPressed: () {
-                          //
-                        },
-                        child: const Text("신고하기",
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 20)),
-                      ),
+                      detailButton(),
+                      //
+
                       Text("   관심 : ${widget.poHeart}  조회 : ${widget.poViews}",
                           style: const TextStyle(
                               color: Colors.black, fontSize: 15)),
@@ -166,57 +154,6 @@ class _BoardPageState extends State<BoardPage> {
                 ),
               ],
             ),
-            // Positioned(
-            //   bottom: 0,
-            //   child: Row(
-            //     children: [
-            //       Container(
-            //         width: 60,
-            //         height: 60,
-            //         decoration: const BoxDecoration(
-            //           border: Border(
-            //             right: BorderSide(color: Colors.black, width: 0.5),
-            //           ),
-            //         ),
-            //         child: IconButton(
-            //           onPressed: () {
-            //             heartState = !heartState;
-            //             setState(() {});
-            //             heartState ? loveHeart() : brokenHeart();
-            //           },
-            //           icon: heartState ? const Icon(Icons.favorite) : heart,
-            //           color: Colors.red,
-            //         ),
-            //       ),
-            //       Container(
-            //         width: MediaQuery.of(context).size.width * 0.5,
-            //         height: 80,
-            //         child: Row(
-            //           children: [
-            //             Text(
-            //               "   가격 :  ${widget.poPrice}",
-            //               style: const TextStyle(
-            //                   fontSize: 20, fontWeight: FontWeight.bold),
-            //             ),
-            //             // 채팅하기 누르면 1대1 채팅방으로 이동
-            //           ],
-            //         ),
-            //       ),
-            //       ElevatedButton(
-            //         style: ElevatedButton.styleFrom(
-            //             backgroundColor: Colors.white,
-            //             side: const BorderSide(width: 2)),
-            //         onPressed: () {
-            //           //
-            //         },
-            //         child: const Text(
-            //           "채팅하기",
-            //           style: TextStyle(color: Colors.black, fontSize: 20),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ), // == 버튼 로우 ==
           ]);
         }
       },
@@ -232,56 +169,44 @@ class _BoardPageState extends State<BoardPage> {
     return url;
   }
 
-//   //
-//   // 좋아요 + 1
-//   Future loveHeart() async {
-//     int poId = widget.poId;
-//     var url =
-//         await Uri.parse('http://localhost:8080/post/heartPlus?poId=$poId');
-//     await http.get(url);
-//     // poHeart +1 해주고
-//     importWish(poId);
-//     // import wish userID, poId, update(now) 해주고
-//   }
+  // 작성한 게시글이면 버튼 바꿔서 출력. /post/poState
+  detailButton() {
+    if (poUserId == "korea") {
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            backgroundColor: buttonColoc, side: const BorderSide(width: 2)),
+        onPressed: () {
+          // 판매완료를 누르면
+          // 포스트 상태 state 에 +1 해준다. 왜? 0 = 판매중 1 = 판매완료로 하고잇음
+          StateChange();
 
-//   // 즐겨찾기 등록하기
-//   Future importWish(poId) async {
-//     var url = await Uri.parse(
-//         'http://localhost:8080/post/WishInsert?U_userId=$userId&P_poId=$poId');
-//     await http.get(url);
-//   }
+          setState(() {
+            buttonColoc = Colors.grey;
+            buttonText = "판매완료등록";
+          });
+        },
+        child: Text(buttonText,
+            style: TextStyle(color: Colors.black, fontSize: 20)),
+      );
+    } else {
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white, side: const BorderSide(width: 2)),
+        onPressed: () {
+          //
+        },
+        child: const Text(
+          "신고하기",
+          style: TextStyle(color: Colors.black, fontSize: 20),
+        ),
+      );
+    }
+  } //
 
-// // =======
-//   // 좋아요 1개 내리기
-//   Future brokenHeart() async {
-//     int poId = widget.poId;
-//     var url = await Uri.parse('http://localhost:8080/post/heartDiv?poId=$poId');
-//     await http.get(url);
-//     deleteWish(poId);
-//   } //
-
-//   // 즐겨찾기  삭제하기
-//   Future deleteWish(poId) async {
-//     // /deleteWish/{userId}/{poId}
-//     int poId = widget.poId;
-//     var url = await Uri.parse('http://localhost:8080/deleteWish/$userId/$poId');
-//     await http.get(url);
-//   }
-
-  // // 좋아요 즐겨찾기 등록한 게시물인지 체크해용
-  // Future<int> checkWish() async {
-  //   int poId = widget.poId;
-  //   var url =
-  //       await Uri.parse('http://localhost:8080/post/selectWishlist?poId=$poId');
-  //   var respnse = await http.get(url);
-  //   var dataConvertedJson = json.decode(utf8.decode(respnse.bodyBytes));
-  //   heartbeat = dataConvertedJson;
-  //   // heartbeat == 0 ? heartState = false : "";
-  //   if (heartbeat != 1) {
-  //     heartState = false;
-  //   }
-  //   return heartbeat;
-  // } //
+  Future StateChange() async {
+    var url = Uri.parse('http://localhost:8080/post/poState?poId=$poId');
+    await http.get(url);
+  }
 }
 
 /// END

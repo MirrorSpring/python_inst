@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:dl_flutter_app/Widget/Alert/Alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import '../../Widget/Alert/Snackbar.dart';
-import '../../tabbar.dart';
 
 class InsertPage extends StatefulWidget {
   const InsertPage({super.key});
@@ -26,19 +26,22 @@ class _InsertPageState extends State<InsertPage> {
   //
   late bool insertBoard = false;
   final ImagePicker _picker = ImagePicker();
+  Alertclass gotocalss = Alertclass();
   late String imagefile = "";
   Snackbar snackbar = Snackbar();
   late Response _response;
   late String url = "";
-  late Image cameraImage;
+  late Image cameraImage = Image.network(
+      "http://localhost:8080/images/CameraImage.png",
+      width: MediaQuery.of(context).size.width * 1,
+      height: MediaQuery.of(context).size.height * 0.4,
+      fit: BoxFit.fill);
   //
   late Object formData = 0;
   File? _image;
   @override
   void initState() {
     super.initState();
-    cameraImage = Image.network("http://localhost:8080/images/CameraImage.png",
-        width: 300, height: 240, fit: BoxFit.fill);
   }
 
   boarderTextStyle(Color? color) {
@@ -49,6 +52,16 @@ class _InsertPageState extends State<InsertPage> {
     );
   }
 
+  // gotoTapbar() {
+  //   return Navigator.pushAndRemoveUntil(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => Tabbar(),
+  //       ),
+  //       (route) => false);
+  // }
+
+  @override
   Widget build(BuildContext context) {
     // var response;
     return Scaffold(
@@ -58,72 +71,77 @@ class _InsertPageState extends State<InsertPage> {
         // padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            const SizedBox(
-              height: 60,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
             ),
-            // (취소) -- 내 물건 팔기 --  [완료]
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    // 취소가 되야 돼
-                    // 팝으로 넘어가는데 게시판 상태가 갱신이 안됨,
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.cancel_outlined,
-                    size: 30,
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Colors.black, width: 1),
+                ),
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      gotocalss.gotoTapbar(context);
+                    },
+                    icon: const Icon(
+                      Icons.cancel_outlined,
+                      size: 30,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  width: 75,
-                ),
-                Text(
-                  "판매 상품 등록",
-                  style: boarderTextStyle(Colors.black),
-                ),
-                const SizedBox(
-                  width: 75,
-                ),
-                TextButton(
-                  onPressed: () async {
-                    /// 사진 이미지를 선택해라.
-                    /// 사진 올리기를 하지 않았을경우 실행 X
-                    await patchUserProfileImage(formData);
-                    // 사진 이름을 imagefile에 저장
-                    String name = titleController.text;
-
-                    /// 제목, 가격, 내용, 사진이름을 모두 입력해야 통과
-                    if (titleController.text.isNotEmpty &&
-                        priceController.text.isNotEmpty &&
-                        contentController.text.isNotEmpty &&
-                        imagefile != "") {
-                      insertBoard = true;
-                      if (insertBoard == true) {
-                        await makeBoard(
-                            titleController.text,
-                            contentController.text,
-                            priceController.text,
-                            imagefile);
-                      }
-                    } else {
-                      insertBoard = false;
-                    }
-                    // snackbar 출력
-                    insertBoard
-                        ? snackbar.MySnackbar(context, "입력완료")
-                        : snackbar.MySnackbar(context, "입력실패");
-
-                    /// 1. 값 다 입력했는지 확인 및 정규화
-                    /// 2. true 일 때만 입력해야 됨
-                  },
-                  child: Text(
-                    "완료",
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.23,
+                  ),
+                  Text(
+                    "판매 상품 등록",
                     style: boarderTextStyle(Colors.black),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.19,
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      /// 사진 이미지를 선택해라.
+                      /// 사진 올리기를 하지 않았을경우 실행 X
+                      await patchUserProfileImage(formData);
+                      // 사진 이름을 imagefile에 저장
+                      String name = titleController.text;
+
+                      /// 제목, 가격, 내용, 사진이름을 모두 입력해야 통과
+                      if (titleController.text.isNotEmpty &&
+                          priceController.text.isNotEmpty &&
+                          contentController.text.isNotEmpty &&
+                          imagefile != "") {
+                        insertBoard = true;
+                        if (insertBoard == true) {
+                          await makeBoard(
+                              titleController.text,
+                              contentController.text,
+                              priceController.text,
+                              imagefile);
+                        }
+                      } else {
+                        insertBoard = false;
+                      }
+                      // snackbar 출력
+                      insertBoard
+                          ? snackbar.MySnackbar(context, "입력완료")
+                          : snackbar.MySnackbar(context, "입력실패");
+
+                      /// 1. 값 다 입력했는지 확인 및 정규화
+                      /// 2. true 일 때만 입력해야 됨
+                    },
+                    child: Text(
+                      "완료",
+                      style: boarderTextStyle(Colors.black),
+                    ),
+                  ),
+                ],
+              ),
             ),
+            // (취소) -- 내 물건 팔기 --  [완료]
             Container(
                 color: Colors.white,
                 width: MediaQuery.of(context).size.width * 1,
@@ -246,12 +264,7 @@ class _InsertPageState extends State<InsertPage> {
     var url = Uri.parse("http://localhost:8080/post/views/$poId/$U_userId");
     await http.get(url);
     // ignore: use_build_context_synchronously
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Tabbar(),
-        ),
-        (route) => false);
+    gotocalss.gotoTapbar(context);
     return 0;
   }
 

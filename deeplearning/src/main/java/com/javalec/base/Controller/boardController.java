@@ -114,6 +114,11 @@ public class boardController {
 	}
 	//SELECT Count(U_userId) From deeplearning.post as p, deeplearning.wish as w WHERE p.poId = w.P_poId and U_userId = "korea";
 
+	// 판매상태 변경 
+	@GetMapping("/post/poState")
+	public int postateUpdate(@RequestParam("poId") String Id) {
+		return mapper.postateUpdate(Id);
+	}
 
 //	searchBoard(@Param("search") String Search);
 }
