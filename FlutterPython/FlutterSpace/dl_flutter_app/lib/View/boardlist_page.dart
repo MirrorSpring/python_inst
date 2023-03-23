@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Model/User/static_user.dart';
@@ -28,9 +29,10 @@ class _BoardListPageState extends State<BoardListPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("static user id: ${StaticUser.userId}");
-    print("static user name: ${StaticUser.userName}");
-    print("auth id: ${FirebaseAuth.instance.currentUser?.uid}");
+    selectUserInfo();
+    // print("static user id: ${StaticUser.userId}");
+    // print("static user name: ${StaticUser.userName}");
+    // print("auth id: ${FirebaseAuth.instance.currentUser?.uid}");
     // print("auth: ${FirebaseAuth.instance.currentUser}");
     // print("auth: ${FirebaseAuth.instance.currentUser?.uid}");
     // print("auth: ${FirebaseAuth.instance.currentUser?.uid}");
@@ -90,4 +92,38 @@ class _BoardListPageState extends State<BoardListPage> {
       ),
     );
   } //
+
+  selectUserInfo() async {
+    String? uId = FirebaseAuth.instance.currentUser?.uid;
+
+    // final Query query = FirebaseFirestore.instance.collection('user').doc(uId).snapshots();
+    // final QuerySnapshot querySnapshot = await query.get();
+    // for (var document in querySnapshot.docs) {
+    //   print('로그인된 user docId를 select: ${document.id}');
+    //   // chatRoomId = document.id;
+    // }
+
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(uId)
+        .get()
+        .then((DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('데이터: ${documentSnapshot.data()}');
+        Map<String, dynamic>? data = documentSnapshot.data();
+
+        StaticUser.userId = uId!;
+        StaticUser.userName = data!['userName'];
+        StaticUser.userAddress = data['userAddress'];
+        StaticUser.userPw = data['userPw'];
+        StaticUser.userReliability = data['userReliability'];
+      } else {
+        print('Document does not exist on the database');
+      }
+
+      print("static user id: ${StaticUser.userId}");
+      print("static user name: ${StaticUser.userName}");
+      print("auth id: ${FirebaseAuth.instance.currentUser?.uid}");
+    });
+  }
 } // END
