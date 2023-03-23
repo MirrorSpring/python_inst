@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../Model/board/Boardmodel.dart';
 import '../../Widget/Alert/Alert.dart';
 import '../../Widget/boardPage/boardPage.dart';
-import '../../tabbar.dart';
 
 class PageDetail extends StatefulWidget {
   final board;
