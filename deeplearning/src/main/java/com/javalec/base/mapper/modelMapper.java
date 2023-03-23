@@ -24,7 +24,7 @@ public interface modelMapper {
 	// Test
 	
 	// insert user
-	@Insert("insert into deeplearning.user(userId, userName, userPw, userAddress, userInDate) values (#{userId}, #{userName}, #{userPw}, #{userAddress}, now())")
+	@Insert("insert into deeplearning.user(userId, userName, userPw, userAddress, userInDate, userReliability) values (#{userId}, #{userName}, #{userPw}, #{userAddress}, now(), 50)")
 	int insertUser(@Param("userId")String userId, @Param("userName")String userName, @Param("userPw")String userPw, @Param("userAddress")String userAddress);
 	
 	@Select("SELECT * FROM user")
