@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:dl_flutter_app/Model/User/static_user.dart';
 import 'package:dl_flutter_app/Widget/Alert/Alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,6 +41,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
   late bool insertBoard = false;
   late String imagefile = "";
   final ImagePicker _picker = ImagePicker();
+
   File? _image;
   late Image cameraImage = Image.network(
     "http://localhost:8080/images/$poimage",
@@ -260,7 +262,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
   Future<int> makemodifyDate(int id) async {
     // int poHeart = 0;
     int poId = id;
-    String U_userId = "korea";
+    String U_userId = StaticUser.userId;
     var url =
         Uri.parse("http://localhost:8080/post/modifyboard/$poId/$U_userId");
     var response = await http.get(url);

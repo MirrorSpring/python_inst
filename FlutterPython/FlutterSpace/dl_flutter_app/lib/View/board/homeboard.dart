@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dl_flutter_app/Model/User/static_user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -28,17 +29,16 @@ class _HomeboardState extends State<Homeboard> {
   var f = NumberFormat.currency(locale: 'ko_KR', symbol: '₩');
   late int heartbeat = 0;
   late int heartbeat2 = 0;
-  late String userid = "korea";
+  late String userid = "";
   late bool heartState = false;
   late bool heartState2 = false;
   @override
   void initState() {
     super.initState();
     searchText = widget.searchText;
+    userid = StaticUser.userId;
     setState(() {
-      if (userid != null) {
-        checkWish(userid);
-      }
+      checkWish(userid);
     });
   }
 
