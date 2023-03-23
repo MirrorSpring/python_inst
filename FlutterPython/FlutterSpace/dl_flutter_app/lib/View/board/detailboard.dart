@@ -97,7 +97,6 @@ class _PageDetailState extends State<PageDetail> {
             SingleChildScrollView(
               controller: scroller,
               physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(8),
               child: BoardPage(
                 heartState: heartState,
                 poId: board.poId,

@@ -55,7 +55,7 @@ class _InsertPageState extends State<InsertPage> {
       body: SingleChildScrollView(
         controller: scroller,
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(8),
+        // padding: const EdgeInsets.all(8),
         child: Column(
           children: [
             const SizedBox(
@@ -126,8 +126,8 @@ class _InsertPageState extends State<InsertPage> {
             ),
             Container(
                 color: Colors.white,
-                width: 300,
-                height: 250,
+                width: MediaQuery.of(context).size.width * 1,
+                height: MediaQuery.of(context).size.height * 0.4,
                 child: Column(
                   children: [
                     _image == null
@@ -135,14 +135,14 @@ class _InsertPageState extends State<InsertPage> {
                         : Image.file(
                             _image!,
                             fit: BoxFit.fill,
-                            width: 300,
-                            height: 250,
+                            width: MediaQuery.of(context).size.width * 1,
+                            height: MediaQuery.of(context).size.height * 0.4,
                           ),
                   ],
                 )),
             // 사진 올리는 버튼
             SizedBox(
-              width: 300,
+              width: MediaQuery.of(context).size.width * 1,
               height: 50,
               child: ElevatedButton(
                   onPressed: () {
@@ -174,12 +174,12 @@ class _InsertPageState extends State<InsertPage> {
                 ]),
             // 내용 (힌트로 작성법 설명)
             TextField(
-              maxLength: 400,
-              maxLines: 10,
+              maxLength: 200,
+              maxLines: 8,
               controller: contentController,
               decoration: const InputDecoration(
                   hintText: "게시글 내용을 작성해주세요",
-                  contentPadding: EdgeInsets.symmetric(vertical: 20)),
+                  contentPadding: EdgeInsets.symmetric(vertical: 2)),
             )
 
             // 거래 희망장소 (편의점 선택) -> 폴리움 할 수 있게
@@ -261,7 +261,7 @@ class _InsertPageState extends State<InsertPage> {
   Future<Object> imageToServe() async {
     var selectImage = await _picker.getImage(
       maxWidth: 300,
-      maxHeight: 250,
+      maxHeight: 300,
       source: ImageSource.gallery, //위치는 갤러리
     );
     if (selectImage != null) {
