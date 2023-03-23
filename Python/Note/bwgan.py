@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import tensorflow as tf
 
-class MyGAN:
+class BWGAN:
     number_of_data=1 #데이터 수
     img_width_size=100 #너비
     img_height_size=100 #높이
@@ -38,20 +38,15 @@ class MyGAN:
     
     #배치 데이터셋 만들기
     def makebatch(self,imgs):
-        train=np.zeros(self.number_of_data*self.img_height_size*self.img_width_size*self.channel,dtype=np.int32).reshape(self.number_of_data,self.img_height_size,self.img_width_size,self.channel)
+        train=np.zeros(self.number_of_data*self.img_height_size*self.img_width_size,dtype=np.int32).reshape(self.number_of_data,self.img_height_size,self.img_width_size)
         i=0
         for image in sorted(imgs):
             img=Image.open(image)
-            imgConverted=img.resize((self.img_height_size,self.img_width_size))
-            if self.channel==1:
-                imgConverted=imgConverted.convert('L')
+            imgConverted=img.convert('L')
+            imgConverted=imgConverted.resize((self.img_height_size,self.img_width_size))
             img=np.array(imgConverted,dtype=np.int32)
-            try:
-                train[i,:,:,:]=img
-                i+=1
-            except:
-                pass
-            
+            train[i,:,:]=img
+            i+=1
 
         x_train=train.reshape(train.shape[0],self.img_height_size,self.img_width_size,self.channel)
         X=(x_train-127.5)/127.5
@@ -83,9 +78,9 @@ class MyGAN:
         model.add(keras.layers.BatchNormalization())
         model.add(keras.layers.LeakyReLU())
         
-        model.add(keras.layers.Conv2DTranspose(self.channel, (5, 5), 
+        model.add(keras.layers.Conv2DTranspose(1, (5, 5), 
                                         strides=(2, 2), padding='same', activation='tanh'))
-        assert model.output_shape == (None, self.img_height_size, self.img_width_size,self.channel)
+        assert model.output_shape == (None, self.img_height_size, self.img_width_size, 1)
     
         return model
 
@@ -94,17 +89,17 @@ class MyGAN:
 
         model = keras.Sequential()
     
-        model.add(keras.layers.Conv2D(self.img_height_size*2, (5, 5), strides=2, padding='same',
-                       input_shape=[self.img_height_size, self.img_width_size, self.channel])) # input image size
+        model.add(keras.layers.Conv2D(self.img_height_size*2, (5, 5), strides=2, padding='same',  # 56 = 28 * 2
+                       input_shape=[self.img_height_size, self.img_width_size, 1])) # input image size
         model.add(keras.layers.LeakyReLU(0.2))
         model.add(keras.layers.Dropout(0.3))
 
-        model.add(keras.layers.Conv2D(self.img_height_size*4, (5, 5), strides=2, padding='same'))
+        model.add(keras.layers.Conv2D(self.img_height_size*4, (5, 5), strides=2, padding='same')) # 112 = 56 * 2
         model.add(keras.layers.LeakyReLU(0.2))
     
         model.add(keras.layers.Flatten())
     
-        model.add(keras.layers.Dense(self.img_height_size*4*2))
+        model.add(keras.layers.Dense(self.img_height_size*4*2)) # 224 = 112 * 2
         model.add(keras.layers.LeakyReLU(0.2))
         model.add(keras.layers.Dropout(0.3))
 
@@ -156,26 +151,23 @@ class MyGAN:
         
         i = 1
         for image in images:
-            image = image.reshape(self.img_width_size, self.img_height_size,self.channel)
+            image = image.reshape(self.img_width_size, self.img_height_size)
             plt.subplot(2, 5, i)
-            plt.imshow(image)
+            plt.imshow(image, cmap='gray')
             plt.axis('off')
             i+=1
-            
     
         plt.suptitle("Generated Images on EPOCH: %s" % epoch, fontsize = 25)
         plt.show()
     
     #훈련 시작
     def train(self,epochs=1000,show_freq=5):
+        
         for epoch in range(epochs):
             for image_batch in self.batch_data:
                 self.train_step(image_batch)
             if epoch%show_freq==0:
-                self.show_generated_images(self.total_epochs)
-            self.total_epochs+=1
-        self.show_generated_images('Final')
-        print('Done!')
+                self.show_generated_images(epoch)
 
     #이미지 생성 후 저장
     def saveimage(self,num_res,dirstr,prefix):
@@ -183,7 +175,7 @@ class MyGAN:
         images = self.generator.predict(test_noise)
         i=1
         for image in images:
-            img=Image.fromarray(((image)*127.5+127.5).astype('uint8').reshape(self.img_width_size,self.img_height_size,self.channel))
+            img=Image.fromarray(((image)*127.5+127.5).astype('uint8').reshape(100,100),'L')
             img.save(f'{dirstr}/{prefix}{i}.jpg', 'JPEG')
             i+=1
 
@@ -193,7 +185,7 @@ class MyGAN:
         plt.figure(figsize=figsize)
         images = self.generator.predict(test_noise)
         images = 0.5 * images + 0.5
-        image = images[0].reshape(self.img_width_size, self.img_height_size,self.channel)
-        plt.imshow(image)
+        image = images[0].reshape(self.img_width_size, self.img_height_size)
+        plt.imshow(image, cmap='gray')
         plt.axis('off')
         plt.show()
