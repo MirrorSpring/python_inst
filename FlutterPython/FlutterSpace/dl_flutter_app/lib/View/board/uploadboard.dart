@@ -39,7 +39,12 @@ class _UpdateBoradState extends State<UpdateBorad> {
   late String imagefile = "";
   final ImagePicker _picker = ImagePicker();
   File? _image;
-  late Image cameraImage;
+  late Image cameraImage = Image.network(
+    "http://localhost:8080/images/$poimage",
+    fit: BoxFit.fill,
+    width: MediaQuery.of(context).size.width * 0.9,
+    height: 250,
+  );
   late String poimage = widget.poImage;
   boarderTextStyle(Color? color) {
     return TextStyle(
@@ -54,142 +59,142 @@ class _UpdateBoradState extends State<UpdateBorad> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    cameraImage = Image.network(
-      "http://localhost:8080/images/$poimage",
-      fit: BoxFit.fill,
-      width: 300,
-      height: 250,
-    );
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 60,
-          ),
-          // (취소) -- 내 물건 팔기 --  [완료]
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  // 취소가 되야 돼
-                  // 팝으로 넘어가는데 게시판 상태가 갱신이 안됨,
-                  Navigator.pop(context);
-                },
-                icon: const Icon(
-                  Icons.cancel_outlined,
-                  size: 30,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            // (취소) -- 내 물건 팔기 --  [완료]
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    // 취소가 되야 돼
+                    // 팝으로 넘어가는데 게시판 상태가 갱신이 안됨,
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    Icons.cancel_outlined,
+                    size: 30,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                width: 79,
-              ),
-              Text(
-                "상품 등록 수정",
-                style: boarderTextStyle(Colors.black),
-              ),
-              const SizedBox(
-                width: 79,
-              ),
-              TextButton(
-                onPressed: () {
-                  /// 완료하면 인서트 해야 되는데
-                  String name = titleController.text;
-                  if (titleController.text.isNotEmpty &&
-                      priceController.text.isNotEmpty &&
-                      contentController.text.isNotEmpty &&
-                      imagefile != "") {
-                    insertBoard = true;
-                    if (insertBoard == true) {
-                      modifyBoard(
-                          widget.poId,
-                          titleController.text,
-                          contentController.text,
-                          priceController.text,
-                          imagefile);
-                      pushHome();
-                    }
-                  } else {
-                    insertBoard = false;
-                  }
-                  // snackbar 출력
-                  insertBoard
-                      ? snackbar.MySnackbar(context, "입력완료")
-                      : snackbar.MySnackbar(context, "다시입력해주세요");
-
-                  /// 1. 값 다 입력했는지 확인 및 정규화
-                  /// 2. true 일 때만 입력해야 됨
-                },
-                child: Text(
-                  "완료",
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.19,
+                ),
+                Text(
+                  "상품 등록 수정",
                   style: boarderTextStyle(Colors.black),
                 ),
-              ),
-            ],
-          ),
-          Container(
-              color: Colors.white,
-              width: 300,
-              height: 250,
-              child: Column(
-                children: [
-                  _image == null
-                      ? cameraImage
-                      : Image.file(
-                          _image!,
-                          fit: BoxFit.fill,
-                          width: 300,
-                          height: 250,
-                        ),
-                ],
-              )),
-          // 사진 올리는 버튼
-          SizedBox(
-            width: 300,
-            height: 50,
-            child: ElevatedButton(
-                onPressed: () {
-                  imageToServe();
-                  setState(() {});
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
+                // const SizedBox(
+                //   width: 79,
+                // ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.19,
                 ),
-                child: Text(
-                  "사진 올리기 ",
-                  style: boarderTextStyle(Colors.white),
-                )),
-          ),
-          // ===========
-          // 글 제목
-          TextField(
-            maxLength: 30,
-            controller: titleController,
-            decoration: const InputDecoration(hintText: "글 제목"),
-          ),
-          // 가격
-          TextField(
-              maxLength: 11,
-              controller: priceController,
-              decoration: const InputDecoration(hintText: "가격 : 숫자만 입력가능"),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp('[0-9]'))
-              ]),
-          // 내용 (힌트로 작성법 설명)
-          TextField(
-            maxLength: 400,
-            maxLines: 10,
-            controller: contentController,
-            decoration: const InputDecoration(
-                hintText: "게시글 내용을 작성해주세요",
-                contentPadding: EdgeInsets.symmetric(vertical: 20)),
-          )
+                TextButton(
+                  onPressed: () {
+                    /// 완료하면 인서트 해야 되는데
+                    String name = titleController.text;
+                    if (titleController.text.isNotEmpty &&
+                        priceController.text.isNotEmpty &&
+                        contentController.text.isNotEmpty &&
+                        imagefile != "") {
+                      insertBoard = true;
+                      if (insertBoard == true) {
+                        modifyBoard(
+                            widget.poId,
+                            titleController.text,
+                            contentController.text,
+                            priceController.text,
+                            imagefile);
+                        pushHome();
+                      }
+                    } else {
+                      insertBoard = false;
+                    }
+                    // snackbar 출력
+                    insertBoard
+                        ? snackbar.MySnackbar(context, "입력완료")
+                        : snackbar.MySnackbar(context, "다시입력해주세요");
 
-          // 거래 희망장소 (편의점 선택) -> 폴리움 할 수 있게
-          // 끝?
-        ],
+                    /// 1. 값 다 입력했는지 확인 및 정규화
+                    /// 2. true 일 때만 입력해야 됨
+                  },
+                  child: Text(
+                    "완료",
+                    style: boarderTextStyle(Colors.black),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+                color: Colors.white,
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: 250,
+                child: Column(
+                  children: [
+                    _image == null
+                        ? cameraImage
+                        : Image.file(
+                            _image!,
+                            fit: BoxFit.fill,
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            height: 250,
+                          ),
+                  ],
+                )),
+            // 사진 올리는 버튼
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: 50,
+              child: ElevatedButton(
+                  onPressed: () {
+                    imageToServe();
+                    setState(() {});
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                  ),
+                  child: Text(
+                    "사진 올리기 ",
+                    style: boarderTextStyle(Colors.white),
+                  )),
+            ),
+            // ===========
+            // 글 제목
+            TextField(
+              maxLength: 30,
+              controller: titleController,
+              decoration: const InputDecoration(hintText: "글 제목"),
+            ),
+            // 가격
+            TextField(
+                maxLength: 11,
+                controller: priceController,
+                decoration: const InputDecoration(hintText: "가격 : 숫자만 입력가능"),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp('[0-9]'))
+                ]),
+            // 내용 (힌트로 작성법 설명)
+            TextField(
+              maxLength: 400,
+              maxLines: 10,
+              controller: contentController,
+              decoration: const InputDecoration(
+                  hintText: "게시글 내용을 작성해주세요",
+                  contentPadding: EdgeInsets.symmetric(vertical: 20)),
+            )
+
+            // 거래 희망장소 (편의점 선택) -> 폴리움 할 수 있게
+            // 끝?
+          ],
+        ),
       ),
     );
   } ////

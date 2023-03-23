@@ -1,6 +1,7 @@
-import 'package:dl_flutter_app/DataHandler/post_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../../DataHandler/post_handler.dart';
 
 class ChatFloatingBar extends StatefulWidget {
   final String userId;

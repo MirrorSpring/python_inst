@@ -1,8 +1,8 @@
 import 'package:dl_flutter_app/View/boardlist_page.dart';
-import 'package:dl_flutter_app/View/chat/chatlist_page.dart';
 import 'package:dl_flutter_app/View/my_page.dart';
 import 'package:flutter/material.dart';
 
+import 'View/chat/chatlist_page.dart';
 import 'View/map_page.dart';
 
 class Tabbar extends StatefulWidget {
