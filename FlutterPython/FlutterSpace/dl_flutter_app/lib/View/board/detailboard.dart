@@ -11,7 +11,8 @@ import 'package:http/http.dart' as http;
 class PageDetail extends StatefulWidget {
   final board;
   final heartState2;
-  const PageDetail(this.board, this.heartState2, {super.key});
+  final userid;
+  const PageDetail(this.board, this.heartState2, this.userid, {super.key});
 
   @override
   State<PageDetail> createState() => _PageDetailState();
@@ -24,7 +25,7 @@ class _PageDetailState extends State<PageDetail> {
   late Board board;
   var alert = Alertclass();
   late bool heartState = widget.heartState2;
-  late String userId = StaticUser.userId;
+  late String userId = "";
   late int heartbeat = 0;
 
   @override
@@ -32,6 +33,8 @@ class _PageDetailState extends State<PageDetail> {
     super.initState();
     board = widget.board;
     // checkWish();
+    board.u_userId;
+    userId = widget.userid;
     print("=== 좋아요 한거면 true여야함.... ====");
     print(heartState);
     setState(() {
@@ -178,7 +181,8 @@ class _PageDetailState extends State<PageDetail> {
     // 현재 로그인한 사용자의 ID를 반환하는 함수
     // 이 함수는 실제로는 로그인 관련 로직을 구현해야 합니다.
     // 로그인할때 입력한거 저장해서 여기에 넣으면 될듯??
-    return StaticUser.userId; // 임시로 korea 반환하도록 구현한 예시입니다.
+    return board.u_userId;
+    ; // 임시로 korea 반환하도록 구현한 예시입니다.
   }
 
   //

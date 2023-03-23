@@ -1,3 +1,4 @@
+import 'package:dl_flutter_app/Model/User/static_user.dart';
 import 'package:dl_flutter_app/Model/mypage_list/list.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class _WishListState extends State<WishList> {
   void initState() {
     super.initState();
     handler = ListModel();
-    userId = 'zxc'; // 스태틱 변수(Id) 넣기
+    userId = StaticUser.userId; // 스태틱 변수(Id) 넣기
     poId = 1; // 스태틱 변수 넣기
   }
 
