@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dl_flutter_app/Model/User/static_user.dart';
 import 'package:dl_flutter_app/View/login/register_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import '../../Widget/Login/my_button.dart';
@@ -138,10 +141,12 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
-
+      // FirebaseAuth.instance.currentUser;
+      // print(FirebaseAuth.instance.currentUser);
+      selectUserInfo();
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
-//로딩화면끄기
+      //로딩화면끄기
       Navigator.pop(context);
       // Wrong email
       if (e.code == 'user-not-found') {
@@ -185,6 +190,39 @@ class _LoginPageState extends State<LoginPage> {
         );
       },
     );
+  }
+
+  selectUserInfo() async {
+    String? uId = FirebaseAuth.instance.currentUser?.uid;
+
+    // final Query query = FirebaseFirestore.instance.collection('user').doc(uId).snapshots();
+    // final QuerySnapshot querySnapshot = await query.get();
+    // for (var document in querySnapshot.docs) {
+    //   print('로그인된 user docId를 select: ${document.id}');
+    //   // chatRoomId = document.id;
+    // }
+
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(uId)
+        .get()
+        .then((DocumentSnapshot<Map<String, dynamic>> documentSnapshot) {
+      if (documentSnapshot.exists) {
+        print('데이터: ${documentSnapshot.data()}');
+        Map<String, dynamic>? data = documentSnapshot.data();
+
+        StaticUser.userId = uId!;
+        StaticUser.userName = data!['userName'];
+        StaticUser.userAddress = data['userAddress'];
+        StaticUser.userPw = data['userPw'];
+        StaticUser.userReliability = data['userReliability'];
+
+        // print('uId: $uId');
+        // StaticUser.userId = data;
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
   }
 
   //-function

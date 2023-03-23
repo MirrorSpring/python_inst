@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../Model/User/static_user.dart';
 import '../Model/User/users.dart';
 import 'board/Declaration.dart';
 import 'board/homeboard.dart';
@@ -26,7 +28,12 @@ class _BoardListPageState extends State<BoardListPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("user: ${UserModel2.userId}");
+    print("static user id: ${StaticUser.userId}");
+    print("static user name: ${StaticUser.userName}");
+    print("auth id: ${FirebaseAuth.instance.currentUser?.uid}");
+    // print("auth: ${FirebaseAuth.instance.currentUser}");
+    // print("auth: ${FirebaseAuth.instance.currentUser?.uid}");
+    // print("auth: ${FirebaseAuth.instance.currentUser?.uid}");
   }
 
   @override
