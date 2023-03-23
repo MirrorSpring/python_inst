@@ -72,18 +72,4 @@ class _BoardListPageState extends State<BoardListPage> {
       ),
     );
   } //
-
-//   // 검색
-//   // 2023 - 03 - 21 - 화요일
-//   // 박태권
-//   // searchboard() {}
-//   // 데이터를 초기화 한 후 게시글 출력
-//   // // 게시글 누르면 조회수 1 증가.
-//   // Future UpdateViews() async {
-//   //   // print(poId);
-//   //   var url = await Uri.parse('http://localhost:8080/post/views/$poId');
-//   //   await http.get(url);
-//   //   // print(url);
-//   //   return data;
-//   // }
 } // END

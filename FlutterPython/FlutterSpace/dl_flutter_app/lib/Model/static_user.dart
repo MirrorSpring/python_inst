@@ -3,8 +3,8 @@ class StaticUser {
   String mongId = "RlXHRl6pR1asfHeKTq5k";
   String postman = "u3pCtH01NsR3SMjXzAb2";
 
-  static String userId = "RlXHRl6pR1asfHeKTq5k";
+  static String userId = "korea";
   static String userPw = "1234";
-  static String userName = "몽이";
+  static String userName = "kimdo";
   static int userReliability = 50;
 }

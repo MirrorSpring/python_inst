@@ -31,6 +31,8 @@ class _InsertPageState extends State<InsertPage> {
   late Response _response;
   late String url = "";
   late Image cameraImage;
+  //
+  late Object formData = 0;
   File? _image;
   @override
   void initState() {
@@ -85,8 +87,13 @@ class _InsertPageState extends State<InsertPage> {
                 ),
                 TextButton(
                   onPressed: () async {
-                    /// 완료하면 인서트 해야 되는데
+                    /// 사진 이미지를 선택해라.
+                    /// 사진 올리기를 하지 않았을경우 실행 X
+                    await patchUserProfileImage(formData);
+                    // 사진 이름을 imagefile에 저장
                     String name = titleController.text;
+
+                    /// 제목, 가격, 내용, 사진이름을 모두 입력해야 통과
                     if (titleController.text.isNotEmpty &&
                         priceController.text.isNotEmpty &&
                         contentController.text.isNotEmpty &&
@@ -233,12 +240,11 @@ class _InsertPageState extends State<InsertPage> {
   // uploadInsert
   Future<int> makeUploadDate(int id) async {
     // int poHeart = 0;
+    await Future.delayed(const Duration(seconds: 4));
     int poId = id;
     String U_userId = "korea";
     var url = Uri.parse("http://localhost:8080/post/views/$poId/$U_userId");
     await http.get(url);
-    // ignore: use_build_context_synchronously
-    await Future.delayed(const Duration(seconds: 2));
     // ignore: use_build_context_synchronously
     Navigator.pushAndRemoveUntil(
         context,
@@ -249,10 +255,10 @@ class _InsertPageState extends State<InsertPage> {
     return 0;
   }
 
-  // image Server Upload
+  // image Server Upload1
   // 박태권 ==============
   // 2023.03.21
-  Future<void> imageToServe() async {
+  Future<Object> imageToServe() async {
     var selectImage = await _picker.getImage(
       maxWidth: 300,
       maxHeight: 250,
@@ -263,26 +269,33 @@ class _InsertPageState extends State<InsertPage> {
         _image = File(selectImage.path);
       });
       dynamic sendData = selectImage.path;
-      var formData =
+      formData =
           FormData.fromMap({'image': await MultipartFile.fromFile(sendData)});
-      patchUserProfileImage(formData);
+      // patchUserProfileImage(formData);
+      return formData;
+    } else {
+      return 0;
     }
   }
 
-  // image
+  // image server upload 2
   Future<dynamic> patchUserProfileImage(dynamic input) async {
     var dio = new Dio();
-    try {
-      dio.options.contentType = 'multipart/form-data';
-      dio.options.maxRedirects.isFinite;
-      var response = await dio.patch(
-        'http://localhost:8080/src/main/resources/static/images/',
-        data: input,
-      );
-      imagefile = response.data;
-      imageslect(imagefile);
-      return imagefile;
-    } catch (e) {}
+    if (input != 0) {
+      try {
+        dio.options.contentType = 'multipart/form-data';
+        dio.options.maxRedirects.isFinite;
+        var response = await dio.patch(
+          'http://localhost:8080/src/main/resources/static/images/',
+          data: input,
+        );
+        imagefile = response.data;
+        imageslect(imagefile);
+        return imagefile;
+      } catch (e) {
+        //
+      }
+    }
   } //
 
   Future imageslect(imagefile) async {

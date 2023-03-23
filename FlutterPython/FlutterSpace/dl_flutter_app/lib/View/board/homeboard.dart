@@ -27,8 +27,10 @@ class _HomeboardState extends State<Homeboard> {
   Boarder boarder = Boarder();
   var f = NumberFormat.currency(locale: 'ko_KR', symbol: '₩');
   late int heartbeat = 0;
+  late int heartbeat2 = 0;
   late String userid = "korea";
   late bool heartState = false;
+  late bool heartState2 = false;
   @override
   void initState() {
     super.initState();
@@ -88,10 +90,12 @@ class _HomeboardState extends State<Homeboard> {
                                   // data.clear;
                                   // boardList();
                                 });
+                                wishlistcheck(poId);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PageDetail(board)),
+                                      builder: (context) =>
+                                          PageDetail(board, heartState2)),
                                 );
                               },
                               child: SingleChildScrollView(
@@ -104,7 +108,10 @@ class _HomeboardState extends State<Homeboard> {
                                       children: [
                                         Container(
                                           color: Colors.white,
-                                          width: 100,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.25,
                                           height: 110,
                                           child: Image.network(
                                             "http://localhost:8080/images/${data[index]['poImage01']}",
@@ -118,7 +125,10 @@ class _HomeboardState extends State<Homeboard> {
                                         ),
                                         Container(
                                           color: Colors.white,
-                                          width: 260,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.65,
                                           height: 125,
                                           child: Column(
                                             children: [
@@ -127,7 +137,11 @@ class _HomeboardState extends State<Homeboard> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   SizedBox(
-                                                    width: 260,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.65,
                                                     child: Text(
                                                       "${data[index]['poTitle']}",
                                                       overflow:
@@ -245,6 +259,19 @@ class _HomeboardState extends State<Homeboard> {
   // }
 
   // 데이터를 초기화 한 후 게시글 출력
+  Future<bool> wishlistcheck(poId) async {
+    var url =
+        await Uri.parse('http://localhost:8080/post/selectWishlist?poId=$poId');
+    var respnse = await http.get(url);
+    var dataConvertedJson = json.decode(utf8.decode(respnse.bodyBytes));
+    heartbeat2 = dataConvertedJson;
+    // heartbeat == 0 ? heartState = false : "";
+    if (heartbeat2 == 1) {
+      heartState2 = true;
+    }
+    return heartState2;
+  } //
+
   boardList(searchText) {
     data.clear();
     setState(() {
@@ -291,9 +318,11 @@ class _HomeboardState extends State<Homeboard> {
     var dataConvertedJson = json.decode(utf8.decode(respnse.bodyBytes));
     heartbeat = dataConvertedJson;
     // heartbeat == 0 ? heartState = false : "";
+    print(heartbeat);
     if (heartbeat >= 1) {
       heartState = true;
     }
+    print(heartState);
     return heartbeat;
   } //
 } //
