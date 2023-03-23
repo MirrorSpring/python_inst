@@ -33,6 +33,7 @@ class _BuyListState extends State<BuyList> {
             itemCount: snapshot.data?.length,
             itemBuilder: (BuildContext context, int index) {
               if (snapshot.data == null) {
+                return Text('no dataaaaaaaaa');
               } else {
                 return cardBuild(context, index, snapshot);
               }
