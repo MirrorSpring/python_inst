@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dl_flutter_app/Model/User/static_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -33,7 +35,6 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     emailController = TextEditingController();
     passwordController = TextEditingController();
@@ -268,6 +269,8 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
     //default는 손님32
     userName = UserModel2.userName.isEmpty ? '손님32' : UserModel2.userName;
 
+    registerInFirebase();
+
     //print로 4가지정보 잘전달되는지 확인
     print('==========회원정보=======');
     print(userId);
@@ -297,6 +300,34 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
     );
   }
 
+  registerInFirebase() {
+    // if (userInfo.idCheck == 1 && userInfo.pwCheck == 1) {
+    var userDocId = FirebaseAuth.instance.currentUser?.uid;
+
+    print("userName: $userName");
+    FirebaseFirestore.instance.collection('user').doc('$userDocId').set(
+      {
+        'userName': userName,
+        'userPw': userPw,
+        'userAddress': userAddress,
+        'userInDate': DateTime.now(),
+        'userReliability': 50,
+      },
+    );
+
+    StaticUser.userId = '$userDocId';
+    StaticUser.userName = userName;
+    StaticUser.userAddress = userAddress;
+    StaticUser.userReliability = 50;
+
+    // _showDialog(context);
+    // } else if (userInfo.idCheck == 0) {
+    //   showSnackBar('중복 된 아이디 입니다.\n다른 아이디를 입력하세요.');
+    // } else {
+    //   showSnackBar('패스워드가 일치하지 않습니다.\n패스워드를 동일하게 입력하세요.');
+    // }
+  }
+
 // MySql 에 넣는 메소드 ------------------(미완성)
   // getJSONData() async {
   //   var url = Uri.parse(
@@ -306,15 +337,11 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
 
   Future<bool> insertUser() async {
     print("1. insert review");
-    // String userId = userId;
-    // String userPw = userPw;
-    // String fromUserId1 = StaticUser.userId;
 
     var url = Uri.parse(
         'http://localhost:8080/user/insert/$userId?userId=$userId&userPw=$userPw&userAddress=$userAddress&userName=$userName');
     await http.get(url);
 
-    // await updateReliability();
     return true;
   }
 

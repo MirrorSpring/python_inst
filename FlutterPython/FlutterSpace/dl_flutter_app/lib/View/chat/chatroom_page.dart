@@ -193,6 +193,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           // 내가 보낸 채팅은 오른쪽 정렬(end), 받은 채팅은 왼쪽 정렬(start)
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: chat.sendUserId == StaticUser.userId
               ? MainAxisAlignment.end
               : MainAxisAlignment.start,
