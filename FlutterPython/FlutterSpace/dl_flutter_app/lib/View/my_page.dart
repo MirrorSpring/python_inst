@@ -3,6 +3,7 @@ import 'package:dl_flutter_app/Widget/AppBar/custom_app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../Model/User/static_user.dart';
 import '../Model/User/user_mypage.dart';
 import 'buylist.dart';
 
@@ -27,8 +28,10 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          CustomAppBar(title: "마이 페이지", centerTitle: false, appBar: AppBar()),
+      appBar: CustomAppBar(
+          title: "마이 페이지: ${StaticUser.userName}",
+          centerTitle: false,
+          appBar: AppBar()),
       body: SafeArea(
         child: Column(
           children: [
