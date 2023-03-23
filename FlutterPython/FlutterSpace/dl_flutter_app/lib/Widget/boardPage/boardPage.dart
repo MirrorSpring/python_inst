@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dl_flutter_app/Model/User/static_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -52,7 +53,7 @@ class _BoardPageState extends State<BoardPage> {
   late String text = widget.poImage1;
   late int poId = widget.poId;
   late String poUserId = widget.poUserId;
-  late String userId = "korea";
+  late String userId = "";
   late int temp;
   late Color buttonColoc = Colors.white;
   late String buttonText = "판매완료";
@@ -61,6 +62,11 @@ class _BoardPageState extends State<BoardPage> {
     // TODO: implement initState
     super.initState();
     temp = widget.userReliability;
+    userId = StaticUser.userId;
+    print(poUserId);
+    print("+_+_+_+_+_+");
+    print(userId);
+    print("+_+_+_+_+_+userId");
   }
 
   @override
@@ -143,7 +149,7 @@ class _BoardPageState extends State<BoardPage> {
                   width: MediaQuery.of(context).size.width * 0.9,
                   child: Row(
                     children: [
-                      detailButton(),
+                      detailButton(userId),
                       //
 
                       Text("   관심 : ${widget.poHeart}  조회 : ${widget.poViews}",
@@ -170,8 +176,12 @@ class _BoardPageState extends State<BoardPage> {
   }
 
   // 작성한 게시글이면 버튼 바꿔서 출력. /post/poState
-  detailButton() {
-    if (poUserId == "korea") {
+  detailButton(userId) {
+    String useridd = userId;
+    print(userId);
+    print("==========");
+    print(poUserId == useridd);
+    if (poUserId == useridd) {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
             backgroundColor: buttonColoc, side: const BorderSide(width: 2)),

@@ -94,8 +94,8 @@ class _HomeboardState extends State<Homeboard> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          PageDetail(board, heartState2)),
+                                      builder: (context) => PageDetail(
+                                          board, heartState2, userid)),
                                 );
                               },
                               child: SingleChildScrollView(

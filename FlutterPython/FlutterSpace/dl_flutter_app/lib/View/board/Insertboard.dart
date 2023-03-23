@@ -263,7 +263,7 @@ class _InsertPageState extends State<InsertPage> {
     // int poHeart = 0;
     await Future.delayed(const Duration(seconds: 4));
     int poId = id;
-    String U_userId = poUser;
+    String U_userId = StaticUser.userId;
     var url = Uri.parse("http://localhost:8080/post/views/$poId/$U_userId");
     await http.get(url);
     // ignore: use_build_context_synchronously
