@@ -607,6 +607,9 @@ PODS:
     - firebase_core
     - Flutter
     - nanopb (< 2.30910.0, >= 2.30908.0)
+  - Firebase/Auth (10.6.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 10.6.0)
   - Firebase/CoreOnly (10.6.0):
     - FirebaseCore (= 10.6.0)
   - Firebase/Firestore (10.6.0):
@@ -615,6 +618,10 @@ PODS:
   - Firebase/Storage (10.6.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 10.6.0)
+  - firebase_auth (4.3.0):
+    - Firebase/Auth (= 10.6.0)
+    - firebase_core
+    - Flutter
   - firebase_core (2.8.0):
     - Firebase/CoreOnly (= 10.6.0)
     - Flutter
@@ -623,6 +630,11 @@ PODS:
     - firebase_core
     - Flutter
   - FirebaseAppCheckInterop (10.7.0)
+  - FirebaseAuth (10.6.0):
+    - FirebaseCore (~> 10.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
+    - GoogleUtilities/Environment (~> 7.8)
+    - GTMSessionFetcher/Core (< 4.0, >= 2.1)
   - FirebaseAuthInterop (10.7.0)
   - FirebaseCore (10.6.0):
     - FirebaseCoreInternal (~> 10.0)
@@ -655,11 +667,21 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - GoogleUtilities/AppDelegateSwizzler (7.11.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
   - GoogleUtilities/Environment (7.11.0):
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.11.0):
     - GoogleUtilities/Environment
+  - GoogleUtilities/Network (7.11.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
   - "GoogleUtilities/NSData+zlib (7.11.0)"
+  - GoogleUtilities/Reachability (7.11.0):
+    - GoogleUtilities/Logger
   - "gRPC-C++ (1.44.0)":
     - "gRPC-C++/Implementation (= 1.44.0)"
     - "gRPC-C++/Interface (= 1.44.0)"
@@ -736,6 +758,7 @@ PODS:
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
@@ -749,6 +772,7 @@ SPEC REPOS:
     - BoringSSL-GRPC
     - Firebase
     - FirebaseAppCheckInterop
+    - FirebaseAuth
     - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseCoreExtension
@@ -768,6 +792,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
+  firebase_auth:
+    :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_storage:
@@ -786,9 +812,11 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   cloud_firestore: ad043705a33fa70971b31cb760ce54051576aa84
   Firebase: f13680471b021937f2230ea8503c7809d8c29806
+  firebase_auth: aa94601a07cad33a3f95c8c1ce8ba86d00ca3d9a
   firebase_core: 58542d7399889ebdbb034baa72d081e54c5c814d
   firebase_storage: 12bbcaea18ebca39a1e73470440a53ea86342f14
   FirebaseAppCheckInterop: 8e907eea79958960a8bd2058e067f31e03a7914b
+  FirebaseAuth: 743e5cd568af59d6d99a91ea9300843672515cf7
   FirebaseAuthInterop: 46201190fe90ef1f581513eb0f9fa3d7820e7d6d
   FirebaseCore: fa80ad16a62d52f67274b5b88304c3a318bbf9a4
   FirebaseCoreExtension: f17247ba8c61e4d3c8d136b5e2de3cb4ac6a85b6

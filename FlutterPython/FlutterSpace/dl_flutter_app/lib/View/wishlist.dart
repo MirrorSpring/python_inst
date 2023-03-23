@@ -35,6 +35,7 @@ class _WishListState extends State<WishList> {
             itemCount: snapshot.data?.length,
             itemBuilder: (BuildContext context, int index) {
               if (snapshot.data == null) {
+                return Text('no dataaaaaaaaaaaaaaa');
               } else {
                 return cardBuild(context, index, snapshot);
               }
