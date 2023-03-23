@@ -257,10 +257,24 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
         showErrorMessage('계정정보가 일치하지 않습니다');
       }
     }
-    userId = 'lee8@gmail.com';
-    userPw = 'asdf1234';
-    userName = 'a';
-    userAddress = 'b';
+
+    // Mysql에 User 정보 넣는 부분 -------------
+    userId = UserModel2.userId;
+    userPw = UserModel2.userPw;
+    // defalut 는 강남구
+    userAddress = useraddressController.text.isNotEmpty
+        ? useraddressController.text
+        : '강남구';
+    //default는 손님32
+    userName = UserModel2.userName.isEmpty ? '손님32' : UserModel2.userName;
+
+    //print로 4가지정보 잘전달되는지 확인
+    print('==========회원정보=======');
+    print(userId);
+    print(userPw);
+    print(userName);
+    print(userAddress);
+    print('======회원정보=======');
     getJSONData();
   }
 
@@ -284,7 +298,7 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
   }
 
 // MySql 에 넣는 메소드 ------------------(미완성)
-  Future<void> getJSONData() async {
+  getJSONData() async {
     var url = Uri.parse(
         'http://localhost:8080/DLFlutter/user_insert.jsp?userId=$userId&userPw=$userPw&userAddress=$userAddress&userName=$userName');
     await http.get(url);
