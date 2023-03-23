@@ -1,5 +1,6 @@
 import 'package:dl_flutter_app/View/wishlist.dart';
 import 'package:dl_flutter_app/Widget/AppBar/custom_app_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../Model/User/user_mypage.dart';
@@ -75,6 +76,7 @@ class _MyPageState extends State<MyPage> {
                   leading: const Icon(Icons.arrow_back),
                   onTap: () {
                     // 로그인페이지 / 홈페이지
+                    _showDialogLogOut(context);
                   },
                 ),
                 ListTile(
@@ -140,5 +142,42 @@ class _MyPageState extends State<MyPage> {
   _deleteUser() async {
     model = UserModel();
     model.deleteUser(userId);
+  }
+
+  // 로그아웃
+  _showDialogLogOut(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          content: const Text('정말 로그아웃 하시겠어요?'),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                  child: const Text(
+                    '취소',
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.of(ctx).pop();
+                  },
+                  child: const Text(
+                    '확인',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
   }
 }
