@@ -18,6 +18,7 @@ class _ReviewListPageState extends State<ReviewListPage> {
   late List data;
   late ReviewHandler handler;
   late String toUserId;
+  late String toUserName;
   final Color mainColor = const Color.fromARGB(255, 174, 195, 250);
 
   @override
@@ -28,13 +29,17 @@ class _ReviewListPageState extends State<ReviewListPage> {
     toUserId = StaticChat.chatUserIds[0] == StaticUser.userId
         ? StaticChat.chatUserIds[1]
         : StaticChat.chatUserIds[0];
+    toUserName = StaticChat.chatUserNames[0] == StaticUser.userName
+        ? StaticChat.chatUserNames[1]
+        : StaticChat.chatUserNames[0];
     handler.selectRowCount(toUserId);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "후기", centerTitle: false, appBar: AppBar()),
+      appBar: CustomAppBar(
+          title: "$toUserName 상점 후기", centerTitle: false, appBar: AppBar()),
       body: FutureBuilder(
         future: handler.getReivew(widget.userId),
         builder: (BuildContext context, AsyncSnapshot<List> snapshot) {

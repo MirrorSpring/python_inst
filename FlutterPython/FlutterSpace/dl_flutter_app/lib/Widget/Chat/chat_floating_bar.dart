@@ -63,7 +63,7 @@ class _ChatFloatingBarState extends State<ChatFloatingBar> {
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(5.0) // POINT
                                       ),
-                                  color: Colors.amber),
+                                  color: Colors.grey),
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                                 child: Text(snapshot.data![0]['poState'] == 0
