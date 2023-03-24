@@ -1,3 +1,4 @@
+import 'package:dl_flutter_app/View/login/login_page.dart';
 import 'package:dl_flutter_app/View/wishlist.dart';
 import 'package:dl_flutter_app/Widget/AppBar/custom_app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,7 +44,7 @@ class _MyPageState extends State<MyPage> {
                   title: const Text('정보 수정'),
                   leading: const Icon(Icons.person),
                   onTap: () {
-                    // 페이지 연결(수정은 병준님)
+                    // 페이지 연결(정보 수정은 병준님)
                   },
                 ),
               ],
@@ -78,7 +79,6 @@ class _MyPageState extends State<MyPage> {
                   title: const Text('로그아웃'),
                   leading: const Icon(Icons.arrow_back),
                   onTap: () {
-                    // 로그인페이지 / 홈페이지
                     _showDialogLogOut(context);
                   },
                 ),
@@ -117,8 +117,7 @@ class _MyPageState extends State<MyPage> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (BuildContext) =>
-                                    MyPage()), // 향후 로그인 페이지로 수정
+                                builder: (BuildContext) => LoginPage()),
                             (route) => false);
                       },
                       child: const Text('확인')),
