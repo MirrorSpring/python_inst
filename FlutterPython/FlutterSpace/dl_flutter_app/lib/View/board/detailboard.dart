@@ -1,12 +1,16 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dl_flutter_app/Model/User/static_user.dart';
 import 'package:dl_flutter_app/View/board/uploadboard.dart';
 import 'package:flutter/material.dart';
+import '../../Model/Chat/static_chat.dart';
 import '../../Model/board/Boardmodel.dart';
 import '../../Widget/Alert/Alert.dart';
 import '../../Widget/boardPage/boardPage.dart';
 import 'package:http/http.dart' as http;
+
+import '../chat/chatroom_page.dart';
 
 class PageDetail extends StatefulWidget {
   final board;
@@ -166,7 +170,9 @@ class _PageDetailState extends State<PageDetail> {
                       backgroundColor: Colors.white,
                       side: const BorderSide(width: 2)),
                   onPressed: () {
-                    //
+                    //채팅으로 넘어가는 버튼
+                    checkRoomExist(
+                        getCurrentUserId(), board.poUser, board.poId);
                   },
                   child: const Text(
                     "채팅하기",
@@ -239,4 +245,68 @@ class _PageDetailState extends State<PageDetail> {
   //   }
   //   return heartbeat;
   // } //
+
+  // 이미 존재하는 채팅방인지 확인
+  checkRoomExist(String userId, String userName, int poId) async {
+    FirebaseFirestore fs = FirebaseFirestore.instance;
+
+    final Query query1 = fs
+        .collection('chatroom')
+        .where("sendUserId", isEqualTo: StaticUser.userId)
+        .where("receiveUserId", isEqualTo: userId);
+
+    final Query query2 = fs
+        .collection("chatroom")
+        .where("sendUserId", isEqualTo: userId)
+        .where("receiveUserId", isEqualTo: StaticUser.userId);
+
+    final QuerySnapshot querySnapshot1 = await query1.get();
+    final QuerySnapshot querySnapshot2 = await query2.get();
+    final int count1 = querySnapshot1.size;
+    final int count2 = querySnapshot2.size;
+    final bool chatRoomExist = (count1 + count2) == 0 ? false : true;
+
+    print(count1 + count2);
+
+    // 이미 존재하는 채팅방이라면 Static에 채팅방 문서 id 넘겨주기
+    if (chatRoomExist) {
+      print('이미 채팅방이 존재!');
+      for (var doc in [querySnapshot1.docs, querySnapshot2.docs]) {
+        for (var document in doc) {
+          StaticChat.chatRoomId =
+              document.id.isEmpty ? StaticChat.chatRoomId : document.id;
+          StaticChat.chatUserIds = document['userIds'] == []
+              ? StaticChat.chatUserIds
+              : document['userIds'];
+          StaticChat.chatUserNames = document['userNames'] == []
+              ? StaticChat.chatUserNames
+              : document['userNames'];
+          StaticChat.boardId = poId;
+          print('Document ID: ${document.id}');
+          print('userIds: ${StaticChat.chatUserIds}');
+          print('userNames: ${StaticChat.chatUserNames}');
+        }
+      }
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatRoomPage(),
+        ),
+      );
+    } else {
+      // 존재하지 않는다면 빈 채팅방 페이지만 띄우기
+      print("채팅방이 존재하지 않으므로 빈 페이지를 띄웁니다!");
+      StaticChat.chatRoomId = "none";
+      StaticChat.chatUserIds = [StaticUser.userId, userId];
+      StaticChat.chatUserNames = [StaticUser.userName, userName];
+      StaticChat.boardId = poId;
+      // StaticChat.chatRoomId = "";
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatRoomPage(),
+        ),
+      );
+    }
+  }
 } //

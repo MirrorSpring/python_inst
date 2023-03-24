@@ -28,8 +28,8 @@ class ChatBubble extends StatelessWidget {
               ),
               color: Color.fromARGB(255, 174, 195, 250),
             ),
-      // width: 250,
-      // constraints: const BoxConstraints(maxWidth: 250, minWidth: 50),
+      width: 250,
+      constraints: const BoxConstraints(maxWidth: 250, minWidth: 50),
       child: ListTile(
         title: Text(chat.chatText),
       ),
