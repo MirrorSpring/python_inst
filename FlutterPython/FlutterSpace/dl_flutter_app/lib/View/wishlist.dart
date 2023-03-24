@@ -18,8 +18,8 @@ class _WishListState extends State<WishList> {
   void initState() {
     super.initState();
     handler = ListModel();
-    userId = StaticUser.userId; // 스태틱 변수(Id) 넣기
-    poId = 1; // 스태틱 변수 넣기
+    userId = StaticUser.userId;
+    poId = 0;
   }
 
   @override
@@ -38,7 +38,7 @@ class _WishListState extends State<WishList> {
               if (snapshot.data == null) {
                 return Text('no dataaaaaaaaaaaaaaa');
               } else {
-                return cardBuild(context, index, snapshot);
+                return wishBuild(context, index, snapshot);
               }
             },
           );
@@ -47,69 +47,127 @@ class _WishListState extends State<WishList> {
     );
   }
 
-  Widget cardBuild(BuildContext context, int index, AsyncSnapshot snapshot) {
+  Widget wishBuild(BuildContext context, int index, AsyncSnapshot snapshot) {
     return Card(
-      child: Column(
-        children: [
-          ListTile(
-            leading: Text(snapshot.data[index]['poImage'].toString()),
-            title: Text(snapshot.data[index]['poTitle'].toString()),
-            subtitle: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(snapshot.data[index]['poPrice'].toString()),
-              ],
-            ),
-            trailing: const Icon(Icons.favorite, color: Colors.red),
-            onTap: () async {
-              await _deleteWish();
-              refresh();
-            },
-          ),
-          Row(
+      clipBehavior: Clip.antiAlias,
+      child: Container(
+        height: 120,
+        padding: const EdgeInsets.all(0),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
-                Icons.favorite_border,
-                size: 16,
-                color: Colors.black38,
+              Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 82,
+                        child: Image.network(
+                            "http://localhost:8080/images/${snapshot.data[index]['poImage01']}"),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Text(
+                          snapshot.data[index]['poTitle'].toString(),
+                          style: TextStyle(
+                              fontSize: 20.0, fontWeight: FontWeight.bold),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Text(
+                        snapshot.data[index]['poPrice'].toString(),
+                        style: TextStyle(fontSize: 15),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      snapshot.data[index]['poState'] == 0
+                          ? SizedBox(
+                              width: 65,
+                              height: 35,
+                              child: Card(
+                                color: Colors.grey,
+                                child: Center(
+                                  child: Text(
+                                    '판매 완료',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              width: 65,
+                              height: 35,
+                              child: Card(
+                                color: Colors.grey,
+                                child: Center(
+                                  child: Text(
+                                    '판매 중',
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ],
+                  ),
+                ],
               ),
-              Text(snapshot.data[index]['poHeart'].toString()),
-              snapshot.data[index]['poState'] == 0
-                  ? Card(
-                      elevation: 5,
-                      child: Container(
-                        height: 25,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.blueGrey,
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                        ),
-                        child: Text('판매 중',
-                            style: TextStyle(color: Colors.white, height: 1.0),
-                            textAlign: TextAlign.center),
-                      ),
-                    )
-                  : Card(
-                      elevation: 10,
-                      child: Container(
-                        height: 100,
-                        width: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.blueGrey,
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        child: Text('판매 완료'),
-                      ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () async {
+                      await _deleteWish(snapshot.data[index]['poId']
+                          .toString()); // 수정 필요 - 삭제 안 됨
+                      refresh();
+                    },
+                    icon: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
                     ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        Icons.favorite_border,
+                        size: 16,
+                        color: Colors.black38,
+                      ),
+                      Text(
+                        snapshot.data[index]['poHeart'].toString(),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
 
-  // 찜 목록 삭제
-  _deleteWish() async {
+  // 찜 목록 삭제 (수정 필요 - 삭제 안 됨)
+  _deleteWish(data) async {
     handler = ListModel();
     handler.deleteWish(userId, poId);
   }

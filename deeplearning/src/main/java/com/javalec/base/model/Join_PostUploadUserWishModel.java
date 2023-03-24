@@ -3,6 +3,7 @@ package com.javalec.base.model;
 import java.sql.Date;
 
 public class Join_PostUploadUserWishModel {
+	int poId;
 	int poHeart;
 	String poTitle;
 	String poPrice;
@@ -11,6 +12,12 @@ public class Join_PostUploadUserWishModel {
 	int poState;
 
 
+	public int getPoId() {
+		return poId;
+	}
+	public void setPoId(int poId) {
+		this.poId = poId;
+	}
 	public int getPoHeart() {
 		return poHeart;
 	}

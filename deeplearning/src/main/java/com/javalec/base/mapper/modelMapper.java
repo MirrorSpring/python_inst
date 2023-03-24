@@ -109,9 +109,9 @@ public interface modelMapper {
 	// --- My Page ---
 
 	// 찜 목록
-	@Select("select poHeart, poTitle, poPrice, poImage01 from deeplearning.post p, deeplearning.user u, deeplearning.wish w\n"
-			+ "where w.P_poId = p.poId and w.U_userId = u.userId\n"
-			+ "and w.U_userId = #{user} and w.WishDelDate is null;")
+	@Select("select poId, poHeart, poTitle, poPrice, poImage01, poState from deeplearning.post p, deeplearning.user u, deeplearning.wish w, deeplearning.upload up\n"
+			+ "where w.P_poId = p.poId and w.U_userId = u.userId and up.P_poId = p.poId and up.U_userId = u.userId\n"
+			+ "and w.U_userId = #{user} and w.WishDate is not null and up.poDelDate is null;")
 	List<Join_PostUploadUserWishModel> wishlistSelect(String user);
 
 	// 판매 내역
