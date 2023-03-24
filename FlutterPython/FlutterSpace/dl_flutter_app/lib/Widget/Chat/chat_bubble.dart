@@ -1,3 +1,4 @@
+import 'package:dl_flutter_app/View/review/review_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../Model/Chat/chat.dart';
@@ -28,10 +29,29 @@ class ChatBubble extends StatelessWidget {
               ),
               color: Color.fromARGB(255, 174, 195, 250),
             ),
-      width: 250,
+      // width: 250,
       constraints: const BoxConstraints(maxWidth: 250, minWidth: 50),
-      child: ListTile(
-        title: Text(chat.chatText),
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          children: [
+            Text(chat.chatText),
+            chat.chatText.contains("님이 거래 확정을 요청했습니다.")
+                ? ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ReviewPage(),
+                        ),
+                      );
+                    },
+                    child: const Text('거래 확정'))
+                : const SizedBox(
+                    height: 0,
+                  )
+          ],
+        ),
       ),
     );
   }

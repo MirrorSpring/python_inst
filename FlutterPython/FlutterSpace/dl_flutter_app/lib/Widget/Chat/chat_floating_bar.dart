@@ -75,6 +75,12 @@ class _ChatFloatingBarState extends State<ChatFloatingBar> {
                         ),
                       ],
                     ),
+                    ElevatedButton(
+                        onPressed: () {
+                          // 거래가 완료되었다는 채팅을 버튼과 함께 보냄 (거래를 확정하시겠습니까?)
+                          // 클릭하면 다음은 리뷰 작성
+                        },
+                        child: const Text('거래 완료 임시 버튼'))
                   ],
                 ),
               ),
@@ -86,4 +92,19 @@ class _ChatFloatingBarState extends State<ChatFloatingBar> {
       ),
     );
   }
+
+  // // 채팅을 insert
+  // addChatBubble() {
+  //   print('3. chat insert');
+  //   FirebaseFirestore.instance
+  //       .collection('chatroom')
+  //       .doc(StaticChat.chatRoomId)
+  //       .collection('chat')
+  //       .add({
+  //     'sendUserId': StaticUser.userId,
+  //     'chatTime': DateTime.now(),
+  //     'chatText': "oo님이 거래 확정을 요청했습니다.",
+  //     'photoUrl': "",
+  //   });
+  // }
 }

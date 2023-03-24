@@ -12,8 +12,8 @@ import '../../Model/User/static_user.dart';
 import '../../Widget/AppBar/custom_app_bar.dart';
 
 class ReviewPage extends StatefulWidget {
-  final String userId;
-  const ReviewPage({super.key, required this.userId});
+  // final String userId;
+  const ReviewPage({super.key});
 
   @override
   State<ReviewPage> createState() => _ReviewPageState();
@@ -32,7 +32,7 @@ class _ReviewPageState extends State<ReviewPage> {
   @override
   void initState() {
     super.initState();
-    print('userId: ${widget.userId}');
+    // print('userId: ${widget.userId}');
     handler = ReviewHandler();
     tfReviewController = TextEditingController();
     starIndex = 5;

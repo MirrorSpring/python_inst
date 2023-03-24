@@ -1,13 +1,10 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dl_flutter_app/Model/User/static_user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 import '../../Model/Chat/static_chat.dart';
+import '../../Model/User/static_user.dart';
 import '../Alert/image.dart';
+import 'package:http/http.dart' as http;
 
 class BoardPage extends StatefulWidget {
   const BoardPage({
@@ -57,6 +54,9 @@ class _BoardPageState extends State<BoardPage> {
   late int temp;
   late Color buttonColoc = Colors.white;
   late String buttonText = "상태변경";
+  late String chatRoomId;
+  late List userIds;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -67,6 +67,11 @@ class _BoardPageState extends State<BoardPage> {
     print("+_+_+_+_+_+");
     print(userId);
     print("+_+_+_+_+_+userId");
+    chatRoomId = "";
+    userIds = [];
+    // receiveUserId = StaticUser.userId == StaticChat.chatUserIds[0]
+    // ? StaticChat.chatUserIds[1]
+    // : StaticChat.chatUserIds[0];
   }
 
   @override
@@ -187,13 +192,18 @@ class _BoardPageState extends State<BoardPage> {
           // 포스트 상태 state 에 +1 해준다. 왜? 0 = 판매중 1 = 판매완료로 하고잇음
           StateChange();
 
+          // 거래 완료 채팅을 보냅니다.
+          selectChatRoomID()
+              .then((value) => confirmChat())
+              .then((value) => updateChatAction());
+
           setState(() {
             buttonColoc = Colors.grey;
             buttonText = "판매완료등록";
           });
         },
         child: Text(buttonText,
-            style: TextStyle(color: Colors.black, fontSize: 20)),
+            style: const TextStyle(color: Colors.black, fontSize: 20)),
       );
     } else {
       return ElevatedButton(
@@ -214,6 +224,63 @@ class _BoardPageState extends State<BoardPage> {
     var url = Uri.parse('http://localhost:8080/post/poState?poId=$poId');
     await http.get(url);
   }
-}
 
-/// END
+  // 거래 완료 확인 채팅 보내기
+  Future confirmChat() async {
+    print('2. 거래 완료 확인 채팅 보내기');
+    FirebaseFirestore.instance
+        .collection('chatroom')
+        .doc(chatRoomId)
+        .collection('chat')
+        .add({
+      'sendUserId': poUserId,
+      'chatTime': DateTime.now(),
+      'chatText': "${widget.poUser}님이 거래 확정을 요청했습니다.",
+      'photoUrl': "",
+    });
+  }
+
+  // chatRoomId를 poId로 select
+  Future<bool> selectChatRoomID() async {
+    print('1. select room id');
+    // poId가 똑같은 채팅방을 select 합니다.
+    await FirebaseFirestore.instance
+        .collection('chatroom')
+        .where('poId', isEqualTo: poId)
+        .get()
+        .then(
+      (QuerySnapshot<Map<String, dynamic>> querySnapshot) {
+        List<QueryDocumentSnapshot<Map<String, dynamic>>> documentSnapshots =
+            querySnapshot.docs;
+        for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot
+            in documentSnapshots) {
+          Map<String, dynamic> data = documentSnapshot.data();
+          userIds = data['userIds'];
+          chatRoomId = documentSnapshot.id;
+        }
+      },
+    );
+    return true;
+  }
+
+  // 채팅방 목록에 가장 최근 채팅 띄우고 chatRoomState update
+  updateChatAction() async {
+    print('3. update chatroom');
+    print("chatRoomId: $chatRoomId");
+    String receiveUserId =
+        StaticUser.userId == userIds[0] ? userIds[1] : userIds[0];
+    await FirebaseFirestore.instance
+        .collection('chatroom')
+        .doc(chatRoomId)
+        .update(
+      {
+        'lastChat': "${widget.poUser}님이 거래 확정을 요청했습니다.",
+        "sendUserId": StaticUser.userId,
+        "receiveUserId": receiveUserId,
+        "sendChatRoomState": true,
+        "receiveChatRoomState": false,
+      },
+    );
+  }
+}//END
+

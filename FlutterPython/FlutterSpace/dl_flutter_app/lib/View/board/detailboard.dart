@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import '../../Model/Chat/static_chat.dart';
 import '../../Model/board/Boardmodel.dart';
 import '../../Widget/Alert/Alert.dart';
-import '../../Widget/boardPage/boardPage.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Widget/boardPage/board_page.dart';
 import '../chat/chatroom_page.dart';
 
 class PageDetail extends StatefulWidget {
