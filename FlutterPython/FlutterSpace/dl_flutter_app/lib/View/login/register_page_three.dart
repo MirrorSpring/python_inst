@@ -336,7 +336,7 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
   // }
 
   Future<bool> insertUser() async {
-    print("1. insert review");
+    // print("1. insert review");
     var userDocId = FirebaseAuth.instance.currentUser?.uid;
 
     var url = Uri.parse(
