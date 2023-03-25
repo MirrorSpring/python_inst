@@ -85,4 +85,25 @@ public class controller {
 	public void deleteUser(@PathVariable("userId") String userId) {
 		mapper.deleteUser(userId);
 	}
+
+	// 찜 목록 삭제시 하트 수 -1 내리기
+	@GetMapping("/wishdown/{poId}")
+	public void wiishDownpoHeart(@PathVariable("poId") int poId) {
+		mapper.wishDownpoHeart(poId);
+	}
+
+	// 회원 정보 가져오기
+	@GetMapping("/userInfo")
+	@org.springframework.lang.Nullable
+	public List<UserInfoModel> userInfo(HttpServletRequest request) {
+		String user = request.getParameter("userId");
+		return mapper.userInfo(user);
+	}
+
+	// 회원 정보 수정하기
+	@GetMapping("/updateUser/{userId}/{userPw}/{userName}/{userAddress}")
+	public void updateUser(@PathVariable("userId") String userId, @PathVariable("userPw") String userPw, @PathVariable("userName") String userName, @PathVariable("userAddress") String userAddress) {
+		mapper.updateUser(userId, userPw, userName, userAddress);
+	}
+	
 }
