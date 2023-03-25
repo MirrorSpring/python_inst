@@ -134,9 +134,11 @@ class _WishListState extends State<WishList> {
                 children: [
                   IconButton(
                     onPressed: () async {
-                      await _deleteWish(snapshot.data[index]['poId']
-                          .toString()); // 수정 필요 - 삭제 안 됨
+                      await _deleteWish(
+                        snapshot.data[index]['poId'],
+                      );
                       refresh();
+                      await wishDownpoHeart(snapshot.data[index]['poId']);
                     },
                     icon: Icon(
                       Icons.favorite,
@@ -166,7 +168,7 @@ class _WishListState extends State<WishList> {
     );
   }
 
-  // 찜 목록 삭제 (수정 필요 - 삭제 안 됨)
+  // 찜 목록 삭제
   _deleteWish(data) async {
     handler = ListModel();
     handler.deleteWish(userId, poId);
@@ -174,5 +176,11 @@ class _WishListState extends State<WishList> {
 
   refresh() {
     setState(() {});
+  }
+
+  // 찜 목록 제거시 하트수 -1
+  wishDownpoHeart(poId) {
+    handler = ListModel();
+    handler.wishDownpoHeart(poId);
   }
 }
