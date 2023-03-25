@@ -225,21 +225,6 @@ class _BoardPageState extends State<BoardPage> {
     await http.get(url);
   }
 
-  // 거래 완료 확인 채팅 보내기
-  Future confirmChat() async {
-    print('2. 거래 완료 확인 채팅 보내기');
-    FirebaseFirestore.instance
-        .collection('chatroom')
-        .doc(chatRoomId)
-        .collection('chat')
-        .add({
-      'sendUserId': poUserId,
-      'chatTime': DateTime.now(),
-      'chatText': "${widget.poUser}님이 거래 확정을 요청했습니다.",
-      'photoUrl': "",
-    });
-  }
-
   // chatRoomId를 poId로 select
   Future<bool> selectChatRoomID() async {
     print('1. select room id');
@@ -261,6 +246,21 @@ class _BoardPageState extends State<BoardPage> {
       },
     );
     return true;
+  }
+
+  // 거래 완료 요청 채팅 보내기
+  Future confirmChat() async {
+    print('2. 거래 완료 요청 채팅 보내기');
+    FirebaseFirestore.instance
+        .collection('chatroom')
+        .doc(chatRoomId)
+        .collection('chat')
+        .add({
+      'sendUserId': poUserId,
+      'chatTime': DateTime.now(),
+      'chatText': "${widget.poUser}님이 거래 확정을 요청했습니다.",
+      'photoUrl': "",
+    });
   }
 
   // 채팅방 목록에 가장 최근 채팅 띄우고 chatRoomState update
