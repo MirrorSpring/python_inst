@@ -127,4 +127,17 @@ public interface modelMapper {
 	// 회원 탈퇴
 	@Update("UPDATE user set userDelDate = now() WHERE userId = #{userId};")
 	void deleteUser(@Param("userId") String userId);
+
+	// 찜 목록 삭제 시 하트 수 -1
+	@Update("UPDATE post SET poHeart = poHeart-1 WHERE poId = #{poId}")
+	void wishDownpoHeart(@Param("poId") int poId);
+
+	// 회원 정보 가져오기
+	@Select("SELECT userId, userName, userPw, userAddress FROM user where userId = #{user}")
+	@org.springframework.lang.Nullable
+	public List<UserInfoModel> userInfo(String user);
+
+	// 회원 정보 수정하기
+	@Update("UPDATE user set userPw = #{userPw}, userName = #{userName}, userAddress = #{userAddress} WHERE userId = #{userId};")
+	void updateUser(@Param("userId") String userId, @Param("userPw") String userPw, @Param("userName") String userName, @Param("userAddress") String userAddress);
 }
