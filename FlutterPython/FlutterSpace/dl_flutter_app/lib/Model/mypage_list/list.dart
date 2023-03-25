@@ -23,4 +23,10 @@ class ListModel {
     var buylistResult = json.decode(utf8.decode(respnse.bodyBytes));
     return buylistResult;
   }
+
+  // 찜 목록 삭제시 하트 수 -1
+  Future wishDownpoHeart(int poId) async {
+    var url = Uri.parse('http://localhost:8080/wishdown/$poId');
+    var response = await http.get(url);
+  }
 }
