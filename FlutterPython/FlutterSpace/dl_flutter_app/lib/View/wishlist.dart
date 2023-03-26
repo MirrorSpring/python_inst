@@ -29,19 +29,35 @@ class _WishListState extends State<WishList> {
         title: const Text('찜 목록'),
       ),
       body: FutureBuilder(
-        // future: handler.wishlistSelect(),
         future: handler.wishlistSelect(userId),
         builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-          return ListView.builder(
-            itemCount: snapshot.data?.length,
-            itemBuilder: (BuildContext context, int index) {
-              if (snapshot.data == null) {
-                return Text('no dataaaaaaaaaaaaaaa');
-              } else {
-                return wishBuild(context, index, snapshot);
-              }
-            },
-          );
+          // 로딩 중일 때
+          if (snapshot.data == null) {
+            return Container(
+                // color: Colors.black,
+                // width: 300,
+                // height: 300,
+                );
+          } else {
+            // 로딩 뒤에 데이터가 비었는지 있는지에 따라
+            if (snapshot.data!.isEmpty) {
+              return const Center(
+                child: Text(
+                  '찜한 목록이 없습니다.',
+                  style: TextStyle(fontSize: 25),
+                ),
+              );
+            }
+            // 여기가 로딩 뒤에 데이터가 있을 떄
+            else {
+              return ListView.builder(
+                itemCount: snapshot.data?.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return wishBuild(context, index, snapshot);
+                },
+              );
+            }
+          }
         },
       ),
     );

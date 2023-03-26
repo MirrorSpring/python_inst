@@ -29,18 +29,32 @@ class _BuyListState extends State<BuyList> {
         title: const Text('판매 내역'),
       ),
       body: FutureBuilder(
+        // future: handler.wishlistSelect(),
         future: handler.buylistSelect(userId),
         builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-          return ListView.builder(
-            itemCount: snapshot.data?.length,
-            itemBuilder: (BuildContext context, int index) {
-              if (snapshot.data == null) {
-                return Text('no dataaaaaaaaa');
-              } else {
-                return buyBuild(context, index, snapshot);
-              }
-            },
-          );
+          if (snapshot.data == null) {
+            return Container(
+                // color: Colors.black,
+                // width: 300,
+                // height: 300,
+                );
+          } else {
+            if (snapshot.data!.isEmpty) {
+              return const Center(
+                child: Text(
+                  '판매한 목록이 없습니다.',
+                  style: TextStyle(fontSize: 25),
+                ),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data?.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return buyBuild(context, index, snapshot);
+                },
+              );
+            }
+          }
         },
       ),
     );
