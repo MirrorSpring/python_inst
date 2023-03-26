@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dl_flutter_app/Model/User/static_user.dart';
+import 'package:dl_flutter_app/Style/custom_colors.dart';
 import 'package:dl_flutter_app/View/login/register_page.dart';
+import 'package:dl_flutter_app/tabbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -61,18 +63,18 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        '비밀번호를 분실하셨습니까?',
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.end,
+                //     children: [
+                //       Text(
+                //         '비밀번호를 분실하셨습니까?',
+                //         style: TextStyle(color: Colors.grey[600]),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 const SizedBox(
                   height: 25,
                 ),
@@ -106,10 +108,10 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         );
                       },
-                      child: const Text(
+                      child: Text(
                         'Register now',
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: CustomColors.pointColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -142,7 +144,14 @@ class _LoginPageState extends State<LoginPage> {
       // FirebaseAuth.instance.currentUser;
       // print(FirebaseAuth.instance.currentUser);
       selectUserInfo();
-      Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return const Tabbar();
+          },
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       //로딩화면끄기
       Navigator.pop(context);

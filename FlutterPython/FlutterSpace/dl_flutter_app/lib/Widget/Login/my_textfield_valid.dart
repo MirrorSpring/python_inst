@@ -1,3 +1,4 @@
+import 'package:dl_flutter_app/Style/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 class ValidTextfield extends StatelessWidget {
@@ -46,16 +47,16 @@ class ValidTextfield extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30.0),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Color.fromARGB(255, 110, 173, 143),
+                borderSide: BorderSide(
+                  color: CustomColors.mainColor,
                 ),
                 borderRadius: BorderRadius.circular(30.0),
               ),
               border: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
+                borderSide: BorderSide(color: CustomColors.mainColor),
                 borderRadius: BorderRadius.circular(30.0),
               ),
-              fillColor: Colors.grey.shade200,
+              fillColor: CustomColors.greyColor,
               filled: true,
               hintText: hintText,
               hintStyle: TextStyle(color: Colors.grey[500])),

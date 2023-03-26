@@ -1,3 +1,4 @@
+import 'package:dl_flutter_app/Style/custom_colors.dart';
 import 'package:dl_flutter_app/View/login/register_page_three.dart';
 import 'package:flutter/material.dart';
 
@@ -126,7 +127,7 @@ class _RegisterPageTwoState extends State<RegisterPageTwo> {
                           padding: const EdgeInsets.all(0),
                           margin: const EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 110, 173, 143),
+                            color: CustomColors.mainColor,
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: const Center(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../Style/custom_colors.dart';
+
 class MyTextfield extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
   final controller;
@@ -29,11 +31,11 @@ class MyTextfield extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: Color.fromARGB(255, 110, 173, 143),
+                color: Color(0xffFEC260),
               ),
               borderRadius: BorderRadius.circular(30.0),
             ),
-            fillColor: Colors.grey.shade200,
+            fillColor: CustomColors.greyColor,
             filled: true,
             hintText: hintText,
             hintStyle: TextStyle(color: Colors.grey[500])),
