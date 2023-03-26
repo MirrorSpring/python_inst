@@ -6,7 +6,7 @@ class Board {
   final String poPrice;
   final String poImage01;
   // final String poImage02;
-  // final String poImage03;
+  final String poInstrument;
   final int poViews;
   final int poState;
   // final DateTime poUpDate;
@@ -25,7 +25,7 @@ class Board {
       required this.poPrice,
       required this.poImage01,
       // required this.poImage02,
-      // required this.poImage03,
+      required this.poInstrument,
       required this.poViews,
       required this.poState,
       // required this.poUpDate,
@@ -42,7 +42,7 @@ class Board {
         poContent = res['poContent'],
         poPrice = res['poPrice'],
         poImage01 = res['poImage01'],
-        // poImage02 = res['poImage02'],
+        poInstrument = res['poInstrument'],
         poViews = res['poViews'],
         poState = res['poState'],
         u_userId = res['u_userId'],
@@ -58,7 +58,7 @@ class Board {
       'poContent': poContent,
       'poPrice': poPrice,
       'poImage01': poImage01,
-      // 'poImage02': poImage02,
+      'poInstrument': poInstrument,
       'poViews': poViews,
       'poState': poState,
       'u_userId': u_userId,

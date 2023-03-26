@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -9,8 +10,6 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 import '../../Widget/Alert/Snackbar.dart';
-import '../../tabbar.dart';
-import '../boardlist_page.dart';
 
 class UpdateBorad extends StatefulWidget {
   const UpdateBorad(
@@ -19,12 +18,14 @@ class UpdateBorad extends StatefulWidget {
       required this.poTitle,
       required this.poContent,
       required this.poPrice,
-      required this.poImage});
+      required this.poImage,
+      required this.poInstrument});
   final int poId;
   final String poTitle;
   final String poContent;
   final String poPrice;
   final String poImage;
+  final String poInstrument;
 
   @override
   State<UpdateBorad> createState() => _UpdateBoradState();
@@ -50,6 +51,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
     height: MediaQuery.of(context).size.height * 0.4,
   );
   late String poimage = widget.poImage;
+  late String dropdownValue = '악기목록';
   boarderTextStyle(Color? color) {
     return TextStyle(
       fontSize: 20,
@@ -63,6 +65,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    dropdownValue = widget.poInstrument;
   }
 
   Widget build(BuildContext context) {
@@ -163,6 +166,29 @@ class _UpdateBoradState extends State<UpdateBorad> {
                   style: boarderTextStyle(Colors.white),
                 )),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Text("카테고리 : "),
+              // String dropdownValue = 'One';
+              // SizedBox(width: MediaQuery.of(context).size.width * 0.1),
+              DropdownButton<String>(
+                value: dropdownValue,
+                onChanged: (newValue) {
+                  setState(() {
+                    dropdownValue = newValue!;
+                  });
+                },
+                items: <String>['악기목록', '어쿠스틱 기타', '일렉트릭 기타', '색소폰']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
           // ===========
           // 글 제목
           Padding(
@@ -186,7 +212,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
                 // 내용 (힌트로 작성법 설명)
                 TextField(
                   maxLength: 200,
-                  maxLines: 8,
+                  maxLines: 6,
                   controller: contentController,
                   decoration: const InputDecoration(
                       hintText: "게시글 내용을 작성해주세요",
@@ -214,6 +240,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
       setState(() {
         _image = File(selectImage.path);
       });
+      upload(selectImage);
       dynamic sendData = selectImage.path;
       var formData =
           FormData.fromMap({'image': await MultipartFile.fromFile(sendData)});
@@ -233,7 +260,9 @@ class _UpdateBoradState extends State<UpdateBorad> {
       );
       imagefile = response.data;
       return imagefile;
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
   } //
 
   // TextField에 입력한 값을 받아와서 poTitle,poContent,poPrice,poImage01은 입력하고
@@ -247,9 +276,9 @@ class _UpdateBoradState extends State<UpdateBorad> {
     String poTitle = title;
     String poContent = content;
     String poPrice = price;
-    String poImage01 = image;
+    String poImage01 = imagefile;
     var url = Uri.parse(
-        "http://localhost:8080/post/modify?poTitle=$poTitle&poContent=$poContent&poPrice=$poPrice&poImage01=$poImage01&poId=$poId");
+        "http://localhost:8080/post/modify?poTitle=$poTitle&poContent=$poContent&poPrice=$poPrice&poImage01=$poImage01&poInstrument=$dropdownValue&poId=$poId");
     var response = await http.get(url);
     makemodifyDate(poId);
     return 0;
@@ -273,6 +302,27 @@ class _UpdateBoradState extends State<UpdateBorad> {
     await Future.delayed(const Duration(seconds: 2));
     // ignore: use_build_context_synchronously
     gotocalss.gotoTapbar(context);
+  }
+
+  // 카테고리 AI 사용 ******
+  Future<String> upload(selectImage) async {
+    if (selectImage != null) {
+      var url = Uri.parse("http://localhost:5000/predict");
+      var request = http.MultipartRequest("POST", url);
+      request.files
+          .add(await http.MultipartFile.fromPath('image', selectImage!.path));
+      var response = await request.send();
+      // print(json.decode(await response.stream.bytesToString()));
+      var dataConvertedJSON =
+          json.decode(await response.stream.bytesToString());
+      String result = dataConvertedJSON['result'];
+      setState(() {
+        dropdownValue = result;
+      });
+      return result;
+    } else {
+      return 'error';
+    }
   }
 
 // Future.delayed(Duration(seconds: 3));

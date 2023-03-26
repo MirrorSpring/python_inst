@@ -13,6 +13,7 @@ import com.javalec.base.model.Join_PostUploadModel;
 import com.javalec.base.model.Join_PostUploadUserWishModel;
 import com.javalec.base.model.Join_UserReviewModel;
 import com.javalec.base.model.PostModel;
+import com.javalec.base.model.UserInfoModel;
 import com.javalec.base.model.UserModel;
 
 @Mapper
@@ -30,10 +31,10 @@ public interface modelMapper {
 	@Select("SELECT * FROM user")
 	UserModel getuserModelInformation();
 	
-	@Select("SELECT poId,poHeart,poTitle,poContent,poPrice,poImage01,poImage02,poImage03,poViews,poState FROM deeplearning.post")
+	@Select("SELECT poId,poHeart,poTitle,poContent,poPrice,poImage01,poImage02,poInstrument,poViews,poState FROM deeplearning.post")
 	List<PostModel> getpostModelInformation();
 	
-	@Select("SELECT poId,poHeart,poTitle,poContent,poPrice,poImage01,poImage02,poImage03,poViews,poState,poUser,U_userId,userAddress,userReliability, poUpDate, DATE_FORMAT(poUpDate, '%H:%i:%s') AS timeonly FROM deeplearning.post as p , deeplearning.upload as u, deeplearning.user as us where p.poId = u.P_poId and u.U_userId = us.userId and poDelDate is null order by poUpDate desc")
+	@Select("SELECT poId,poHeart,poTitle,poContent,poPrice,poImage01,poInstrument,poInstrument,poViews,poState,poUser,U_userId,userAddress,userReliability, poUpDate, DATE_FORMAT(poUpDate, '%H:%i:%s') AS timeonly FROM deeplearning.post as p , deeplearning.upload as u, deeplearning.user as us where p.poId = u.P_poId and u.U_userId = us.userId and poDelDate is null order by poUpDate desc")
 	List<Join_PostUploadModel> getboardModel();
 	
 	@Select("select * from deeplearning.post where poId = #{poId}")
@@ -68,15 +69,15 @@ public interface modelMapper {
 	@Update("UPDATE post set poViews = poViews+1 WHERE poId = #{poId}")
 	int updatePostViews(@Param("poId") String Id);
 	// 게시글 수정
-	@Update("UPDATE post set poTitle = #{poTitle},poContent = #{poContent},poPrice = #{poPrice}, poImage01 = #{poImage01} WHERE poId = #{poId}")
-	int modifyPost(@Param("poTitle") String poTitle,@Param("poContent") String poContent,@Param("poPrice") String poPrice,@Param("poImage01") String poImage01,@Param("poId") int poId);
+	@Update("UPDATE post set poTitle = #{poTitle},poContent = #{poContent},poPrice = #{poPrice}, poImage01 = #{poImage01}, poInstrument = #{poInstrument} WHERE poId = #{poId}")
+	int modifyPost(@Param("poTitle") String poTitle,@Param("poContent") String poContent,@Param("poPrice") String poPrice,@Param("poImage01") String poImage01,@Param("poInstrument") String poInstrument,@Param("poId") int poId);
 	
 	// 게시글 작성
-	@Insert("INSERT INTO post(poHeart,poTitle,poContent,poPrice,poImage01,poViews,poState,poUser) VALUES(#{poHeart},#{poTitle},#{poContent},#{poPrice},#{poImage01},#{poViews},#{poState},#{poUser})")
-	int insertBoard(@Param("poHeart") String poHeart, @Param("poTitle") String poTitle, @Param("poContent") String poContent, @Param("poPrice") String poPrice, @Param("poImage01") String poImage01, @Param("poViews") String poViews, @Param("poState") String poState, @Param("poUser") String poUser );
+	@Insert("INSERT INTO post(poHeart,poTitle,poContent,poPrice,poImage01,poInstrument,poViews,poState,poUser) VALUES(#{poHeart},#{poTitle},#{poContent},#{poPrice},#{poImage01},#{poInstrument},#{poViews},#{poState},#{poUser})")
+	int insertBoard(@Param("poHeart") String poHeart, @Param("poTitle") String poTitle, @Param("poContent") String poContent, @Param("poPrice") String poPrice, @Param("poImage01") String poImage01,@Param("poInstrument") String poInstrument, @Param("poViews") String poViews, @Param("poState") String poState, @Param("poUser") String poUser );
 	
-	@Select("SELECT poId from post where poHeart=#{poHeart} and poTitle=#{poTitle} and poContent = #{poContent} and poPrice= #{poPrice} and poImage01= #{poImage01} and poViews= #{poViews} and poState= #{poState} and poUser=#{poUser}")
-	int getpostId(@Param("poHeart") String poHeart, @Param("poTitle") String poTitle, @Param("poContent") String poContent, @Param("poPrice") String poPrice, @Param("poImage01") String poImage01, @Param("poViews") String poViews, @Param("poState") String poState, @Param("poUser") String poUser);
+	@Select("SELECT poId from post where poHeart=#{poHeart} and poTitle=#{poTitle} and poContent = #{poContent} and poPrice= #{poPrice} and poImage01= #{poImage01} and poInstrument = #{poInstrument} and poViews= #{poViews} and poState= #{poState} and poUser=#{poUser}")
+	int getpostId(@Param("poHeart") String poHeart, @Param("poTitle") String poTitle, @Param("poContent") String poContent, @Param("poPrice") String poPrice, @Param("poImage01") String poImage01,@Param("poInstrument") String poInstrument ,@Param("poViews") String poViews, @Param("poState") String poState, @Param("poUser") String poUser);
 	// 작성일자 등록
 	@Insert("INSERT INTO upload(P_poId,U_userId,poUpDate) VALUES(#{P_poId},#{U_userId},now())")
 	int insertUpload(@Param("P_poId") String P_poId, @Param("U_userId") String U_userId);
@@ -84,7 +85,7 @@ public interface modelMapper {
 	@Update("UPDATE upload set poMoDate = now() WHERE P_poId = #{P_poId} and U_userId = #{U_userId}")
 	int modifyUpload(@Param("P_poId") String P_poId, @Param("U_userId") String U_userId);
 
-	@Select("SELECT poId,poHeart,poTitle,poContent,poPrice,poImage01,poImage02,poImage03,poViews,poState,poUser,U_userId,userAddress,userReliability, poUpDate, DATE_FORMAT(poUpDate, '%H:%i:%s') AS timeonly FROM post as p , upload as u, user as us where p.poId = u.P_poId and u.U_userId = us.userId and poDelDate is null and poTitle REGEXP #{Search} order by poUpDate desc")
+	@Select("SELECT poId,poHeart,poTitle,poContent,poPrice,poImage01,poImage02,poInstrument,poViews,poState,poUser,U_userId,userAddress,userReliability, poUpDate, DATE_FORMAT(poUpDate, '%H:%i:%s') AS timeonly FROM post as p , upload as u, user as us where p.poId = u.P_poId and u.U_userId = us.userId and poDelDate is null and poTitle REGEXP #{Search} order by poUpDate desc")
 	List<Join_PostUploadModel> searchBoard(@Param("Search") String Search);
 
 	@Update("UPDATE post set poHeart = poHeart+1 WHERE poId = #{poId}")

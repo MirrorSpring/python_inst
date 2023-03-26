@@ -52,20 +52,20 @@ public class boardController {
 	}
 	// 게시글수정
 	@GetMapping("/post/modify")
-		public int modifyPost(@RequestParam("poTitle") String poTitle,@RequestParam("poContent") String poContent,@RequestParam("poPrice") String poPrice,@RequestParam("poImage01") String poImage01,@RequestParam("poId") int poId) {
+		public int modifyPost(@RequestParam("poTitle") String poTitle,@RequestParam("poContent") String poContent,@RequestParam("poPrice") String poPrice,@RequestParam("poImage01") String poImage01,@RequestParam("poInstrument") String poInstrument,@RequestParam("poId") int poId) {
 		System.out.println(poImage01);	
-		return mapper.modifyPost(poTitle, poContent, poPrice,poImage01,poId);
+		return mapper.modifyPost(poTitle, poContent, poPrice,poImage01,poInstrument,poId);
 	}
 	
 	// 게시글 작성
 	@GetMapping("/post/insert")
-	public int insertBoard(@RequestParam("poHeart") String poHeart, @RequestParam("poTitle") String poTitle,@RequestParam("poContent") String poContent,@RequestParam("poPrice") String poPrice,@RequestParam("poImage01") String poImage01,@RequestParam("poViews") String poViews,@RequestParam("poState") String poState, @RequestParam("poUser")String poUser) {
-		return mapper.insertBoard(poHeart,poTitle,poContent,poPrice,poImage01,poViews,poState,poUser);
+	public int insertBoard(@RequestParam("poHeart") String poHeart, @RequestParam("poTitle") String poTitle,@RequestParam("poContent") String poContent,@RequestParam("poPrice") String poPrice,@RequestParam("poImage01") String poImage01,@RequestParam("poInstrument") String poInstrument, @RequestParam("poViews")String poViews,@RequestParam("poState") String poState, @RequestParam("poUser")String poUser) {
+		return mapper.insertBoard(poHeart,poTitle,poContent,poPrice,poImage01,poInstrument,poViews,poState,poUser);
 	}
 	
 	@GetMapping("/post/select/postId")
-	public int getpostId(@RequestParam("poHeart") String poHeart, @RequestParam("poTitle") String poTitle,@RequestParam("poContent") String poContent,@RequestParam("poPrice") String poPrice,@RequestParam("poImage01") String poImage01,@RequestParam("poViews") String poViews,@RequestParam("poState") String poState, @RequestParam("poUser")String poUser) {
-		return mapper.getpostId(poHeart,poTitle,poContent,poPrice,poImage01,poViews,poState,poUser);
+	public int getpostId(@RequestParam("poHeart") String poHeart, @RequestParam("poTitle") String poTitle,@RequestParam("poContent") String poContent,@RequestParam("poPrice") String poPrice,@RequestParam("poImage01") String poImage01,@RequestParam("poInstrument") String poInstrument, @RequestParam("poViews") String poViews,@RequestParam("poState") String poState, @RequestParam("poUser")String poUser) {
+		return mapper.getpostId(poHeart,poTitle,poContent,poPrice,poImage01,poInstrument,poViews,poState,poUser);
 	}
 	// 게시글 작성시간
 	@GetMapping("/post/views/{P_poId}/{U_userId}")
