@@ -4,37 +4,26 @@ import 'package:dl_flutter_app/Model/Chat/static_chat.dart';
 import 'package:flutter/material.dart';
 
 import '../../Model/User/static_user.dart';
-// import '../../View/review/review_page.dart';
+import '../../View/review/review_page.dart';
 
-class ConfirmChatBubble extends StatefulWidget {
+class ReviewChatBubble extends StatefulWidget {
   final Chat chat;
   final String kindOfChat;
 
-  const ConfirmChatBubble(
+  const ReviewChatBubble(
       {super.key, required this.chat, required this.kindOfChat});
 
   @override
-  State<ConfirmChatBubble> createState() => _ConfirmChatBubbleState();
+  State<ReviewChatBubble> createState() => _ReviewChatBubbleState();
 }
 
-class _ConfirmChatBubbleState extends State<ConfirmChatBubble> {
-  late bool confirmState;
-  late String receiveId;
-  // late int count;
+class _ReviewChatBubbleState extends State<ReviewChatBubble> {
+  late bool reviewState;
 
   @override
   void initState() {
     super.initState();
-    confirmState = StaticChat.confirmState;
-    receiveId = StaticUser.userId == StaticChat.chatUserIds[0]
-        ? StaticChat.chatUserIds[1]
-        : StaticChat.chatUserIds[0];
-    // count = 0;
-
-    // if (count > 1) {
-    //   confirmState = !confirmState;
-    // }
-    print("init: $confirmState");
+    reviewState = StaticChat.reviewState;
   }
 
   @override
@@ -54,8 +43,8 @@ class _ConfirmChatBubbleState extends State<ConfirmChatBubble> {
           children: [
             Text(widget.chat.chatText),
             const SizedBox(height: 10),
-            confirmState
-                ? IconButton(onPressed: () {}, icon: const Icon(Icons.check))
+            reviewState
+                ? const Icon(Icons.check)
                 : ElevatedButton(
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
@@ -64,14 +53,21 @@ class _ConfirmChatBubbleState extends State<ConfirmChatBubble> {
                       ),
                     ),
                     onPressed: () {
-                      confirmChat().then((value) => updateChatAction());
-                      StaticChat.confirmState = !confirmState;
-                      // count += 1;
+                      // 거래 확정 클릭하면 거래를 확정했습니다 채팅 + 보내기
+                      // widget.kindOfChat == "거래 확정"
+                      // ? confirmChat().then((value) => updateChatAction())
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ReviewPage(),
+                        ),
+                      );
+                      // reviewState =
                       setState(() {});
                     },
-                    child: const Text(
-                      "거래 확정",
-                      style: TextStyle(
+                    child: Text(
+                      widget.kindOfChat,
+                      style: const TextStyle(
                         color: Color.fromARGB(255, 82, 75, 225),
                       ),
                     ),
@@ -86,7 +82,7 @@ class _ConfirmChatBubbleState extends State<ConfirmChatBubble> {
   // 거래 확정 채팅 보내기
   Future confirmChat() async {
     print('2. 거래 확정 확인 채팅 보내기');
-    await FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .collection('chatroom')
         .doc(StaticChat.chatRoomId)
         .collection('chat')
@@ -103,9 +99,9 @@ class _ConfirmChatBubbleState extends State<ConfirmChatBubble> {
   // 채팅방 목록에 가장 최근 채팅 띄우고 chatRoomState update
   updateChatAction() async {
     print('2. update chatroom');
-    // String receiveUserId = StaticUser.userId == StaticChat.chatUserIds[0]
-    //     ? StaticChat.chatUserIds[1]
-    //     : StaticChat.chatUserIds[0];
+    String receiveUserId = StaticUser.userId == StaticChat.chatUserIds[0]
+        ? StaticChat.chatUserIds[1]
+        : StaticChat.chatUserIds[0];
     await FirebaseFirestore.instance
         .collection('chatroom')
         .doc(StaticChat.chatRoomId)
@@ -113,16 +109,10 @@ class _ConfirmChatBubbleState extends State<ConfirmChatBubble> {
       {
         'lastChat': "${StaticUser.userName}님이 거래를 확정했습니다.",
         "sendUserId": StaticUser.userId,
-        "receiveUserId": receiveId,
+        "receiveUserId": receiveUserId,
         "sendChatRoomState": true,
         "receiveChatRoomState": false,
       },
     );
-
-    // setState(() {});
   }
-
-  // refresh() {
-  //   setState(() {});
-  // }
 }
