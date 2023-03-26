@@ -1,3 +1,4 @@
+import 'package:dl_flutter_app/Style/custom_colors.dart';
 import 'package:dl_flutter_app/View/login/register_page_two.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -128,9 +129,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                       decoration: InputDecoration(
                           suffixIcon: _emailCheck && _emailCheck2
-                              ? const Icon(
+                              ? Icon(
                                   Icons.check,
-                                  color: Colors.green,
+                                  color: CustomColors.mainColor,
                                 )
                               : null,
                           //선택 비선택시 테두리색깔
@@ -139,16 +140,18 @@ class _RegisterPageState extends State<RegisterPage> {
                             borderRadius: BorderRadius.circular(30.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 110, 173, 143),
+                            borderSide: BorderSide(
+                              color: CustomColors.mainColor,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
                           ),
                           border: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.green),
+                            borderSide: BorderSide(
+                              color: CustomColors.mainColor,
+                            ),
                             borderRadius: BorderRadius.circular(30.0),
                           ),
-                          fillColor: Colors.grey.shade200,
+                          fillColor: CustomColors.greyColor,
                           filled: true,
                           hintText: '이메일',
                           hintStyle: TextStyle(color: Colors.grey[500])),
@@ -211,16 +214,18 @@ class _RegisterPageState extends State<RegisterPage> {
                             borderRadius: BorderRadius.circular(30.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 110, 173, 143),
+                            borderSide: BorderSide(
+                              color: CustomColors.mainColor,
                             ),
                             borderRadius: BorderRadius.circular(30.0),
                           ),
                           border: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.green),
+                            borderSide: BorderSide(
+                              color: CustomColors.mainColor,
+                            ),
                             borderRadius: BorderRadius.circular(30.0),
                           ),
-                          fillColor: Colors.grey.shade200,
+                          fillColor: CustomColors.greyColor,
                           filled: true,
                           hintText: '비밀번호 확인',
                           hintStyle: TextStyle(color: Colors.grey[500])),
@@ -288,7 +293,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           padding: const EdgeInsets.all(0),
                           margin: const EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 110, 173, 143),
+                            color: CustomColors.mainColor,
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: const Center(
@@ -377,10 +382,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         );
                       },
-                      child: const Text(
+                      child: Text(
                         '로그인 하러가기',
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: CustomColors.pointColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

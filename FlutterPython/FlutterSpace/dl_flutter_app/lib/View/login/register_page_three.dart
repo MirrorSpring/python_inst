@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../Model/Gu/gu_list.dart';
 import '../../Model/User/users.dart';
+import '../../Style/custom_colors.dart';
 
 class RegisterPageThree extends StatefulWidget {
   final Function()? onTap;
@@ -88,12 +89,12 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color.fromARGB(255, 110, 173, 143),
+                        borderSide: BorderSide(
+                          color: CustomColors.mainColor,
                         ),
                         borderRadius: BorderRadius.circular(30.0),
                       ),
-                      fillColor: Colors.grey.shade200,
+                      fillColor: CustomColors.greyColor,
                       filled: true,
                       hintText: '내 동네 이름(동,읍,면)으로 검색',
                       hintStyle: TextStyle(color: Colors.grey[500])),
@@ -111,7 +112,7 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
                   padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.symmetric(horizontal: 25),
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 110, 173, 143),
+                    color: CustomColors.mainColor,
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: const Center(
@@ -190,7 +191,7 @@ class _RegisterPageThreeState extends State<RegisterPageThree> {
                         padding: const EdgeInsets.all(0),
                         margin: const EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 110, 173, 143),
+                          color: CustomColors.mainColor,
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: const Center(

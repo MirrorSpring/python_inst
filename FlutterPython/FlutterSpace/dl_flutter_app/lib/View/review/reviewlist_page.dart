@@ -1,3 +1,4 @@
+import 'package:dl_flutter_app/View/chat/chatroom_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../DataHandler/review_handler.dart';
@@ -39,7 +40,23 @@ class _ReviewListPageState extends State<ReviewListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          title: "$toUserName 상점 후기", centerTitle: false, appBar: AppBar()),
+        title: "$toUserName 상점 후기",
+        centerTitle: false,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => const ChatRoomPage()),
+                  ));
+            },
+            icon: const Icon(Icons.close),
+            color: Colors.black,
+          ),
+        ],
+        appBar: AppBar(),
+      ),
       body: FutureBuilder(
         future: handler.getReivew(widget.userId),
         builder: (BuildContext context, AsyncSnapshot<List> snapshot) {

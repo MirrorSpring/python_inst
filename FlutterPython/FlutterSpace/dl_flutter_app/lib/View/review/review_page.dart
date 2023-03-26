@@ -5,14 +5,11 @@ import 'package:dl_flutter_app/View/review/reviewlist_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-// import 'dart:convert';
-
 import '../../Model/Chat/static_chat.dart';
 import '../../Model/User/static_user.dart';
 import '../../Widget/AppBar/custom_app_bar.dart';
 
 class ReviewPage extends StatefulWidget {
-  // final String userId;
   const ReviewPage({super.key});
 
   @override
@@ -52,8 +49,20 @@ class _ReviewPageState extends State<ReviewPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar:
-            CustomAppBar(title: "리뷰 작성", centerTitle: true, appBar: AppBar()),
+        appBar: CustomAppBar(
+          title: "리뷰 작성",
+          centerTitle: true,
+          appBar: AppBar(),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.close),
+              color: Colors.black,
+            ),
+          ],
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(25),
@@ -151,6 +160,7 @@ class _ReviewPageState extends State<ReviewPage> {
     );
   }
 
+  // mysql db에 review insert
   Future<bool> insertReview() async {
     print("1. insert review");
     String reText = tfReviewController.text;
@@ -162,6 +172,9 @@ class _ReviewPageState extends State<ReviewPage> {
     await http.get(url);
 
     await updateReliability();
+
+    // reviewState를 true로 만듭니다.
+    StaticChat.reviewState = true;
     return true;
   }
 
