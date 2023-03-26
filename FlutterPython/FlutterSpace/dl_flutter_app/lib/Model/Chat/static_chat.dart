@@ -6,4 +6,7 @@ class StaticChat {
   static bool chatState = false;
 
   static int boardId = 0;
+
+  static bool confirmState = false;
+  static bool reviewState = false;
 }

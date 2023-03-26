@@ -1,5 +1,6 @@
-import 'package:dl_flutter_app/View/review/review_page.dart';
+// import 'package:dl_flutter_app/View/review/review_page.dart';
 import 'package:dl_flutter_app/Widget/Chat/confirm_chat_bubble.dart';
+import 'package:dl_flutter_app/Widget/Chat/review_chat_bubble.dart';
 import 'package:flutter/material.dart';
 
 import '../../Model/Chat/chat.dart';
@@ -19,7 +20,7 @@ class ChatBubble extends StatelessWidget {
             kindOfChat: '거래 확정',
           )
         : chat.chatText.contains("님이 거래를 확정했습니다.")
-            ? ConfirmChatBubble(chat: chat, kindOfChat: '리뷰 쓰러 가기')
+            ? ReviewChatBubble(chat: chat, kindOfChat: '리뷰 쓰러 가기')
             : Container(
                 decoration: chat.sendUserId == StaticUser.userId
                     ? const BoxDecoration(
