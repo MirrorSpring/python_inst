@@ -7,7 +7,7 @@ class PredictImage {
     //이미지 올리기
   Future<String> upload(image) async {
     if (image != null) {
-      var url = Uri.parse("http://localhost:5000/upload");
+      var url = Uri.parse("http://localhost:5000/predict");
       var request = http.MultipartRequest("POST", url);
       request.files
           .add(await http.MultipartFile.fromPath('image', image!.path));
