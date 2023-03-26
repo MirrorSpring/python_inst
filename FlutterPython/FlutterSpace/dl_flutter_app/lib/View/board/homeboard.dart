@@ -74,7 +74,7 @@ class _HomeboardState extends State<Homeboard> {
                                     poPrice: data[index]['poPrice'],
                                     poImage01: data[index]['poImage01'],
                                     // poImage02: data[index]['poImage02'],
-                                    // poImage03 : data[index]['poImage03'],
+                                    poInstrument: data[index]['poInstrument'],
                                     poViews: data[index]['poViews'],
                                     poState: data[index]['poState'],
                                     // poUpDate : data[index]['poUpDate'],
@@ -162,7 +162,7 @@ class _HomeboardState extends State<Homeboard> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                      "${data[index]['userAddress']} \n"
+                                                      "${data[index]['userAddress']} ${data[index]['poInstrument']}\n"
                                                       "${data[index]['poUpDate']}"),
                                                 ],
                                               ),

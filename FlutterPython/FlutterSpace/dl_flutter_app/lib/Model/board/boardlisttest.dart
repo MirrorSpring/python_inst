@@ -11,8 +11,6 @@ class Boarder {
   // 게시글 목록 불러오기
   Stream<List> boardList2(searchText) async* {
     //searchText
-    print("====함수====");
-    print(searchText);
     if (searchText.length <= 2) {
       var url = await Uri.parse('http://localhost:8080/post/alljoin_upload');
       // return url

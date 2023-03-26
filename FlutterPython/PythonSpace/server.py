@@ -8,19 +8,34 @@ from tensorflow import keras
 
 app=Flask('__main__')
 
-@app.route("/predict",methods=['GET','POST'])
+# @app.route("/predict",methods=['GET','POST'])
+# def showtest():
+#     reslist=['어쿠스틱 기타','일렉트릭 기타','색소폰']
+#     file=request.files['image']
+#     image=Image.open(file)
+#     imgConverted=image.resize((100,100)).convert('L')
+#     imgArray=255-np.array(imgConverted).reshape(-1,100,100,1)
+#     model=keras.models.load_model('./FlutterPython/PythonSpace/cnn_inst_model.h5')
+#     result=reslist[int(np.argmax(model.predict(imgArray)))]
+#     image.close()
+#     imgConverted.close()
+
+#     return json.dumps({'result': result},ensure_ascii=False)
+
+
+@app.route("/predict", methods=['POST'])
 def showtest():
-    reslist=['어쿠스틱 기타','일렉트릭 기타','색소폰']
-    file=request.files['img']
-    image=Image.open(file)
-    imgConverted=image.resize((100,100)).convert('L')
-    imgArray=255-np.array(imgConverted).reshape(-1,100,100,1)
-    model=keras.models.load_model('./FlutterPython/PythonSpace/cnn_inst_model.h5')
-    result=reslist[int(np.argmax(model.predict(imgArray)))]
+    reslist = ['어쿠스틱 기타', '일렉트릭 기타', '색소폰']
+    file = request.files['image']
+    image = Image.open(file)
+    imgConverted = image.resize((100, 100)).convert('L')
+    imgArray = 255 - np.array(imgConverted).reshape(-1, 100, 100, 1)
+    model = keras.models.load_model('../FlutterPython/PythonSpace/cnn_inst_model.h5')
+    result = reslist[int(np.argmax(model.predict(imgArray)))]
     image.close()
     imgConverted.close()
 
-    return json.dumps({'result': result},ensure_ascii=False)
+    return jsonify({'result': result})
 
 @app.route('/test')
 def predicttest():
@@ -36,5 +51,7 @@ def showmap():
 
 
 if __name__=='__main__':
-    app.run(host='192.168.10.213',port=5000,debug=True)
+    app.run(host='127.0.0.1',port=5000,debug=True)
     app.config['JSON_AS_ASCII'] = False
+
+##192.168.10.213

@@ -11,7 +11,7 @@ public class Join_PostUploadModel {
 	String poPrice;	
 	String poImage01;	
 	String poImage02;	
-	String poImage03;	
+	String poInstrument;	
 	int poViews;	
 	int poState;	
 	String poUser;
@@ -24,10 +24,8 @@ public class Join_PostUploadModel {
 	
 	
 	
-	
-	
 	public Join_PostUploadModel(int poId, int poHeart, String poTitle, String poContent, String poPrice,
-			String poImage01, String poImage02, String poImage03, int poViews, int poState, String poUser,
+			String poImage01, String poImage02, String poInstrument, int poViews, int poState, String poUser,
 			String u_userId, String userAddress, int userReliability, Date poUpDate, Time timeonly) {
 		super();
 		this.poId = poId;
@@ -37,7 +35,7 @@ public class Join_PostUploadModel {
 		this.poPrice = poPrice;
 		this.poImage01 = poImage01;
 		this.poImage02 = poImage02;
-		this.poImage03 = poImage03;
+		this.poInstrument = poInstrument;
 		this.poViews = poViews;
 		this.poState = poState;
 		this.poUser = poUser;
@@ -89,11 +87,11 @@ public class Join_PostUploadModel {
 	public void setPoImage02(String poImage02) {
 		this.poImage02 = poImage02;
 	}
-	public String getPoImage03() {
-		return poImage03;
+	public String getPoInstrument() {
+		return poInstrument;
 	}
-	public void setPoImage03(String poImage03) {
-		this.poImage03 = poImage03;
+	public void setPoInstrument(String poInstrument) {
+		this.poInstrument = poInstrument;
 	}
 	public int getPoViews() {
 		return poViews;
@@ -143,6 +141,10 @@ public class Join_PostUploadModel {
 	public void setTimeonly(Time timeonly) {
 		this.timeonly = timeonly;
 	}
+	
+	
+	
+	
 	
 	
 	

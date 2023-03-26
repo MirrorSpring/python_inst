@@ -16,7 +16,7 @@ class BoardPage extends StatefulWidget {
     required this.poContent,
     required this.poPrice,
     required this.poImage1,
-    // required this.poImage2,
+    required this.poInstrument,
     required this.poViews,
     // required this.initdate,poImage1
     required this.poUser,
@@ -31,7 +31,7 @@ class BoardPage extends StatefulWidget {
   final String poContent;
   final String poPrice;
   final String poImage1;
-  // final String poImage2;
+  final String poInstrument;
   final int poViews;
   final String poUser;
   final String poUserId;
@@ -63,10 +63,6 @@ class _BoardPageState extends State<BoardPage> {
     super.initState();
     temp = widget.userReliability;
     userId = StaticUser.userId;
-    print(poUserId);
-    print("+_+_+_+_+_+");
-    print(userId);
-    print("+_+_+_+_+_+userId");
     chatRoomId = "";
     userIds = [];
     // receiveUserId = StaticUser.userId == StaticChat.chatUserIds[0]
@@ -105,14 +101,14 @@ class _BoardPageState extends State<BoardPage> {
                       bottom: BorderSide(color: Colors.black, width: 1),
                     ),
                   ),
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  width: MediaQuery.of(context).size.width * 0.95,
                   height: 60,
                   child: Row(
                     children: [
                       Text("${widget.poUser} \n${widget.userAddress}",
                           style: const TextStyle(fontSize: 20)),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.35,
+                        width: MediaQuery.of(context).size.width * 0.40,
                       ),
                       Text("${widget.userReliability}'C",
                           style: const TextStyle(fontSize: 20)),
@@ -130,7 +126,7 @@ class _BoardPageState extends State<BoardPage> {
                       bottom: BorderSide(color: Colors.black, width: 0.1),
                     ),
                   ),
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  width: MediaQuery.of(context).size.width * 0.95,
                   height: 45,
                   child: Text(
                     widget.poTitle,
@@ -140,23 +136,19 @@ class _BoardPageState extends State<BoardPage> {
                 ),
                 Container(
                   color: Colors.white,
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  width: MediaQuery.of(context).size.width * 0.95,
                   height: MediaQuery.of(context).size.width * 0.3,
-                  // decoration: BoxDecoration(
-                  //   border: Border.all(color: Colors.black, width: 0.5),
-                  // ),
                   child: Text(
                     widget.poContent,
                     style: const TextStyle(fontSize: 20),
                   ),
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  width: MediaQuery.of(context).size.width * 0.95,
                   child: Row(
                     children: [
                       detailButton(userId),
                       //
-
                       Text("   관심 : ${widget.poHeart}  조회 : ${widget.poViews}",
                           style: const TextStyle(
                               color: Colors.black, fontSize: 15)),
@@ -191,15 +183,76 @@ class _BoardPageState extends State<BoardPage> {
           // 판매완료를 누르면
           // 포스트 상태 state 에 +1 해준다. 왜? 0 = 판매중 1 = 판매완료로 하고잇음
           StateChange();
-
           // 거래 완료 채팅을 보냅니다.
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return Padding(
+                padding: const EdgeInsets.all(22.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 1,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            side: const BorderSide(width: 2)),
+                        onPressed: () {
+                          StateChange();
+                          Navigator.pop(context);
+                        },
+                        child: const Text("판매완료",
+                            style: TextStyle(color: Colors.black)),
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 1,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            side: const BorderSide(width: 2)),
+                        onPressed: () {
+                          StateChange();
+                          Navigator.pop(context);
+                        },
+                        child: const Text("판매중",
+                            style: TextStyle(color: Colors.black)),
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 1,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            side: const BorderSide(width: 2)),
+                        onPressed: () {
+                          StateChange();
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          "거래중",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+
           selectChatRoomID()
               .then((value) => confirmChat())
               .then((value) => updateChatAction());
 
           setState(() {
-            buttonColoc = Colors.grey;
-            buttonText = "판매완료등록";
+            // buttonColoc = Colors.grey;
+            // buttonText = "판매완료등록";
           });
         },
         child: Text(buttonText,

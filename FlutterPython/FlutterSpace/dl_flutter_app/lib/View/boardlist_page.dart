@@ -1,13 +1,9 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Model/User/static_user.dart';
-import '../Model/User/users.dart';
 import 'board/Declaration.dart';
 import 'board/homeboard.dart';
-import 'package:http/http.dart' as http;
 import '../Model/board/boardlisttest.dart';
 
 class BoardListPage extends StatefulWidget {

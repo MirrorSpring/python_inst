@@ -12,7 +12,7 @@ class Snackbar {
         duration: const Duration(
           seconds: 1,
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.blue,
       ),
     );
   }

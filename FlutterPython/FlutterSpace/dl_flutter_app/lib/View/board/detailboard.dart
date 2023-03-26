@@ -39,8 +39,7 @@ class _PageDetailState extends State<PageDetail> {
     // checkWish();
     board.u_userId;
     userId = widget.userid;
-    print("=== 좋아요 한거면 true여야함.... ====");
-    print(heartState);
+
     setState(() {
       //
     });
@@ -56,10 +55,6 @@ class _PageDetailState extends State<PageDetail> {
         iconTheme: const IconThemeData(color: Colors.black),
         toolbarHeight: 40,
         centerTitle: true,
-        // title: const Text(
-        //   "작성글",
-        //   style: TextStyle(color: Colors.black),
-        // ),
         actions: [
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.35,
@@ -92,6 +87,7 @@ class _PageDetailState extends State<PageDetail> {
                       poTitle: board.poTitle,
                       poContent: board.poContent,
                       poPrice: board.poPrice,
+                      poInstrument: board.poInstrument,
                       poImage: board.poImage01,
                     ),
                   ),
@@ -117,7 +113,7 @@ class _PageDetailState extends State<PageDetail> {
                 poContent: board.poContent,
                 poPrice: board.poPrice,
                 poImage1: board.poImage01,
-                // poImage2: board.poImage02,
+                poInstrument: board.poInstrument,
                 poViews: board.poViews,
                 poUser: board.poUser,
                 userAddress: board.userAddress,
@@ -151,7 +147,7 @@ class _PageDetailState extends State<PageDetail> {
                     color: Colors.red,
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width * 0.5,
                   height: 80,
                   child: Row(
@@ -232,19 +228,19 @@ class _PageDetailState extends State<PageDetail> {
   }
 
   // 좋아요 즐겨찾기 등록한 게시물인지 체크해용
-  // Future<int> checkWish() async {
-  //   int poId = board.poId;
-  //   var url =
-  //       await Uri.parse('http://localhost:8080/post/selectWishlist?poId=$poId');
-  //   var respnse = await http.get(url);
-  //   var dataConvertedJson = json.decode(utf8.decode(respnse.bodyBytes));
-  //   heartbeat = dataConvertedJson;
-  //   // heartbeat == 0 ? heartState = false : "";
-  //   if (heartbeat == 1) {
-  //     heartState = true;
-  //   }
-  //   return heartbeat;
-  // } //
+  Future<int> checkWish() async {
+    int poId = board.poId;
+    var url =
+        await Uri.parse('http://localhost:8080/post/selectWishlist?poId=$poId');
+    var respnse = await http.get(url);
+    var dataConvertedJson = json.decode(utf8.decode(respnse.bodyBytes));
+    heartbeat = dataConvertedJson;
+    // heartbeat == 0 ? heartState = false : "";
+    if (heartbeat == 1) {
+      heartState = true;
+    }
+    return heartbeat;
+  } //
 
   // 이미 존재하는 채팅방인지 확인
   checkRoomExist(String userId, String userName, int poId) async {

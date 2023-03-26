@@ -40,7 +40,9 @@ class _InsertPageState extends State<InsertPage> {
       fit: BoxFit.fill);
   //
   late Object formData = 0;
+  // late String category = "카테고리를 선택하세요";
   File? _image;
+  String dropdownValue = '악기목록';
   @override
   void initState() {
     super.initState();
@@ -116,7 +118,8 @@ class _InsertPageState extends State<InsertPage> {
                       if (titleController.text.isNotEmpty &&
                           priceController.text.isNotEmpty &&
                           contentController.text.isNotEmpty &&
-                          imagefile != "") {
+                          imagefile != "" &&
+                          dropdownValue != "악기목록") {
                         insertBoard = true;
                         if (insertBoard == true) {
                           await makeBoard(
@@ -178,6 +181,29 @@ class _InsertPageState extends State<InsertPage> {
                     style: boarderTextStyle(Colors.white),
                   )),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text("카테고리 : "),
+                // String dropdownValue = 'One';
+                // SizedBox(width: MediaQuery.of(context).size.width * 0.1),
+                DropdownButton<String>(
+                  value: dropdownValue,
+                  onChanged: (newValue) {
+                    setState(() {
+                      dropdownValue = newValue!;
+                    });
+                  },
+                  items: <String>['악기목록', '어쿠스틱 기타', '일렉트릭 기타', '색소폰']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
             // ===========
             // 글 제목
             TextField(
@@ -209,7 +235,7 @@ class _InsertPageState extends State<InsertPage> {
         ),
       ),
     );
-  } ////
+  } //// ===========================메소드=================================
 
   // TextField에 입력한 값을 받아와서 poTitle,poContent,poPrice,poImage01은 입력하고
   // 나머지는 기본값으로 준다. poUser의 경우는 나중에 로그인한 아이디로 처리하자.
@@ -227,7 +253,7 @@ class _InsertPageState extends State<InsertPage> {
 
     var url = Uri.parse(
         "http://localhost:8080/post/insert?poHeart=$poHeart&poTitle=$poTitle" +
-            "&poContent=$poContent&poPrice=$poPrice&poImage01=$poImage01&poViews=$poViews" +
+            "&poContent=$poContent&poPrice=$poPrice&poImage01=$poImage01&poInstrument=$dropdownValue&poViews=$poViews" +
             "&poState=$poState&poUser=$poUser");
     var response = await http.get(url);
     SelectpostId(poTitle, poContent, price, poImage01, poUser);
@@ -249,7 +275,7 @@ class _InsertPageState extends State<InsertPage> {
 
     var url = Uri.parse(
         "http://localhost:8080/post/select/postId?poHeart=$poHeart&poTitle=$poTitle" +
-            "&poContent=$poContent&poPrice=$poPrice&poImage01=$poImage01&poViews=$poViews" +
+            "&poContent=$poContent&poPrice=$poPrice&poImage01=$poImage01&poInstrument=$dropdownValue&poViews=$poViews" +
             "&poState=$poState&poUser=$poUser");
     var respnse = await http.get(url);
     var poId = json.decode(utf8.decode(respnse.bodyBytes));
@@ -288,6 +314,7 @@ class _InsertPageState extends State<InsertPage> {
       formData =
           FormData.fromMap({'image': await MultipartFile.fromFile(sendData)});
       // patchUserProfileImage(formData);
+      upload(selectImage);
       return formData;
     } else {
       return 0;
@@ -313,6 +340,29 @@ class _InsertPageState extends State<InsertPage> {
       }
     }
   } //
+
+  // 카테고리 AI 사용 ******
+  Future<String> upload(selectImage) async {
+    if (selectImage != null) {
+      var url = Uri.parse("http://localhost:5000/predict");
+      var request = http.MultipartRequest("POST", url);
+      request.files
+          .add(await http.MultipartFile.fromPath('image', selectImage!.path));
+      var response = await request.send();
+      // print(json.decode(await response.stream.bytesToString()));
+      var dataConvertedJSON =
+          json.decode(await response.stream.bytesToString());
+      String result = dataConvertedJSON['result'];
+      setState(() {
+        dropdownValue = result;
+      });
+      return result;
+    } else {
+      return 'error';
+    }
+  }
+
+  //
 
   Future imageslect(imagefile) async {
     // print(poId);
