@@ -30,7 +30,7 @@ def showtest():
     image = Image.open(file)
     imgConverted = image.resize((100, 100)).convert('L')
     imgArray = 255 - np.array(imgConverted).reshape(-1, 100, 100, 1)
-    model = keras.models.load_model('../FlutterPython/PythonSpace/cnn_inst_model.h5')
+    model = keras.models.load_model('./cnn_inst_model.h5')
     result = reslist[int(np.argmax(model.predict(imgArray)))]
     image.close()
     imgConverted.close()
