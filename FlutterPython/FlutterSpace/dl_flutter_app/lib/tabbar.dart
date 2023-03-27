@@ -33,12 +33,12 @@ class _TabbarState extends State<Tabbar> {
             ),
             label: 'home',
           ),
-          NavigationDestination(
-            icon: Icon(
-              Icons.map,
-            ),
-            label: 'map',
-          ),
+          // NavigationDestination(
+          //   icon: Icon(
+          //     Icons.map,
+          //   ),
+          //   label: 'map',
+          // ),
           NavigationDestination(
             icon: Icon(
               Icons.chat,
@@ -65,7 +65,7 @@ class _TabbarState extends State<Tabbar> {
       ),
       body: <Widget>[
         const BoardListPage(),
-        const MapPage(),
+        // const MapPage(),
         const ChatListPage(),
         const MyPage(),
       ][currentPageIndex],
