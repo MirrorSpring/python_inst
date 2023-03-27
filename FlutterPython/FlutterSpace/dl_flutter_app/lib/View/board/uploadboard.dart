@@ -276,7 +276,8 @@ class _UpdateBoradState extends State<UpdateBorad> {
     String poTitle = title;
     String poContent = content;
     String poPrice = price;
-    String poImage01 = imagefile;
+    String poImage01 = "";
+    imagefile != "" ? poImage01 = imagefile : poImage01 = poimage;
     var url = Uri.parse(
         "http://localhost:8080/post/modify?poTitle=$poTitle&poContent=$poContent&poPrice=$poPrice&poImage01=$poImage01&poInstrument=$dropdownValue&poId=$poId");
     var response = await http.get(url);
