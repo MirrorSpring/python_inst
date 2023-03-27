@@ -42,10 +42,14 @@ class _LoginPageState extends State<LoginPage> {
                   height: 50,
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 30,
+                ),
+                const Text(
+                  "Replay",
+                  style: TextStyle(fontSize: 80),
                 ),
                 const SizedBox(
-                  height: 25,
+                  height: 35,
                 ),
                 MyTextfield(
                   controller: emailController,

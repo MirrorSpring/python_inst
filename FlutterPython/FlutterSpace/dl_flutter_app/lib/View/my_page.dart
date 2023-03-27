@@ -166,8 +166,8 @@ class _MyPageState extends State<MyPage> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
                     Navigator.of(ctx).pop();
                   },
                   child: const Text(

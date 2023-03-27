@@ -104,7 +104,7 @@ class _InsertPageState extends State<InsertPage> {
                     style: boarderTextStyle(Colors.black),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.19,
+                    width: MediaQuery.of(context).size.width * 0.18,
                   ),
                   TextButton(
                     onPressed: () async {
@@ -361,8 +361,6 @@ class _InsertPageState extends State<InsertPage> {
       return 'error';
     }
   }
-
-  //
 
   Future imageslect(imagefile) async {
     // print(poId);
