@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dl_flutter_app/Model/User/static_user.dart';
+import 'package:dl_flutter_app/Style/custom_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -245,7 +246,7 @@ class _HomeboardState extends State<Homeboard> {
             ),
           );
         },
-        backgroundColor: Colors.amber,
+        backgroundColor: CustomColors.mainColor,
         child: const Icon(
           Icons.add,
         ),
