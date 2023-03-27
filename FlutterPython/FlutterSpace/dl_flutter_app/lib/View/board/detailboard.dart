@@ -38,8 +38,8 @@ class _PageDetailState extends State<PageDetail> {
     board = widget.board;
     // checkWish();
     board.u_userId;
-    userId = widget.userid;
-
+    // userId = widget.userid;
+    userId = StaticUser.userId;
     setState(() {
       //
     });
