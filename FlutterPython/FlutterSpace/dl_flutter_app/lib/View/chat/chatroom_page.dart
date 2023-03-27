@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dl_flutter_app/Style/custom_colors.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -126,7 +127,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                           ChatInputTf(tfChatController: tfChatController),
                           // -------------------------- 채팅 전송 버튼 **
                           IconButton(
-                            color: const Color(0xff9AB6FF),
+                            color: CustomColors.mainColor,
                             onPressed: () async {
                               //db insert
                               addChatAction();
