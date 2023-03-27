@@ -1,4 +1,5 @@
 // import 'package:dl_flutter_app/View/review/review_page.dart';
+import 'package:dl_flutter_app/Style/custom_colors.dart';
 import 'package:dl_flutter_app/Widget/Chat/confirm_chat_bubble.dart';
 import 'package:dl_flutter_app/Widget/Chat/review_chat_bubble.dart';
 import 'package:flutter/material.dart';
@@ -31,13 +32,13 @@ class ChatBubble extends StatelessWidget {
                         ),
                         color: Color.fromARGB(255, 220, 220, 220),
                       )
-                    : const BoxDecoration(
-                        borderRadius: BorderRadius.only(
+                    : BoxDecoration(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
                           bottomRight: Radius.circular(20),
                         ),
-                        color: Color.fromARGB(255, 174, 195, 250),
+                        color: CustomColors.mainColor,
                       ),
                 // width: 250,
                 constraints: const BoxConstraints(maxWidth: 250, minWidth: 50),

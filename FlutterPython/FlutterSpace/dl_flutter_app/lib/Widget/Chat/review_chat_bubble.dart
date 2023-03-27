@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dl_flutter_app/Model/Chat/chat.dart';
 import 'package:dl_flutter_app/Model/Chat/static_chat.dart';
+import 'package:dl_flutter_app/Style/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../Model/User/static_user.dart';
@@ -49,7 +50,7 @@ class _ReviewChatBubbleState extends State<ReviewChatBubble> {
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
                       backgroundColor: MaterialStateProperty.all(
-                        const Color.fromARGB(255, 215, 212, 252),
+                        CustomColors.backgroundGreen,
                       ),
                     ),
                     onPressed: () {
@@ -67,8 +68,8 @@ class _ReviewChatBubbleState extends State<ReviewChatBubble> {
                     },
                     child: Text(
                       widget.kindOfChat,
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 82, 75, 225),
+                      style: TextStyle(
+                        color: CustomColors.pointColor,
                       ),
                     ),
                   )

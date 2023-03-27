@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dl_flutter_app/Model/Chat/chat.dart';
 import 'package:dl_flutter_app/Model/Chat/static_chat.dart';
+import 'package:dl_flutter_app/Style/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../Model/User/static_user.dart';
@@ -60,7 +61,7 @@ class _ConfirmChatBubbleState extends State<ConfirmChatBubble> {
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(0),
                       backgroundColor: MaterialStateProperty.all(
-                        const Color.fromARGB(255, 215, 212, 252),
+                        CustomColors.backgroundGreen,
                       ),
                     ),
                     onPressed: () {
@@ -69,10 +70,10 @@ class _ConfirmChatBubbleState extends State<ConfirmChatBubble> {
                       // count += 1;
                       setState(() {});
                     },
-                    child: const Text(
+                    child: Text(
                       "거래 확정",
                       style: TextStyle(
-                        color: Color.fromARGB(255, 82, 75, 225),
+                        color: CustomColors.pointColor,
                       ),
                     ),
                   )

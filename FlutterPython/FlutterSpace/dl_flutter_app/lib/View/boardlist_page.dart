@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Model/User/static_user.dart';
-import 'board/Declaration.dart';
+// import 'board/Declaration.dart';
 import 'board/homeboard.dart';
 import '../Model/board/boardlisttest.dart';
 
@@ -68,18 +68,18 @@ class _BoardListPageState extends State<BoardListPage> {
               icon: const Icon(Icons.search),
               color: Colors.black,
             ),
-            IconButton(
-              onPressed: () {
-                // 공지사항으로 이동
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: ((context) => const Declaration()),
-                    ));
-              },
-              icon: const Icon(Icons.notifications),
-              color: Colors.black,
-            ),
+            // IconButton(
+            //   onPressed: () {
+            //     // 공지사항으로 이동
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: ((context) => const Declaration()),
+            //         ));
+            //   },
+            //   icon: const Icon(Icons.notifications),
+            //   color: Colors.black,
+            // ),
           ]),
         ],
       ),
