@@ -13,9 +13,9 @@ import '../../Widget/boardPage/board_page.dart';
 import '../chat/chatroom_page.dart';
 
 class PageDetail extends StatefulWidget {
-  final board;
-  final heartState2;
-  final userid;
+  final Board board;
+  final bool heartState2;
+  final String userid;
   const PageDetail(this.board, this.heartState2, this.userid, {super.key});
 
   @override
@@ -36,13 +36,14 @@ class _PageDetailState extends State<PageDetail> {
   void initState() {
     super.initState();
     board = widget.board;
-    // checkWish();
     board.u_userId;
+
     // userId = widget.userid;
     userId = StaticUser.userId;
     setState(() {
       //
     });
+
   }
 
   @override
@@ -63,13 +64,13 @@ class _PageDetailState extends State<PageDetail> {
               style: TextStyle(color: Colors.black, fontSize: 25),
             ),
           ),
-          // 게시글 작성자일 경우만 Icon 출력
+          // 게시글 작성자일 경우만 수정, 삭제 Icon 출력
           if (isCurrentUserPostAuthor)
             IconButton(
               onPressed: () {
                 // 삭제 : Deldate update
-                int P_poId = board.poId;
-                alert.Alert(context, P_poId);
+                int pPoid = board.poId;
+                alert.Alert(context, pPoid);
               },
               icon: const Icon(Icons.delete),
             )
@@ -153,7 +154,7 @@ class _PageDetailState extends State<PageDetail> {
                   child: Row(
                     children: [
                       Text(
-                        "   가격 :  ${board.poPrice}",
+                        "가격 :  ${board.poPrice}",
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
@@ -188,7 +189,7 @@ class _PageDetailState extends State<PageDetail> {
     // 이 함수는 실제로는 로그인 관련 로직을 구현해야 합니다.
     // 로그인할때 입력한거 저장해서 여기에 넣으면 될듯??
     return board.u_userId;
-    ; // 임시로 korea 반환하도록 구현한 예시입니다.
+    // 임시로 korea 반환하도록 구현한 예시입니다.
   }
 
   //
@@ -235,7 +236,6 @@ class _PageDetailState extends State<PageDetail> {
     var respnse = await http.get(url);
     var dataConvertedJson = json.decode(utf8.decode(respnse.bodyBytes));
     heartbeat = dataConvertedJson;
-    // heartbeat == 0 ? heartState = false : "";
     if (heartbeat == 1) {
       heartState = true;
     }

@@ -1,3 +1,4 @@
+import 'package:dl_flutter_app/Style/custom_colors.dart';
 import 'package:dl_flutter_app/View/chat/chatroom_page.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class _ReviewListPageState extends State<ReviewListPage> {
   late ReviewHandler handler;
   late String toUserId;
   late String toUserName;
-  final Color mainColor = const Color.fromARGB(255, 174, 195, 250);
+  final Color mainColor = CustomColors.mainColor;
 
   @override
   void initState() {
