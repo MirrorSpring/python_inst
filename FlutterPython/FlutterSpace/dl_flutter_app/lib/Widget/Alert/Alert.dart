@@ -6,6 +6,7 @@ import '../../tabbar.dart';
 
 class Alertclass {
   gotoTapbar(BuildContext context) {
+    // 뒤로 가기 없는 페이지가 나옴
     return Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

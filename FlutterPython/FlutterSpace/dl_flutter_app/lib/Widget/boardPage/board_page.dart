@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../Model/Chat/static_chat.dart';
 import '../../Model/User/static_user.dart';
 import '../Alert/image.dart';
 import 'package:http/http.dart' as http;
@@ -59,15 +58,11 @@ class _BoardPageState extends State<BoardPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     temp = widget.userReliability;
     userId = StaticUser.userId;
     chatRoomId = "";
     userIds = [];
-    // receiveUserId = StaticUser.userId == StaticChat.chatUserIds[0]
-    // ? StaticChat.chatUserIds[1]
-    // : StaticChat.chatUserIds[0];
   }
 
   @override
@@ -182,7 +177,7 @@ class _BoardPageState extends State<BoardPage> {
         onPressed: () {
           // 판매완료를 누르면
           // 포스트 상태 state 에 +1 해준다. 왜? 0 = 판매중 1 = 판매완료로 하고잇음
-          StateChange();
+          stateChange();
           // 거래 완료 채팅을 보냅니다.
           showModalBottomSheet(
             context: context,
@@ -201,7 +196,7 @@ class _BoardPageState extends State<BoardPage> {
                             backgroundColor: Colors.white,
                             side: const BorderSide(width: 2)),
                         onPressed: () {
-                          StateChange();
+                          stateChange();
                           Navigator.pop(context);
                         },
                         child: const Text("판매완료",
@@ -216,7 +211,7 @@ class _BoardPageState extends State<BoardPage> {
                             backgroundColor: Colors.white,
                             side: const BorderSide(width: 2)),
                         onPressed: () {
-                          StateChange();
+                          stateChange();
                           Navigator.pop(context);
                         },
                         child: const Text("판매중",
@@ -231,7 +226,7 @@ class _BoardPageState extends State<BoardPage> {
                             backgroundColor: Colors.white,
                             side: const BorderSide(width: 2)),
                         onPressed: () {
-                          StateChange();
+                          stateChange();
                           Navigator.pop(context);
                         },
                         child: const Text(
@@ -273,7 +268,8 @@ class _BoardPageState extends State<BoardPage> {
     }
   } //
 
-  Future StateChange() async {
+  // 거래 완료 등 상태표시
+  Future stateChange() async {
     var url = Uri.parse('http://localhost:8080/post/poState?poId=$poId');
     await http.get(url);
   }

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Model/User/static_user.dart';
-// import 'board/Declaration.dart';
 import 'board/homeboard.dart';
 import '../Model/board/boardlisttest.dart';
 
@@ -23,15 +22,8 @@ class _BoardListPageState extends State<BoardListPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     selectUserInfo();
-    // print("static user id: ${StaticUser.userId}");
-    // print("static user name: ${StaticUser.userName}");
-    // print("auth id: ${FirebaseAuth.instance.currentUser?.uid}");
-    // print("auth: ${FirebaseAuth.instance.currentUser}");
-    // print("auth: ${FirebaseAuth.instance.currentUser?.uid}");
-    // print("auth: ${FirebaseAuth.instance.currentUser?.uid}");
   }
 
   @override
@@ -48,6 +40,7 @@ class _BoardListPageState extends State<BoardListPage> {
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.65,
                 color: Colors.white,
+                // 앱바 검색
                 child: TextField(
                   controller: selectController,
                   onChanged: (text) {
@@ -83,21 +76,16 @@ class _BoardListPageState extends State<BoardListPage> {
           ]),
         ],
       ),
+      // 검색한 거 넘김
       body: Homeboard(
         searchText: searchTexts,
       ),
     );
-  } //
+  }
 
+  // 유저 정보를 static에 담는다.
   selectUserInfo() async {
     String? uId = FirebaseAuth.instance.currentUser?.uid;
-
-    // final Query query = FirebaseFirestore.instance.collection('user').doc(uId).snapshots();
-    // final QuerySnapshot querySnapshot = await query.get();
-    // for (var document in querySnapshot.docs) {
-    //   print('로그인된 user docId를 select: ${document.id}');
-    //   // chatRoomId = document.id;
-    // }
 
     await FirebaseFirestore.instance
         .collection('user')

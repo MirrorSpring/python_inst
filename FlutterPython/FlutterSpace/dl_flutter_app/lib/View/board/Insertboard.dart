@@ -31,14 +31,12 @@ class _InsertPageState extends State<InsertPage> {
   Alertclass gotocalss = Alertclass();
   late String imagefile = "";
   Snackbar snackbar = Snackbar();
-  late Response _response;
   late String url = "";
   late Image cameraImage = Image.network(
       "http://localhost:8080/images/CameraImage.png",
       width: MediaQuery.of(context).size.width * 1,
       height: MediaQuery.of(context).size.height * 0.4,
       fit: BoxFit.fill);
-  //
   late Object formData = 0;
   // late String category = "카테고리를 선택하세요";
   File? _image;
@@ -58,7 +56,7 @@ class _InsertPageState extends State<InsertPage> {
   }
 
   // gotoTapbar() {
-  //   return Navigator.pushAndRemoveUntil(
+  //   return Navigator.pushAndRemoveUntil( // 뒤로 가기가 없음
   //       context,
   //       MaterialPageRoute(
   //         builder: (context) => Tabbar(),
@@ -73,7 +71,6 @@ class _InsertPageState extends State<InsertPage> {
       body: SingleChildScrollView(
         controller: scroller,
         physics: const AlwaysScrollableScrollPhysics(),
-        // padding: const EdgeInsets.all(8),
         child: Column(
           children: [
             SizedBox(
@@ -112,7 +109,7 @@ class _InsertPageState extends State<InsertPage> {
                       /// 사진 올리기를 하지 않았을경우 실행 X
                       await patchUserProfileImage(formData);
                       // 사진 이름을 imagefile에 저장
-                      String name = titleController.text;
+                      // String name = titleController.text;
 
                       /// 제목, 가격, 내용, 사진이름을 모두 입력해야 통과
                       if (titleController.text.isNotEmpty &&
@@ -149,37 +146,39 @@ class _InsertPageState extends State<InsertPage> {
             ),
             // (취소) -- 내 물건 팔기 --  [완료]
             Container(
-                color: Colors.white,
-                width: MediaQuery.of(context).size.width * 1,
-                height: MediaQuery.of(context).size.height * 0.4,
-                child: Column(
-                  children: [
-                    _image == null
-                        ? cameraImage
-                        : Image.file(
-                            _image!,
-                            fit: BoxFit.fill,
-                            width: MediaQuery.of(context).size.width * 1,
-                            height: MediaQuery.of(context).size.height * 0.4,
-                          ),
-                  ],
-                )),
+              color: Colors.white,
+              width: MediaQuery.of(context).size.width * 1,
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: Column(
+                children: [
+                  _image == null
+                      ? cameraImage
+                      : Image.file(
+                          _image!,
+                          fit: BoxFit.fill,
+                          width: MediaQuery.of(context).size.width * 1,
+                          height: MediaQuery.of(context).size.height * 0.4,
+                        ),
+                ],
+              ),
+            ),
             // 사진 올리는 버튼
             SizedBox(
               width: MediaQuery.of(context).size.width * 1,
               height: 50,
               child: ElevatedButton(
-                  onPressed: () {
-                    imageToServe();
-                    setState(() {});
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                  ),
-                  child: Text(
-                    "사진 올리기 ",
-                    style: boarderTextStyle(Colors.white),
-                  )),
+                onPressed: () {
+                  imageToServe();
+                  setState(() {});
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                ),
+                child: Text(
+                  "사진 올리기 ",
+                  style: boarderTextStyle(Colors.white),
+                ),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -252,17 +251,17 @@ class _InsertPageState extends State<InsertPage> {
     String poUser = userId;
 
     var url = Uri.parse(
-        "http://localhost:8080/post/insert?poHeart=$poHeart&poTitle=$poTitle" +
-            "&poContent=$poContent&poPrice=$poPrice&poImage01=$poImage01&poInstrument=$dropdownValue&poViews=$poViews" +
+        "http://localhost:8080/post/insert?poHeart=$poHeart&poTitle=$poTitle"
+                "&poContent=$poContent&poPrice=$poPrice&poImage01=$poImage01&poInstrument=$dropdownValue&poViews=$poViews" +
             "&poState=$poState&poUser=$poUser");
     var response = await http.get(url);
-    SelectpostId(poTitle, poContent, price, poImage01, poUser);
+    selectpostId(poTitle, poContent, price, poImage01, poUser);
     return 0;
   }
 
   // Post에 insert했으면 그 PoId를 가져와야 한다.
   // 똑같이 입력한 값을 가지고 select 해서 ID 찾아서 Upload로 넘기자
-  Future<int> SelectpostId(String title, String content, String price,
+  Future<int> selectpostId(String title, String content, String price,
       String image, String poUsers) async {
     int poHeart = 0;
     String poTitle = title;
@@ -274,8 +273,8 @@ class _InsertPageState extends State<InsertPage> {
     String poUser = poUsers;
 
     var url = Uri.parse(
-        "http://localhost:8080/post/select/postId?poHeart=$poHeart&poTitle=$poTitle" +
-            "&poContent=$poContent&poPrice=$poPrice&poImage01=$poImage01&poInstrument=$dropdownValue&poViews=$poViews" +
+        "http://localhost:8080/post/select/postId?poHeart=$poHeart&poTitle=$poTitle"
+                "&poContent=$poContent&poPrice=$poPrice&poImage01=$poImage01&poInstrument=$dropdownValue&poViews=$poViews" +
             "&poState=$poState&poUser=$poUser");
     var respnse = await http.get(url);
     var poId = json.decode(utf8.decode(respnse.bodyBytes));
@@ -289,10 +288,9 @@ class _InsertPageState extends State<InsertPage> {
     // int poHeart = 0;
     await Future.delayed(const Duration(seconds: 4));
     int poId = id;
-    String U_userId = StaticUser.userId;
-    var url = Uri.parse("http://localhost:8080/post/views/$poId/$U_userId");
+    String uUserid = StaticUser.userId;
+    var url = Uri.parse("http://localhost:8080/post/views/$poId/$uUserid");
     await http.get(url);
-    // ignore: use_build_context_synchronously
     gotocalss.gotoTapbar(context);
     return 0;
   }
@@ -315,6 +313,7 @@ class _InsertPageState extends State<InsertPage> {
           FormData.fromMap({'image': await MultipartFile.fromFile(sendData)});
       // patchUserProfileImage(formData);
       upload(selectImage);
+
       return formData;
     } else {
       return 0;
@@ -323,7 +322,8 @@ class _InsertPageState extends State<InsertPage> {
 
   // image server upload 2
   Future<dynamic> patchUserProfileImage(dynamic input) async {
-    var dio = new Dio();
+    // dio: http 대신 사용할 수 있도록 간편화시킨 flutter library
+    var dio = Dio();
     if (input != 0) {
       try {
         dio.options.contentType = 'multipart/form-data';
@@ -362,14 +362,13 @@ class _InsertPageState extends State<InsertPage> {
     }
   }
 
+  // 파일명 select 후 return
   Future imageslect(imagefile) async {
     // print(poId);
     String imagetext = imagefile;
     var url = await Uri.parse('http://localhost:8080/images/$imagetext');
     await http.get(url);
-    setState(() {
-      //
-    });
+    setState(() {});
     return url;
   }
-} ///// END
+} // END
