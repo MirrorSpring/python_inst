@@ -37,9 +37,13 @@ class _PageDetailState extends State<PageDetail> {
     super.initState();
     board = widget.board;
     board.u_userId;
-    userId = widget.userid;
 
-    // setState(() {});
+    // userId = widget.userid;
+    userId = StaticUser.userId;
+    setState(() {
+      //
+    });
+
   }
 
   @override
