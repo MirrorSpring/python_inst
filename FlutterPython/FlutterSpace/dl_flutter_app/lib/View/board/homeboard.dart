@@ -28,11 +28,11 @@ class _HomeboardState extends State<Homeboard> {
   ScrollController scroller = ScrollController();
   Boarder boarder = Boarder();
   var f = NumberFormat.currency(locale: 'ko_KR', symbol: '₩');
-  late int heartbeat = 0;
+  late int heartbeat = 0; // 게시글의 전체 좋아요 수
   late int heartbeat2 = 0;
   late String userid = "";
-  late bool heartState = false;
-  late bool heartState2 = false;
+  late bool heartState = false; // 내가 누른 거 확인해서 빨간 하트 보여주려고 필요
+  late bool heartState2 = false; //  post에 하트가 하나 이상 있으면 빈 하트 아이콘 보여주려고 필요
   @override
   void initState() {
     super.initState();
@@ -47,6 +47,7 @@ class _HomeboardState extends State<Homeboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
+        // 왜 StreamBuilder?
         child: StreamBuilder(
           stream: boardList(searchText),
           builder: (context, snapshot) {
@@ -66,7 +67,7 @@ class _HomeboardState extends State<Homeboard> {
                             child: GestureDetector(
                               onTap: () {
                                 poId = data[index]['poId'];
-                                UpdateViews();
+                                updateViews();
                                 final board = Board(
                                     poId: data[index]['poId'],
                                     poHeart: data[index]['poHeart'],
@@ -95,13 +96,13 @@ class _HomeboardState extends State<Homeboard> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PageDetail(
-                                          board, heartState2, userid)),
+                                    builder: (context) =>
+                                        PageDetail(board, heartState2, userid),
+                                  ),
                                 );
                               },
                               child: SingleChildScrollView(
                                 controller: scroller,
-                                // physics: const AlwaysScrollableScrollPhysics(),
                                 child: Column(
                                   children: [
                                     Row(
@@ -118,8 +119,6 @@ class _HomeboardState extends State<Homeboard> {
                                               0.15,
                                           child: Image.network(
                                             "http://localhost:8080/images/${data[index]['poImage01']}",
-                                            // width: 90,
-                                            // height: 100,
                                             fit: BoxFit.fill,
                                           ),
                                         ),
@@ -242,7 +241,7 @@ class _HomeboardState extends State<Homeboard> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => InsertPage(),
+              builder: (context) => const InsertPage(),
             ),
           );
         },
@@ -254,11 +253,6 @@ class _HomeboardState extends State<Homeboard> {
     );
   }
 
-  // Stream<List> boardstart(String searchText) async* {
-  //   await boarder.boardList(searchText);
-  //   yield data;
-  // }
-
   // 데이터를 초기화 한 후 게시글 출력
   Future<bool> wishlistcheck(poId) async {
     var url =
@@ -266,7 +260,7 @@ class _HomeboardState extends State<Homeboard> {
     var respnse = await http.get(url);
     var dataConvertedJson = json.decode(utf8.decode(respnse.bodyBytes));
     heartbeat2 = dataConvertedJson;
-    // heartbeat == 0 ? heartState = false : "";
+
     if (heartbeat2 == 1) {
       heartState2 = true;
     } else {
@@ -276,7 +270,7 @@ class _HomeboardState extends State<Homeboard> {
   } //
 
   boardList(searchText) {
-    data.clear();
+    data.clear(); // data.clear를 안 하면 initstate마다 무한 복사됨
     setState(() {
       searchText = widget.searchText;
     });
@@ -285,14 +279,17 @@ class _HomeboardState extends State<Homeboard> {
 
   // 게시글 목록 불러오기
   Stream<List> boardList2(searchText) async* {
-    //searchText
+    //async*? Stream 쓸 때 붙여줘야 한다.
+    //searchText가 비었으면 모든 것들을 불러옴
     if (searchText.isEmpty) {
       var url = await Uri.parse('http://localhost:8080/post/alljoin_upload');
       // return url
       var respnse = await http.get(url);
       var dataConvertedJson = json.decode(utf8.decode(respnse.bodyBytes));
       data.addAll(dataConvertedJson);
-      yield data;
+      yield data; // Stream은 return 아닌 yield를 쓴다.
+
+      // 검색어가 있으면 조건으로 불러옴
     } else {
       var url = await Uri.parse(
           'http://localhost:8080/post/searchBoard?Search=$searchText');
@@ -305,18 +302,19 @@ class _HomeboardState extends State<Homeboard> {
   }
 
   // 게시글 누르면 조회수 1 증가.
-  Future UpdateViews() async {
+  Future<void> updateViews() async {
     // print(poId);
     var url = await Uri.parse('http://localhost:8080/post/views/$poId');
     await http.get(url);
     // print(url);
-    return data;
+    // return data;
   } //
 
+  // 리스트에서 좋아요가 눌려 있으면 true
   Future<int> checkWish(userid) async {
-    String U_userId = userid;
+    String uUserid = userid;
     var url = await Uri.parse(
-        'http://localhost:8080/post/checkWishlist?U_userId=$U_userId');
+        'http://localhost:8080/post/checkWishlist?U_userId=$uUserid');
     var respnse = await http.get(url);
     var dataConvertedJson = json.decode(utf8.decode(respnse.bodyBytes));
     heartbeat = dataConvertedJson;

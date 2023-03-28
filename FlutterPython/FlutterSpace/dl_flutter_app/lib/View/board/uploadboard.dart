@@ -63,11 +63,11 @@ class _UpdateBoradState extends State<UpdateBorad> {
   Snackbar snackbar = Snackbar();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     dropdownValue = widget.poInstrument;
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
@@ -250,7 +250,7 @@ class _UpdateBoradState extends State<UpdateBorad> {
 
   // image
   Future<dynamic> patchUserProfileImage(dynamic input) async {
-    var dio = new Dio();
+    var dio = Dio();
     try {
       dio.options.contentType = 'multipart/form-data';
       dio.options.maxRedirects.isFinite;
@@ -269,10 +269,10 @@ class _UpdateBoradState extends State<UpdateBorad> {
   // 나머지는 기본값으로 준다. poUser의 경우는 나중에 로그인한 아이디로 처리하자.
   // post 테이블에 inset
   Future<int> modifyBoard(
-      int Id, String title, String content, String price, String image) async {
+      int id, String title, String content, String price, String image) async {
     // var enginSizeCC = (engineSize + 1) * 1000;
     // poHeart,poTitle,poContent,poPrice,poImage01,poViews,poState,poUser
-    int poId = Id;
+    int poId = id;
     String poTitle = title;
     String poContent = content;
     String poPrice = price;
@@ -292,9 +292,9 @@ class _UpdateBoradState extends State<UpdateBorad> {
   Future<int> makemodifyDate(int id) async {
     // int poHeart = 0;
     int poId = id;
-    String U_userId = StaticUser.userId;
+    String uUserid = StaticUser.userId;
     var url =
-        Uri.parse("http://localhost:8080/post/modifyboard/$poId/$U_userId");
+        Uri.parse("http://localhost:8080/post/modifyboard/$poId/$uUserid");
     var response = await http.get(url);
     return 0;
   }

@@ -1,6 +1,5 @@
-// import 'dart:ffi';
-
 import 'package:dl_flutter_app/DataHandler/review_handler.dart';
+import 'package:dl_flutter_app/Style/custom_colors.dart';
 import 'package:dl_flutter_app/View/review/reviewlist_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -23,7 +22,7 @@ class _ReviewPageState extends State<ReviewPage> {
   late Icon filledStar;
   late int starIndex;
   late Icon currentStar;
-  final Color mainColor = const Color.fromARGB(255, 174, 195, 250);
+  final Color mainColor = CustomColors.mainColor;
   late String toUserId;
 
   @override
