@@ -1,4 +1,5 @@
 import 'package:dl_flutter_app/View/login/login_page.dart';
+import 'package:dl_flutter_app/View/userupdate_page.dart';
 import 'package:dl_flutter_app/View/wishlist.dart';
 import 'package:dl_flutter_app/Widget/AppBar/custom_app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,7 +24,7 @@ class _MyPageState extends State<MyPage> {
   @override
   void initState() {
     super.initState();
-    userId = 'zxc';
+    userId = StaticUser.userId;
   }
 
   @override
@@ -37,6 +38,7 @@ class _MyPageState extends State<MyPage> {
         child: Column(
           children: [
             ExpansionTile(
+              // ExpansionTile : 숨김, 드러내기 기능(클릭했을 때)
               title: const Text('나의 프로필'),
               childrenPadding: const EdgeInsets.only(left: 60),
               children: [
@@ -44,7 +46,11 @@ class _MyPageState extends State<MyPage> {
                   title: const Text('정보 수정'),
                   leading: const Icon(Icons.person),
                   onTap: () {
-                    // 페이지 연결(정보 수정은 병준님)
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const UserUpdate()),
+                    );
                   },
                 ),
               ],
@@ -57,16 +63,20 @@ class _MyPageState extends State<MyPage> {
                   title: const Text('찜목록'),
                   leading: const Icon(Icons.favorite_border),
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => WishList()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const WishList()));
                   },
                 ),
                 ListTile(
                   title: const Text('거래내역'),
                   leading: const Icon(Icons.monetization_on),
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => BuyList()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const BuyList()));
                   },
                 ),
               ],
@@ -115,9 +125,10 @@ class _MyPageState extends State<MyPage> {
                       onPressed: () {
                         _deleteUser();
                         Navigator.pushAndRemoveUntil(
+                            // Navigator.pushAndRemoveUntil : 모든 페이지 제거 후 해당 페이지로 가기
                             context,
                             MaterialPageRoute(
-                                builder: (BuildContext) => LoginPage()),
+                                builder: (BuildContext) => const LoginPage()),
                             (route) => false);
                       },
                       child: const Text('확인')),
@@ -126,7 +137,7 @@ class _MyPageState extends State<MyPage> {
                   padding: const EdgeInsets.all(20.0),
                   child: ElevatedButton(
                     onPressed: () => Navigator.pop(context, '취소'),
-                    child: Text('취소'),
+                    child: const Text('취소'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
                     ),
