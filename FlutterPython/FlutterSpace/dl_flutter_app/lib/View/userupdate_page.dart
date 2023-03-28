@@ -42,7 +42,11 @@ class _UserUpdateState extends State<UserUpdate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('정보 수정'),
+        title: const Text('정보 수정', style: TextStyle(color: Colors.black)),
+        backgroundColor: const Color.fromARGB(255, 243, 242, 239),
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
       ),
       body: FutureBuilder(
         future: userhandler.userInfo(userId),
@@ -59,35 +63,6 @@ class _UserUpdateState extends State<UserUpdate> {
               children: [
                 const Padding(
                   padding: EdgeInsets.only(left: 20),
-                  child: Text(
-                    '아이디',
-                  ),
-                ),
-                SizedBox(
-                  width: 420.0,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
-                    child: TextField(
-                      readOnly: true,
-                      controller: userIdController,
-                      decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.perm_identity),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                              borderSide:
-                                  BorderSide(color: Colors.green, width: 2))),
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 20),
                   child: Text('비밀번호'),
                 ),
                 SizedBox(
@@ -98,29 +73,31 @@ class _UserUpdateState extends State<UserUpdate> {
                       obscureText: _isObscured,
                       controller: userPasswordController,
                       decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.lock),
+                          prefixIcon: const Icon(Icons.lock),
                           suffixIcon: IconButton(
-                            padding: EdgeInsets.only(right: 12.0),
+                            padding: const EdgeInsets.only(right: 12.0),
                             icon: _isObscured
                                 ? const Icon(Icons.visibility)
-                                : Icon(Icons.visibility_off),
+                                : const Icon(Icons.visibility_off),
                             onPressed: () {
                               setState(() {
                                 _isObscured = !_isObscured;
                               });
                             },
                           ),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(12.0)),
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2),
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(197, 173, 231, 216),
+                                width: 2),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.0)),
-                              borderSide:
-                                  BorderSide(color: Colors.green, width: 2))),
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(197, 173, 231, 216),
+                                  width: 2))),
                     ),
                   ),
                 ),
@@ -139,14 +116,16 @@ class _UserUpdateState extends State<UserUpdate> {
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(12.0)),
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2),
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(197, 173, 231, 216),
+                                width: 2),
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.0)),
-                              borderSide:
-                                  BorderSide(color: Colors.green, width: 2))),
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(197, 173, 231, 216),
+                                  width: 2))),
                     ),
                   ),
                 ),
@@ -165,14 +144,16 @@ class _UserUpdateState extends State<UserUpdate> {
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(12.0)),
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2),
+                            borderSide: BorderSide(
+                                color: Color.fromARGB(197, 173, 231, 216),
+                                width: 2),
                           ),
                           focusedBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.0)),
-                              borderSide:
-                                  BorderSide(color: Colors.green, width: 2))),
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(197, 173, 231, 216),
+                                  width: 2))),
                     ),
                   ),
                 ),
@@ -181,22 +162,21 @@ class _UserUpdateState extends State<UserUpdate> {
                     padding: const EdgeInsets.only(top: 20),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          fixedSize: Size(180, 50),
-                          backgroundColor: Colors.orange),
+                          fixedSize: const Size(180, 50),
+                          backgroundColor: const Color(0xffFEC260)),
                       onPressed: () async {
                         await updateUser(
                             userIdController.text.trim(),
                             userPasswordController.text.trim(),
                             userNameController.text.trim(),
                             userAddressController.text.trim());
-                        // userRefresh();
+                        // ignore: use_build_context_synchronously
                         showDialog(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
-                            title: Text('수정이 완료되었습니다.'),
+                            title: const Text('수정이 완료되었습니다.'),
                             actions: [
                               TextButton(
-                                  // onPressed: () => Navigator.pop(context, 'OK'),
                                   onPressed: () {
                                     Navigator.pushAndRemoveUntil(
                                         context,
@@ -205,11 +185,10 @@ class _UserUpdateState extends State<UserUpdate> {
                                                 MyPage()),
                                         (route) => false);
                                   },
-                                  child: Text('OK')),
+                                  child: const Text('OK')),
                             ],
                           ),
                         );
-                        // userRefresh();
                       },
                       child: const Text('수정하기'),
                     ),
@@ -229,9 +208,5 @@ class _UserUpdateState extends State<UserUpdate> {
   updateUser(userId, userPw, userName, userAddress) {
     userhandler = UserModel();
     userhandler.updateUser(userId, userPw, userName, userAddress);
-  }
-
-  userRefresh() {
-    setState(() {});
   }
 }

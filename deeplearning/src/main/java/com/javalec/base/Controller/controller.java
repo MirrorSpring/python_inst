@@ -91,7 +91,7 @@ public class controller {
 
 	// 찜 목록 삭제시 하트 수 -1 내리기
 	@GetMapping("/wishdown/{poId}")
-	public void wiishDownpoHeart(@PathVariable("poId") int poId) {
+	public void wishDownpoHeart(@PathVariable("poId") int poId) {
 		mapper.wishDownpoHeart(poId);
 	}
 

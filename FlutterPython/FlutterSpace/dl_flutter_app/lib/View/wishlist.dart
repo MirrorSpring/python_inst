@@ -12,7 +12,7 @@ class WishList extends StatefulWidget {
 class _WishListState extends State<WishList> {
   late ListModel handler;
   late String userId;
-  late int poId;
+  late int poId; // 찜 목록 삭제를 위한 것
 
   @override
   void initState() {
@@ -26,27 +26,26 @@ class _WishListState extends State<WishList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('찜 목록'),
+        title: const Text('찜 목록', style: TextStyle(color: Colors.black)),
+        backgroundColor: const Color.fromARGB(255, 243, 242, 239),
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
       ),
       body: FutureBuilder(
         future: handler.wishlistSelect(userId),
         builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
           // 로딩 중일 때
           if (snapshot.data == null) {
-            return Container(
-                // color: Colors.black,
-                // width: 300,
-                // height: 300,
-                );
+            return Container();
           } else {
             // 로딩 뒤에 데이터가 비었는지 있는지에 따라
             if (snapshot.data!.isEmpty) {
               return const Center(
-                child: Text(
-                  '찜한 목록이 없습니다.',
-                  style: TextStyle(fontSize: 25),
-                ),
-              );
+                  child: Text(
+                '찜한 목록이 없습니다.',
+                style: TextStyle(fontSize: 25, color: Colors.black26),
+              ));
             }
             // 여기가 로딩 뒤에 데이터가 있을 떄
             else {
@@ -65,7 +64,7 @@ class _WishListState extends State<WishList> {
 
   Widget wishBuild(BuildContext context, int index, AsyncSnapshot snapshot) {
     return Card(
-      clipBehavior: Clip.antiAlias,
+      clipBehavior: Clip.antiAlias, // 테두리 부드럽게 만드려고 사용
       child: Container(
         height: 120,
         padding: const EdgeInsets.all(0),
@@ -86,7 +85,7 @@ class _WishListState extends State<WishList> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Column(
@@ -97,18 +96,18 @@ class _WishListState extends State<WishList> {
                         padding: const EdgeInsets.only(top: 5),
                         child: Text(
                           snapshot.data[index]['poTitle'].toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20.0, fontWeight: FontWeight.bold),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Text(
                         snapshot.data[index]['poPrice'].toString(),
-                        style: TextStyle(fontSize: 15),
+                        style: const TextStyle(fontSize: 15),
                         overflow: TextOverflow.ellipsis,
                       ),
                       snapshot.data[index]['poState'] == 0
-                          ? SizedBox(
+                          ? const SizedBox(
                               width: 65,
                               height: 35,
                               child: Card(
@@ -125,7 +124,7 @@ class _WishListState extends State<WishList> {
                                 ),
                               ),
                             )
-                          : SizedBox(
+                          : const SizedBox(
                               width: 65,
                               height: 35,
                               child: Card(
@@ -153,10 +152,11 @@ class _WishListState extends State<WishList> {
                       await _deleteWish(
                         snapshot.data[index]['poId'],
                       );
+                      print(snapshot.data[index]['poId']);
                       refresh();
                       await wishDownpoHeart(snapshot.data[index]['poId']);
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.favorite,
                       color: Colors.red,
                     ),
@@ -164,7 +164,7 @@ class _WishListState extends State<WishList> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.favorite_border,
                         size: 16,
                         color: Colors.black38,
@@ -185,11 +185,12 @@ class _WishListState extends State<WishList> {
   }
 
   // 찜 목록 삭제
-  _deleteWish(data) async {
+  _deleteWish(poId) async {
     handler = ListModel();
     handler.deleteWish(userId, poId);
   }
 
+  // 찜 목록 초기화(삭제하고 바로 반영되도록)
   refresh() {
     setState(() {});
   }
