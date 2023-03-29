@@ -39,7 +39,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     chatRoomId = StaticChat.chatRoomId;
     tfChatController = TextEditingController();
     picker = ImagePicker();
-    imageState = false;
+    imageState = false; // image
     file = File("");
 
     print("initState");
@@ -87,15 +87,15 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                             documents.map((e) => _buildItemWidget(e)).toList(),
                       ),
                     ),
-                    // 만약에 image를 가져왔으면 image를 보여주고 아니면 빈 컨테이너를 리턴
 
+                    // 만약에 image를 가져왔으면 image를 보여준다.
                     if (imageState)
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
                         child: Image.file(File(image.path)),
-                      )
-                    else
-                      Container(),
+                      ),
+                    // else
+                    //   Container(),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
                       child: Row(

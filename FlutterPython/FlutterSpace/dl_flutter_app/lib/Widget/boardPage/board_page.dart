@@ -274,6 +274,7 @@ class _BoardPageState extends State<BoardPage> {
     await http.get(url);
   }
 
+  // for 채팅 ======================================
   // chatRoomId를 poId로 select
   Future<bool> selectChatRoomID() async {
     print('1. select room id');
