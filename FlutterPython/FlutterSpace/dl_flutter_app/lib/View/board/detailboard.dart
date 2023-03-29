@@ -43,7 +43,6 @@ class _PageDetailState extends State<PageDetail> {
     setState(() {
       //
     });
-
   }
 
   @override

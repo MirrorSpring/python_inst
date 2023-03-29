@@ -284,8 +284,11 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       });
     })
         .then((value) => selectDocId())
+        // 채팅룸 안에 채팅 컬랙션이 있어서 채팅룸의 ID를 가져오는 과정이 필요해 그래서 만듬
         .then((value) => addChatBubble())
+        // 채팅 보내기. then은 끝나면 처리한다.
         .then((value) => chatRefresh());
+    // 텍스트 필드 비워주고 SET STATE
   }
 
   // 채팅방 목록에 가장 최근 채팅 띄우고 chatRoomState update
@@ -316,6 +319,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   }
 
   // image upload to firebase
+  // URL 저장하고
   Future uploadFile() async {
     if (image == null) return;
 
