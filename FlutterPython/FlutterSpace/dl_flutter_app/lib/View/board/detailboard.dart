@@ -241,10 +241,13 @@ class _PageDetailState extends State<PageDetail> {
     return heartbeat;
   } //
 
+  // for 채팅 =============================
   // 이미 존재하는 채팅방인지 확인
+  // 존재하지 않으면 빈 페이지를 띄우고, 존재하면 기존 채팅방을 띄운다.
   checkRoomExist(String userId, String userName, int poId) async {
     FirebaseFirestore fs = FirebaseFirestore.instance;
 
+    // 로그인된 계정이 sendUserId나 receiveUserId에 포함되어 있다면 true, 없다면 false
     final Query query1 = fs
         .collection('chatroom')
         .where("sendUserId", isEqualTo: StaticUser.userId)
@@ -263,7 +266,7 @@ class _PageDetailState extends State<PageDetail> {
 
     print(count1 + count2);
 
-    // 이미 존재하는 채팅방이라면 Static에 채팅방 문서 id 넘겨주기
+    // 이미 존재하는 채팅방이라면(true면) Static에 채팅방 정보 넘겨주기
     if (chatRoomExist) {
       print('이미 채팅방이 존재!');
       for (var doc in [querySnapshot1.docs, querySnapshot2.docs]) {
@@ -291,11 +294,10 @@ class _PageDetailState extends State<PageDetail> {
     } else {
       // 존재하지 않는다면 빈 채팅방 페이지만 띄우기
       print("채팅방이 존재하지 않으므로 빈 페이지를 띄웁니다!");
-      StaticChat.chatRoomId = "none";
+      StaticChat.chatRoomId = "none"; // chatRoomId가 없으므로 임시적으로 none을 id로 보냅니다.
       StaticChat.chatUserIds = [StaticUser.userId, userId];
       StaticChat.chatUserNames = [StaticUser.userName, userName];
       StaticChat.boardId = poId;
-      // StaticChat.chatRoomId = "";
       Navigator.push(
         context,
         MaterialPageRoute(
