@@ -39,7 +39,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     chatRoomId = StaticChat.chatRoomId;
     tfChatController = TextEditingController();
     picker = ImagePicker();
-    imageState = false;
+    imageState = false; // image
     file = File("");
 
     print("initState");
@@ -87,15 +87,15 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                             documents.map((e) => _buildItemWidget(e)).toList(),
                       ),
                     ),
-                    // 만약에 image를 가져왔으면 image를 보여주고 아니면 빈 컨테이너를 리턴
 
+                    // 만약에 image를 가져왔으면 image를 보여준다.
                     if (imageState)
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
                         child: Image.file(File(image.path)),
-                      )
-                    else
-                      Container(),
+                      ),
+                    // else
+                    //   Container(),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
                       child: Row(
@@ -284,8 +284,11 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       });
     })
         .then((value) => selectDocId())
+        // 채팅룸 안에 채팅 컬랙션이 있어서 채팅룸의 ID를 가져오는 과정이 필요해 그래서 만듬
         .then((value) => addChatBubble())
+        // 채팅 보내기. then은 끝나면 처리한다.
         .then((value) => chatRefresh());
+    // 텍스트 필드 비워주고 SET STATE
   }
 
   // 채팅방 목록에 가장 최근 채팅 띄우고 chatRoomState update
@@ -316,6 +319,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   }
 
   // image upload to firebase
+  // URL 저장하고
   Future uploadFile() async {
     if (image == null) return;
 

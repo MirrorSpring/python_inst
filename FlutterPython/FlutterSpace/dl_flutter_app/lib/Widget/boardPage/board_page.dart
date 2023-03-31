@@ -274,7 +274,9 @@ class _BoardPageState extends State<BoardPage> {
     await http.get(url);
   }
 
+  // for 채팅 ======================================
   // chatRoomId를 poId로 select
+  // 아까
   Future<bool> selectChatRoomID() async {
     print('1. select room id');
     // poId가 똑같은 채팅방을 select 합니다.
@@ -331,5 +333,4 @@ class _BoardPageState extends State<BoardPage> {
       },
     );
   }
-}//END
-
+} //END
